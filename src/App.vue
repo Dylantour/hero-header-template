@@ -6,7 +6,7 @@ const textScale = ref(1)
 const highContrast = ref(false)
 const menuOpen = ref(false)
 const faqOpen = ref(null)
-const activeSlide = ref(1)
+const activeSlide = ref(0)
 const hoveredSlide = ref(null)
 
 let timer = null
@@ -17,7 +17,9 @@ const content = {
     name: 'פנסרה',
     subtitle: 'פתרונות פיננסיים',
 
-    freeBadge: 'מתחילים בחינם',
+    freeBadge: 'בדיקה ללא עלות וללא התחייבות',
+    freeMain: 'בדיקה ללא עלות',
+    freeSub: 'ללא התחייבות',
 
     heroEyebrow: 'פנסרה',
     heroTitle1: 'יש לכם כסף',
@@ -28,20 +30,17 @@ const content = {
     heroText:
       'קרנות השתלמות, קופות גמל, חיסכון פנסיוני והלוואות כנגד קופות — אנחנו עוזרים לכם להבין מה יש לכם ומה האפשרויות שניתן לבדוק.',
 
-    start: 'מתחילים את הבדיקה בחינם',
+    start: 'התחילו את הבדיקה',
     how: 'איך זה עובד?',
 
     simple: '✓ תהליך פשוט',
     personal: '✓ יחס אישי',
     clear: '✓ מידע ברור',
 
-    formTitle: 'מתחילים בחינם',
-    formStrong: 'הבדיקה הראשונית ללא עלות וללא התחייבות.',
+    formTitle: 'מתחילים בבדיקה',
+    formStrong: 'בדיקה ללא עלות וללא התחייבות.',
     formText:
-      'בדיקה והדרכה על הכספים שאיתרנו — לגמרי בחינם.',
-
-    freeMain: 'מתחילים בחינם',
-    freeSub: 'הבדיקה הראשונית ללא עלות וללא התחייבות',
+      'הבדיקה וההדרכה על הכספים שאיתרנו — לגמרי בחינם.',
 
     name: 'שם מלא *',
     namePlaceholder: 'לדוגמה: דני לוי',
@@ -61,7 +60,7 @@ const content = {
     consent:
       'אני מאשר/ת יצירת קשר בהתאם למדיניות הפרטיות.',
 
-    submit: 'מתחילים את הבדיקה בחינם',
+    submit: 'שלחו לי את הבדיקה',
 
     secure: '🔒 פרטים מאובטחים',
     noCommit: 'ללא התחייבות',
@@ -76,7 +75,7 @@ const content = {
     howText:
       'מתחילים בבדיקה. מבינים את הנתונים. ורק אז בוחנים את האפשרויות.',
 
-    companiesEyebrow: 'גופים מוסדיים',
+    companiesEyebrow: 'גופים פיננסיים',
     companiesTitle: 'בודקים את',
     companiesTitle2: 'האפשרויות.',
     companiesText:
@@ -102,7 +101,7 @@ const content = {
     step3Text:
       'מסבירים את האפשרויות ואת המשמעות שלהן.',
 
-    companyTypeInstitutional: 'גוף מוסדי',
+    companyTypeInstitutional: 'גוף פיננסי',
     companyTypeInvestment: 'בית השקעות',
 
     companyDescription:
@@ -119,19 +118,19 @@ const content = {
       ],
       [
         'האם הבדיקה הראשונית מחייבת?',
-        'לא. הבדיקה הראשונית אינה מחייבת אתכם להמשיך. קודם מבינים את המצב ואת האפשרויות.'
+        'לא. הבדיקה הראשונית אינה מחייבת אתכם להמשיך.'
       ],
       [
         'כמה מס משלמים על משיכה?',
         'המס, אם חל, משתנה בהתאם למוצר, לסוג הכספים ולנסיבות. לכן אין סכום אחיד שמתאים לכל לקוח.'
       ],
       [
-        'כמה זמן התהליך לוקח?',
+        'כמה זמן זה לוקח?',
         'מילוי הטופס — פחות מדקה. נציג יחזור תוך 24 שעות (ימים א׳-ה׳, 9:00-18:00). משיכת הכסף — בדרך כלל 7-14 ימי עסקים.'
       ],
       [
-        'איך הבדיקה יכולה להיות בחינם?',
-        'הבדיקה היא חינמית לגמרי. הבדיקה וההדרכה על הכספים שאיתרנו — לגמרי חינם. במקרים שנדרש יועץ להשלמת משיכה, נציג יציע לך הצעה ותוכל/י להחליט אם להמשיך.'
+        'איך זה יכול להיות בחינם?',
+        'הבדיקה היא חינמית לגמרי — הבדיקה וההדרכה על הכספים שאיתרנו — לגמרי חינם. במקרים שנדרש יועץ להשלמת משיכה, נציג יציג לכם הצעה ותחליטו אם להמשיך.'
       ]
     ],
 
@@ -144,7 +143,9 @@ const content = {
     name: 'Пенсера',
     subtitle: 'Финансовые решения',
 
-    freeBadge: 'Начинаем бесплатно',
+    freeBadge: 'Проверка бесплатно и без обязательств',
+    freeMain: 'Проверка бесплатно',
+    freeSub: 'Без обязательств',
 
     heroEyebrow: 'Пенсера',
     heroTitle1: 'У вас есть деньги',
@@ -155,20 +156,17 @@ const content = {
     heroText:
       'Купат Гемель, Керен Иштальмут, пенсионные накопления и кредиты под накопления — поможем разобраться, что у вас есть и какие варианты можно проверить.',
 
-    start: 'Начать бесплатную проверку',
+    start: 'Начать проверку',
     how: 'Как это работает?',
 
     simple: '✓ Всё просто',
     personal: '✓ Личное отношение',
     clear: '✓ Понятно объясняем',
 
-    formTitle: 'Начинаем бесплатно',
-    formStrong: 'Первичная проверка — бесплатно и без обязательств.',
+    formTitle: 'Начинаем проверку',
+    formStrong: 'Проверка бесплатно и без обязательств.',
     formText:
       'Проверка и объяснение найденных денег — полностью бесплатно.',
-
-    freeMain: 'НАЧИНАЕМ БЕСПЛАТНО',
-    freeSub: 'Первичная проверка — без оплаты и без обязательств',
 
     name: 'Полное имя *',
     namePlaceholder: 'Например: Иван Иванов',
@@ -188,7 +186,7 @@ const content = {
     consent:
       'Я разрешаю связаться со мной в соответствии с политикой конфиденциальности.',
 
-    submit: 'Начать бесплатную проверку',
+    submit: 'Отправить данные',
 
     secure: '🔒 Данные защищены',
     noCommit: 'Без обязательств',
@@ -242,7 +240,7 @@ const content = {
       ],
       [
         'Всегда ли лучше выводить деньги?',
-        'Нет. Иногда можно рассмотреть другие варианты, например кредит под накопления. Важно сначала понять ситуацию.'
+        'Нет. Иногда можно рассмотреть другие варианты, например кредит под накопления.'
       ],
       [
         'Обязывает ли меня первичная проверка?',
@@ -267,7 +265,9 @@ const content = {
     name: 'بنصرا',
     subtitle: 'حلول مالية',
 
-    freeBadge: 'نبدأ مجانًا',
+    freeBadge: 'فحص مجاني وبدون التزام',
+    freeMain: 'الفحص مجانًا',
+    freeSub: 'بدون التزام',
 
     heroEyebrow: 'بنصرا',
     heroTitle1: 'عندكم أموال',
@@ -278,20 +278,17 @@ const content = {
     heroText:
       'صناديق الاستكمال، صناديق الادخار والتقاعد، وقروض مقابل المدخرات — بنساعدكم تفهموا شو عندكم وشو الخيارات الممكنة.',
 
-    start: 'ابدأوا الفحص مجانًا',
+    start: 'ابدأوا الفحص',
     how: 'كيف الموضوع بيشتغل؟',
 
     simple: '✓ الموضوع بسيط',
     personal: '✓ تعامل شخصي',
     clear: '✓ شرح واضح',
 
-    formTitle: 'نبدأ مجانًا',
-    formStrong: 'الفحص الأولي مجاني وبدون التزام.',
+    formTitle: 'نبدأ بالفحص',
+    formStrong: 'الفحص مجاني وبدون التزام.',
     formText:
       'الفحص والشرح عن الأموال اللي لقيناها — مجانًا بالكامل.',
-
-    freeMain: 'نبدأ مجانًا',
-    freeSub: 'الفحص الأولي مجاني وبدون أي التزام',
 
     name: 'الاسم الكامل *',
     namePlaceholder: 'مثال: داني ليفي',
@@ -311,7 +308,7 @@ const content = {
     consent:
       'أوافق على التواصل معي حسب سياسة الخصوصية.',
 
-    submit: 'ابدأوا الفحص مجانًا',
+    submit: 'إرسال التفاصيل',
 
     secure: '🔒 بيانات آمنة',
     noCommit: 'بدون التزام',
@@ -365,7 +362,7 @@ const content = {
       ],
       [
         'هل دايمًا الأفضل نسحب المصاري؟',
-        'مش بالضرورة. أحيانًا ممكن نفحص بدائل، مثل قرض مقابل المدخرات. المهم نفهم الخيارات قبل القرار.'
+        'مش بالضرورة. أحيانًا ممكن نفحص بدائل، مثل قرض مقابل المدخرات.'
       ],
       [
         'هل الفحص الأولي بيلزمني بشي؟',
@@ -432,30 +429,12 @@ const services = computed(() => [
 ])
 
 const companies = [
-  {
-    name: 'הפניקס',
-    type: 'institutional'
-  },
-  {
-    name: 'הראל',
-    type: 'institutional'
-  },
-  {
-    name: 'מגדל',
-    type: 'institutional'
-  },
-  {
-    name: 'כלל',
-    type: 'institutional'
-  },
-  {
-    name: 'מנורה',
-    type: 'institutional'
-  },
-  {
-    name: 'מיטב',
-    type: 'investment'
-  }
+  { name: 'הפניקס', type: 'institutional' },
+  { name: 'הראל', type: 'institutional' },
+  { name: 'מגדל', type: 'institutional' },
+  { name: 'כלל', type: 'institutional' },
+  { name: 'מנורה', type: 'institutional' },
+  { name: 'מיטב', type: 'investment' }
 ]
 
 const visibleCompanies = computed(() => {
@@ -577,7 +556,6 @@ onUnmounted(() => {
     }"
   >
 
-
     <!-- HEADER -->
 
     <header class="header">
@@ -629,7 +607,7 @@ onUnmounted(() => {
 
         <div class="header-actions">
 
-          <!-- LANGUAGES -->
+          <!-- BIG LANGUAGE SWITCHER -->
 
           <div class="languages">
 
@@ -638,9 +616,7 @@ onUnmounted(() => {
                 selected:
                   lang === 'he'
               }"
-              @click="
-                setLang('he')
-              "
+              @click="setLang('he')"
             >
               🇮🇱
               <span>
@@ -654,9 +630,7 @@ onUnmounted(() => {
                 selected:
                   lang === 'ru'
               }"
-              @click="
-                setLang('ru')
-              "
+              @click="setLang('ru')"
             >
               🇷🇺
               <span>
@@ -665,14 +639,14 @@ onUnmounted(() => {
             </button>
 
 
+            <!-- NO FLAG FOR ARABIC -->
+
             <button
               :class="{
                 selected:
                   lang === 'ar'
               }"
-              @click="
-                setLang('ar')
-              "
+              @click="setLang('ar')"
             >
               <span>
                 العربية
@@ -682,22 +656,16 @@ onUnmounted(() => {
           </div>
 
 
-          <!-- ACCESSIBILITY -->
-
           <button
             class="accessibility-top"
-            @click="
-              increaseText()
-            "
+            @click="increaseText"
           >
             A+
           </button>
 
           <button
             class="accessibility-top"
-            @click="
-              decreaseText()
-            "
+            @click="decreaseText"
           >
             A−
           </button>
@@ -717,13 +685,8 @@ onUnmounted(() => {
             href="#contact"
             class="nav-button"
           >
-
             {{ current.start }}
-
-            <span>
-              «
-            </span>
-
+            <span>«</span>
           </a>
 
         </div>
@@ -736,13 +699,11 @@ onUnmounted(() => {
               !menuOpen
           "
         >
-
           {{
             menuOpen
               ? '×'
               : '☰'
           }}
-
         </button>
 
       </div>
@@ -762,9 +723,7 @@ onUnmounted(() => {
               selected:
                 lang === 'he'
             }"
-            @click="
-              setLang('he')
-            "
+            @click="setLang('he')"
           >
             🇮🇱 עברית
           </button>
@@ -774,9 +733,7 @@ onUnmounted(() => {
               selected:
                 lang === 'ru'
             }"
-            @click="
-              setLang('ru')
-            "
+            @click="setLang('ru')"
           >
             🇷🇺 Русский
           </button>
@@ -786,9 +743,7 @@ onUnmounted(() => {
               selected:
                 lang === 'ar'
             }"
-            @click="
-              setLang('ar')
-            "
+            @click="setLang('ar')"
           >
             العربية
           </button>
@@ -935,8 +890,7 @@ onUnmounted(() => {
           class="lead-card"
         >
 
-
-          <!-- HUGE FREE BANNER -->
+          <!-- LARGE FREE MESSAGE -->
 
           <div class="free-banner">
 
@@ -1450,6 +1404,7 @@ onUnmounted(() => {
             arrow-right
           "
           @click="prevSlide"
+          aria-label="Previous"
         >
           «
         </button>
@@ -1540,6 +1495,7 @@ onUnmounted(() => {
             arrow-left
           "
           @click="nextSlide"
+          aria-label="Next"
         >
           »
         </button>
@@ -1831,22 +1787,31 @@ onUnmounted(() => {
 :root {
 
   --bg:
-    #080b10;
+    #0d1720;
+
+  --bg-light:
+    #12232e;
+
+  --bg-card:
+    #182b36;
+
+  --bg-card-2:
+    #1c3440;
 
   --cyan:
-    #37c9f5;
+    #42d5f5;
 
   --cyan-light:
-    #5edcff;
+    #73e4fa;
 
   --text:
-    #f5f7fa;
+    #f7fbfd;
 
   --muted:
-    #929aa8;
+    #a8b7c1;
 
   --border:
-    rgba(255,255,255,.11);
+    rgba(255,255,255,.13);
 
 }
 
@@ -1916,9 +1881,7 @@ a {
 }
 
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 .header {
 
@@ -1932,14 +1895,14 @@ a {
     100;
 
   background:
-    rgba(7,10,15,.93);
+    rgba(13,23,32,.94);
 
   border-bottom:
     1px solid
-    rgba(255,255,255,.08);
+    rgba(255,255,255,.1);
 
   backdrop-filter:
-    blur(18px);
+    blur(20px);
 
 }
 
@@ -1947,7 +1910,7 @@ a {
 .nav {
 
   height:
-    76px;
+    82px;
 
   max-width:
     1180px;
@@ -1993,19 +1956,19 @@ a {
 .logo-mark {
 
   width:
-    42px;
+    45px;
 
   height:
-    42px;
+    45px;
 
   border-radius:
-    12px;
+    13px;
 
   background:
     var(--cyan);
 
   color:
-    #061018;
+    #06141b;
 
   display:
     flex;
@@ -2020,7 +1983,7 @@ a {
     900;
 
   font-size:
-    21px;
+    22px;
 
 }
 
@@ -2031,10 +1994,7 @@ a {
     block;
 
   font-size:
-    20px;
-
-  line-height:
-    20px;
+    21px;
 
 }
 
@@ -2045,7 +2005,7 @@ a {
     block;
 
   color:
-    #727b88;
+    #8fa1ad;
 
   font-size:
     10px;
@@ -2062,13 +2022,13 @@ a {
     center;
 
   gap:
-    24px;
+    25px;
 
   color:
-    #9ba3b0;
+    #b2c0c8;
 
   font-size:
-    13px;
+    14px;
 
   font-weight:
     700;
@@ -2092,9 +2052,7 @@ a {
 }
 
 
-/* =========================
-   LANGUAGE
-========================= */
+/* LANGUAGES - BIGGER */
 
 .header-actions {
 
@@ -2105,7 +2063,7 @@ a {
     center;
 
   gap:
-    7px;
+    8px;
 
 }
 
@@ -2115,23 +2073,39 @@ a {
   display:
     flex;
 
+  align-items:
+    center;
+
   padding:
+    5px;
+
+  gap:
     3px;
 
   border:
     1px solid
-    rgba(255,255,255,.12);
+    rgba(255,255,255,.2);
 
   border-radius:
-    999px;
+    14px;
 
   background:
-    rgba(255,255,255,.04);
+    rgba(255,255,255,.07);
+
+  box-shadow:
+    0 5px 25px
+    rgba(0,0,0,.18);
 
 }
 
 
 .languages button {
+
+  min-height:
+    43px;
+
+  padding:
+    8px 13px;
 
   border:
     0;
@@ -2140,25 +2114,41 @@ a {
     transparent;
 
   color:
-    #929aa8;
+    #aebdc6;
 
   cursor:
     pointer;
 
-  padding:
-    7px 9px;
-
   border-radius:
-    999px;
+    10px;
 
   font-size:
-    11px;
+    12px;
 
   font-weight:
-    800;
+    900;
 
   transition:
     .25s;
+
+}
+
+
+.languages button span {
+
+  margin:
+    0 3px;
+
+}
+
+
+.languages button:hover {
+
+  background:
+    rgba(66,213,245,.12);
+
+  color:
+    white;
 
 }
 
@@ -2169,35 +2159,37 @@ a {
     var(--cyan);
 
   color:
-    #061018;
+    #06141b;
+
+  box-shadow:
+    0 5px 18px
+    rgba(66,213,245,.25);
 
 }
 
 
-/* =========================
-   ACCESSIBILITY
-========================= */
+/* ACCESSIBILITY */
 
 .accessibility-top {
 
   width:
-    32px;
+    38px;
 
   height:
-    32px;
+    38px;
 
   border:
     1px solid
-    rgba(255,255,255,.12);
+    rgba(255,255,255,.16);
 
   border-radius:
-    8px;
+    9px;
 
   background:
-    #11161d;
+    #172832;
 
   color:
-    #b7c0ca;
+    #d6e1e7;
 
   cursor:
     pointer;
@@ -2219,9 +2211,7 @@ a {
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
+/* BUTTONS */
 
 .nav-button,
 .primary-button {
@@ -2239,7 +2229,7 @@ a {
     var(--cyan);
 
   color:
-    #061018;
+    #06141b;
 
   font-weight:
     900;
@@ -2248,7 +2238,7 @@ a {
     999px;
 
   padding:
-    12px 19px;
+    13px 21px;
 
   transition:
     .3s;
@@ -2269,8 +2259,8 @@ a {
     translateY(-2px);
 
   box-shadow:
-    0 10px 30px
-    rgba(55,201,245,.2);
+    0 12px 35px
+    rgba(66,213,245,.25);
 
 }
 
@@ -2299,14 +2289,12 @@ a {
     white;
 
   font-size:
-    25px;
+    27px;
 
 }
 
 
-/* =========================
-   TICKER
-========================= */
+/* TICKER */
 
 .ticker {
 
@@ -2317,20 +2305,20 @@ a {
     5;
 
   margin-top:
-    76px;
+    82px;
 
   height:
-    48px;
+    50px;
 
   overflow:
     hidden;
 
   background:
-    #0c1016;
+    #10212b;
 
   border-bottom:
     1px solid
-    var(--border);
+    rgba(255,255,255,.08);
 
 }
 
@@ -2350,10 +2338,10 @@ a {
     center;
 
   gap:
-    28px;
+    30px;
 
   color:
-    #777f8d;
+    #8fa3ae;
 
   font-size:
     13px;
@@ -2379,25 +2367,19 @@ a {
 @keyframes ticker {
 
   from {
-
     transform:
       translateX(0);
-
   }
 
   to {
-
     transform:
       translateX(50%);
-
   }
 
 }
 
 
-/* =========================
-   HERO
-========================= */
+/* HERO */
 
 .hero {
 
@@ -2413,18 +2395,23 @@ a {
   background:
 
     radial-gradient(
-      circle at 75% 30%,
-      rgba(26,134,164,.28),
-      transparent 32%
+      circle at 75% 25%,
+      rgba(49,190,226,.23),
+      transparent 34%
     ),
 
     radial-gradient(
       circle at 10% 80%,
-      rgba(125,74,43,.16),
-      transparent 30%
+      rgba(70,125,155,.16),
+      transparent 35%
     ),
 
-    #090c11;
+    linear-gradient(
+      135deg,
+      #10212b,
+      #0d1820 55%,
+      #122832
+    );
 
 }
 
@@ -2438,32 +2425,25 @@ a {
     0;
 
   opacity:
-    .15;
+    .14;
 
   background-image:
 
     linear-gradient(
-      rgba(255,255,255,.08)
+      rgba(255,255,255,.09)
       1px,
       transparent 1px
     ),
 
     linear-gradient(
       90deg,
-      rgba(255,255,255,.08)
+      rgba(255,255,255,.09)
       1px,
       transparent 1px
     );
 
   background-size:
     72px 72px;
-
-  mask-image:
-    linear-gradient(
-      to bottom,
-      black,
-      transparent 90%
-    );
 
 }
 
@@ -2477,7 +2457,7 @@ a {
     50%;
 
   filter:
-    blur(70px);
+    blur(80px);
 
   pointer-events:
     none;
@@ -2488,10 +2468,10 @@ a {
 .glow-one {
 
   width:
-    400px;
+    450px;
 
   height:
-    400px;
+    450px;
 
   right:
     -120px;
@@ -2500,7 +2480,7 @@ a {
     100px;
 
   background:
-    rgba(37,198,239,.12);
+    rgba(45,205,241,.13);
 
 }
 
@@ -2508,10 +2488,10 @@ a {
 .glow-two {
 
   width:
-    300px;
+    350px;
 
   height:
-    300px;
+    350px;
 
   left:
     10%;
@@ -2520,7 +2500,7 @@ a {
     30px;
 
   background:
-    rgba(230,112,56,.07);
+    rgba(84,147,177,.1);
 
 }
 
@@ -2560,9 +2540,7 @@ a {
 }
 
 
-/* =========================
-   FORM CARD
-========================= */
+/* FORM */
 
 .lead-card {
 
@@ -2570,17 +2548,17 @@ a {
     relative;
 
   background:
-    #f8f9fb;
+    #f8fbfc;
 
   color:
-    #111722;
+    #101a22;
 
   border:
     2px solid
     var(--cyan);
 
   border-radius:
-    22px;
+    23px;
 
   padding:
     31px;
@@ -2588,20 +2566,18 @@ a {
   box-shadow:
 
     0 0 0 6px
-      rgba(55,201,245,.06),
+      rgba(66,213,245,.07),
 
     0 25px 80px
-      rgba(0,0,0,.45),
+      rgba(0,0,0,.35),
 
     0 0 65px
-      rgba(55,201,245,.16);
+      rgba(66,213,245,.14);
 
 }
 
 
-/* =========================
-   HUGE FREE BANNER
-========================= */
+/* BIG FREE BANNER */
 
 .free-banner {
 
@@ -2612,10 +2588,10 @@ a {
     -47px -10px 24px;
 
   min-height:
-    94px;
+    96px;
 
   padding:
-    16px 18px;
+    17px 18px;
 
   display:
     flex;
@@ -2630,7 +2606,7 @@ a {
 
     linear-gradient(
       135deg,
-      #37c9f5,
+      #42d5f5,
       #1da9d0
     );
 
@@ -2666,22 +2642,22 @@ a {
     absolute;
 
   width:
-    120px;
+    140px;
 
   height:
-    120px;
+    140px;
 
   right:
-    -40px;
+    -45px;
 
   top:
-    -50px;
+    -55px;
 
   border-radius:
     50%;
 
   background:
-    rgba(255,255,255,.18);
+    rgba(255,255,255,.2);
 
 }
 
@@ -2689,10 +2665,10 @@ a {
 .free-banner-icon {
 
   width:
-    48px;
+    50px;
 
   height:
-    48px;
+    50px;
 
   flex-shrink:
     0;
@@ -2717,10 +2693,6 @@ a {
 
   font-weight:
     900;
-
-  box-shadow:
-    0 0 0 5px
-    rgba(255,255,255,.1);
 
 }
 
@@ -2762,10 +2734,10 @@ a {
     6px;
 
   font-size:
-    12px;
+    13px;
 
   font-weight:
-    700;
+    800;
 
   opacity:
     .78;
@@ -2795,7 +2767,7 @@ a {
     0;
 
   color:
-    #a1a9b3;
+    #8c98a2;
 
   font-size:
     10px;
@@ -2812,7 +2784,7 @@ a {
     0;
 
   font-size:
-    27px;
+    28px;
 
   line-height:
     1.15;
@@ -2826,19 +2798,19 @@ a {
 .form-header p {
 
   margin:
-    6px 0 0;
+    7px 0 0;
 
   color:
-    #1398bc;
+    #078bad;
 
   font-size:
-    14px;
+    15px;
 
   line-height:
     1.5;
 
   font-weight:
-    800;
+    900;
 
 }
 
@@ -2849,7 +2821,7 @@ a {
     5px;
 
   background:
-    #e1e5ea;
+    #dce5e9;
 
   border-radius:
     10px;
@@ -2888,10 +2860,10 @@ a {
     block;
 
   margin:
-    11px 0 6px;
+    12px 0 6px;
 
   font-size:
-    12px;
+    13px;
 
   font-weight:
     900;
@@ -2908,16 +2880,16 @@ a {
 
   border:
     1px solid
-    #dbe0e7;
+    #d2dde2;
 
   border-radius:
     10px;
 
   padding:
-    12px 13px;
+    13px;
 
   background:
-    #f3f5f8;
+    #f2f6f8;
 
   color:
     #17202c;
@@ -2965,7 +2937,7 @@ a {
     13px;
 
   color:
-    #697382;
+    #64727d;
 
   font-size:
     10px;
@@ -2993,7 +2965,7 @@ a {
     15px;
 
   padding:
-    15px;
+    16px;
 
   border:
     0;
@@ -3002,13 +2974,13 @@ a {
     11px;
 
   background:
-    #28afd6;
+    #25afd3;
 
   color:
     #061018;
 
   font-size:
-    15px;
+    16px;
 
   font-weight:
     900;
@@ -3055,7 +3027,7 @@ a {
 
   border-top:
     1px dashed
-    #d5dae0;
+    #d5dfe4;
 
   display:
     flex;
@@ -3067,7 +3039,7 @@ a {
     7px;
 
   color:
-    #727b88;
+    #727f89;
 
   font-size:
     10px;
@@ -3075,9 +3047,7 @@ a {
 }
 
 
-/* =========================
-   HERO TEXT
-========================= */
+/* HERO TEXT */
 
 .hero-text {
 
@@ -3099,20 +3069,20 @@ a {
     8px;
 
   padding:
-    9px 15px;
+    10px 16px;
 
   border:
     1px solid
-    rgba(55,201,245,.35);
+    rgba(66,213,245,.4);
 
   background:
-    rgba(55,201,245,.08);
+    rgba(66,213,245,.1);
 
   border-radius:
     999px;
 
   color:
-    #a4c2ce;
+    #c2d8e1;
 
   font-size:
     13px;
@@ -3252,7 +3222,7 @@ a {
     27px 0 0;
 
   color:
-    #89919e;
+    #a6b5bf;
 
   font-size:
     17px;
@@ -3274,9 +3244,6 @@ a {
   gap:
     11px;
 
-  justify-content:
-    flex-start;
-
 }
 
 
@@ -3293,13 +3260,13 @@ a {
 
   border:
     1px solid
-    rgba(255,255,255,.15);
+    rgba(255,255,255,.18);
 
   border-radius:
     999px;
 
   color:
-    #b2bac5;
+    #b9c6ce;
 
   transition:
     .3s;
@@ -3330,7 +3297,7 @@ a {
     23px;
 
   color:
-    #69727e;
+    #81919c;
 
   font-size:
     11px;
@@ -3338,9 +3305,7 @@ a {
 }
 
 
-/* =========================
-   SECTIONS
-========================= */
+/* SECTIONS */
 
 .section {
 
@@ -3356,11 +3321,15 @@ a {
 .dark-section {
 
   background:
-    #0b0e14;
+    linear-gradient(
+      180deg,
+      #10212b,
+      #0e1c25
+    );
 
   border-top:
     1px solid
-    rgba(255,255,255,.05);
+    rgba(255,255,255,.06);
 
 }
 
@@ -3420,7 +3389,7 @@ a {
     21px auto 0;
 
   color:
-    #7f8793;
+    #91a2ad;
 
   line-height:
     1.8;
@@ -3436,9 +3405,7 @@ a {
 }
 
 
-/* =========================
-   STEPS
-========================= */
+/* STEPS */
 
 .steps {
 
@@ -3472,7 +3439,7 @@ a {
     30px;
 
   background:
-    #171a20;
+    #18303b;
 
   border:
     1px solid
@@ -3493,11 +3460,11 @@ a {
     translateY(-7px);
 
   border-color:
-    rgba(55,201,245,.5);
+    rgba(66,213,245,.5);
 
   box-shadow:
     0 20px 45px
-    rgba(0,0,0,.3);
+    rgba(0,0,0,.22);
 
 }
 
@@ -3509,7 +3476,7 @@ a {
 
   box-shadow:
     0 15px 45px
-    rgba(55,201,245,.09);
+    rgba(55,201,245,.1);
 
 }
 
@@ -3565,7 +3532,7 @@ a {
 .step p {
 
   color:
-    #777f8c;
+    #91a2ad;
 
   line-height:
     1.7;
@@ -3576,9 +3543,7 @@ a {
 }
 
 
-/* =========================
-   SERVICES
-========================= */
+/* SERVICES */
 
 .services-section {
 
@@ -3586,11 +3551,11 @@ a {
 
     radial-gradient(
       circle at 80% 20%,
-      rgba(30,154,193,.08),
+      rgba(30,154,193,.12),
       transparent 30%
     ),
 
-    #0b0e14;
+    #10212b;
 
 }
 
@@ -3637,7 +3602,7 @@ a {
     18px;
 
   background:
-    #171a20;
+    #18303b;
 
   transition:
     .4s;
@@ -3652,11 +3617,11 @@ a {
     scale(1.015);
 
   border-color:
-    rgba(55,201,245,.65);
+    rgba(66,213,245,.65);
 
   box-shadow:
     0 0 40px
-    rgba(55,201,245,.08);
+    rgba(66,213,245,.08);
 
 }
 
@@ -3664,10 +3629,10 @@ a {
 .service-card.featured {
 
   background:
-    #1d2229;
+    #1d3946;
 
   border-color:
-    rgba(55,201,245,.45);
+    rgba(66,213,245,.45);
 
 }
 
@@ -3675,10 +3640,10 @@ a {
 .service-icon {
 
   width:
-    48px;
+    50px;
 
   height:
-    48px;
+    50px;
 
   border-radius:
     12px;
@@ -3693,7 +3658,7 @@ a {
     center;
 
   background:
-    rgba(55,201,245,.13);
+    rgba(66,213,245,.13);
 
   color:
     var(--cyan);
@@ -3747,7 +3712,7 @@ a {
     500px;
 
   color:
-    #858d99;
+    #92a4ae;
 
   line-height:
     1.8;
@@ -3780,9 +3745,7 @@ a {
 }
 
 
-/* =========================
-   COMPANIES
-========================= */
+/* COMPANIES */
 
 .company-section {
 
@@ -3793,11 +3756,11 @@ a {
 
     radial-gradient(
       circle at 50% 60%,
-      rgba(55,201,245,.05),
+      rgba(66,213,245,.07),
       transparent 35%
     ),
 
-    #0b0e14;
+    #0f2029;
 
 }
 
@@ -3848,11 +3811,11 @@ a {
     28px;
 
   background:
-    #171a20;
+    #18303b;
 
   border:
     1px solid
-    rgba(255,255,255,.09);
+    rgba(255,255,255,.1);
 
   border-radius:
     18px;
@@ -3899,10 +3862,10 @@ a {
   box-shadow:
 
     0 0 0 1px
-      rgba(55,201,245,.15),
+      rgba(66,213,245,.15),
 
     0 20px 70px
-      rgba(55,201,245,.12);
+      rgba(66,213,245,.12);
 
 }
 
@@ -3925,10 +3888,10 @@ a {
   box-shadow:
 
     0 0 35px
-      rgba(55,201,245,.16),
+      rgba(66,213,245,.16),
 
     0 25px 60px
-      rgba(0,0,0,.45);
+      rgba(0,0,0,.35);
 
 }
 
@@ -3968,7 +3931,7 @@ a {
     12px;
 
   background:
-    #203e48;
+    #245060;
 
   display:
     flex;
@@ -3991,7 +3954,7 @@ a {
 .company-type {
 
   color:
-    #68727f;
+    #81939e;
 
   font-size:
     11px;
@@ -4016,7 +3979,7 @@ a {
 .company-card p {
 
   color:
-    #858e9a;
+    #8fa1ab;
 
   line-height:
     1.7;
@@ -4046,7 +4009,7 @@ a {
     space-between;
 
   color:
-    #67717e;
+    #71838e;
 
   font-size:
     12px;
@@ -4065,9 +4028,7 @@ a {
 }
 
 
-/* =========================
-   GLOWING SLIDER ARROWS
-========================= */
+/* GLOWING ARROWS */
 
 .slider-arrow {
 
@@ -4078,20 +4039,20 @@ a {
     10;
 
   width:
-    58px;
+    60px;
 
   height:
-    58px;
+    60px;
 
   border:
     1px solid
-    rgba(55,201,245,.55);
+    rgba(66,213,245,.6);
 
   border-radius:
     50%;
 
   background:
-    #111820;
+    #142933;
 
   color:
     var(--cyan);
@@ -4105,10 +4066,10 @@ a {
   box-shadow:
 
     0 0 20px
-      rgba(55,201,245,.15),
+      rgba(66,213,245,.18),
 
     inset 0 0 15px
-      rgba(55,201,245,.05);
+      rgba(66,213,245,.06);
 
   transition:
     .3s;
@@ -4133,10 +4094,10 @@ a {
   box-shadow:
 
     0 0 20px
-      rgba(55,201,245,.6),
+      rgba(66,213,245,.6),
 
     0 0 55px
-      rgba(55,201,245,.35);
+      rgba(66,213,245,.35);
 
 }
 
@@ -4192,7 +4153,7 @@ a {
     50%;
 
   background:
-    #3c444e;
+    #52646e;
 
   cursor:
     pointer;
@@ -4216,14 +4177,12 @@ a {
 
   box-shadow:
     0 0 12px
-    rgba(55,201,245,.5);
+    rgba(66,213,245,.5);
 
 }
 
 
-/* =========================
-   CTA
-========================= */
+/* CTA */
 
 .cta-section {
 
@@ -4243,11 +4202,15 @@ a {
 
     radial-gradient(
       circle at 50% 100%,
-      rgba(55,201,245,.15),
+      rgba(66,213,245,.17),
       transparent 45%
     ),
 
-    #080b10;
+    linear-gradient(
+      135deg,
+      #10232d,
+      #0c1820
+    );
 
 }
 
@@ -4276,7 +4239,7 @@ a {
     50%;
 
   background:
-    rgba(55,201,245,.06);
+    rgba(66,213,245,.07);
 
   filter:
     blur(70px);
@@ -4310,17 +4273,17 @@ a {
     22px;
 
   padding:
-    11px 19px;
+    12px 21px;
 
   border:
     1px solid
-    rgba(55,201,245,.45);
+    rgba(66,213,245,.5);
 
   border-radius:
     999px;
 
   background:
-    rgba(55,201,245,.08);
+    rgba(66,213,245,.1);
 
   color:
     var(--cyan);
@@ -4331,20 +4294,16 @@ a {
   font-weight:
     900;
 
-  box-shadow:
-    0 0 25px
-    rgba(55,201,245,.08);
-
 }
 
 
 .cta-free span {
 
   width:
-    22px;
+    23px;
 
   height:
-    22px;
+    23px;
 
   display:
     flex;
@@ -4396,7 +4355,7 @@ a {
 .cta-content > p:not(.eyebrow) {
 
   color:
-    #858e9a;
+    #91a3ad;
 
   font-size:
     17px;
@@ -4418,17 +4377,15 @@ a {
 }
 
 
-/* =========================
-   FAQ
-========================= */
+/* FAQ */
 
 .faq-section {
 
   background:
-    #f4f6f8;
+    #edf4f7;
 
   color:
-    #10151d;
+    #101a22;
 
 }
 
@@ -4436,7 +4393,7 @@ a {
 .faq-section .eyebrow {
 
   color:
-    #1195ba;
+    #098eae;
 
 }
 
@@ -4445,7 +4402,7 @@ a {
 .section-heading h2 {
 
   color:
-    #10151d;
+    #101a22;
 
 }
 
@@ -4454,7 +4411,7 @@ a {
 .section-heading h2 span {
 
   color:
-    #119bc1;
+    #0998bc;
 
 }
 
@@ -4480,7 +4437,7 @@ a {
 
   border:
     1px solid
-    #e0e4e8;
+    #d9e2e6;
 
   border-radius:
     14px;
@@ -4497,7 +4454,7 @@ a {
 .faq-item:hover {
 
   border-color:
-    #b8dce6;
+    #a8d8e5;
 
 }
 
@@ -4546,10 +4503,10 @@ a {
 .faq-item button b {
 
   width:
-    32px;
+    34px;
 
   height:
-    32px;
+    34px;
 
   flex-shrink:
     0;
@@ -4567,7 +4524,7 @@ a {
     center;
 
   background:
-    #eaf8fc;
+    #e4f6fa;
 
   color:
     #159cc3;
@@ -4584,7 +4541,7 @@ a {
     0 25px 23px;
 
   color:
-    #68727e;
+    #687680;
 
   line-height:
     1.8;
@@ -4592,14 +4549,12 @@ a {
 }
 
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 footer {
 
   background:
-    #070a0f;
+    #09151c;
 
   padding:
     45px 24px 30px;
@@ -4640,7 +4595,7 @@ footer {
     25px;
 
   color:
-    #69727e;
+    #788b96;
 
   font-size:
     12px;
@@ -4666,7 +4621,7 @@ footer {
     30px auto 0;
 
   color:
-    #4f5864;
+    #61737e;
 
   font-size:
     10px;
@@ -4685,9 +4640,7 @@ footer {
 }
 
 
-/* =========================
-   FLOATING CTA
-========================= */
+/* FLOATING CTA */
 
 .floating-cta {
 
@@ -4704,7 +4657,7 @@ footer {
     18px;
 
   padding:
-    13px 21px;
+    14px 22px;
 
   border-radius:
     999px;
@@ -4747,14 +4700,12 @@ footer {
 
   box-shadow:
     0 12px 35px
-    rgba(55,201,245,.3);
+    rgba(66,213,245,.3);
 
 }
 
 
-/* =========================
-   HIGH CONTRAST
-========================= */
+/* HIGH CONTRAST */
 
 .high-contrast {
 
@@ -4775,7 +4726,7 @@ footer {
 footer {
 
   background:
-    #000;
+    #071016;
 
 }
 
@@ -4793,9 +4744,7 @@ footer {
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media (max-width: 1050px) {
 
@@ -4833,7 +4782,7 @@ footer {
   .mobile-nav {
 
     padding:
-      18px 24px 25px;
+      20px 24px 28px;
 
     display:
       flex;
@@ -4849,7 +4798,7 @@ footer {
       var(--border);
 
     background:
-      #080b10;
+      #0d1b23;
 
   }
 
@@ -4857,7 +4806,7 @@ footer {
   .mobile-nav a {
 
     color:
-      #b8bec8;
+      #c1cdd3;
 
     font-weight:
       700;
@@ -4882,20 +4831,20 @@ footer {
   .mobile-languages button {
 
     padding:
-      10px 13px;
+      12px 15px;
 
     border:
       1px solid
       var(--border);
 
     border-radius:
-      9px;
+      10px;
 
     background:
-      #11161d;
+      #152933;
 
     color:
-      #b8bec8;
+      #c3d0d6;
 
     cursor:
       pointer;
@@ -4932,10 +4881,10 @@ footer {
   .mobile-access button {
 
     width:
-      45px;
+      48px;
 
     height:
-      40px;
+      43px;
 
     border:
       1px solid
@@ -4945,7 +4894,7 @@ footer {
       8px;
 
     background:
-      #11161d;
+      #152933;
 
     color:
       white;
@@ -4977,7 +4926,7 @@ footer {
   .nav {
 
     height:
-      68px;
+      70px;
 
     padding:
       0 18px;
@@ -4996,7 +4945,7 @@ footer {
   .ticker {
 
     margin-top:
-      68px;
+      70px;
 
   }
 
@@ -5282,10 +5231,6 @@ footer {
 
 }
 
-
-/* =========================
-   REDUCED MOTION
-========================= */
 
 @media (prefers-reduced-motion: reduce) {
 
