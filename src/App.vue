@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const language = ref('he')
 const mobileMenu = ref(false)
@@ -36,7 +36,7 @@ const translations = {
 
     sliderTitle: 'איפה יכולים להיות הכספים שלכם?',
     sliderText:
-      'החסכונות שלכם יכולים להיות מפוזרים בין גופים שונים. אנחנו עוזרים לעשות סדר.',
+      'הכספים שלכם יכולים להיות מפוזרים בין גופים שונים. אנחנו עוזרים לעשות סדר.',
 
     servicesTitle: 'מה אנחנו יכולים לעזור לכם לבדוק?',
     servicesText:
@@ -59,7 +59,7 @@ const translations = {
       'עוזרים לכם להבין מה יש לכם, איפה הכספים נמצאים ומה כדאי לבדוק הלאה.',
 
     howTitle: 'איך זה עובד?',
-    step1: 'ממלאים טופס',
+    step1: 'משאירים פרטים',
     step1Text: 'פחות מדקה.',
     step2: 'נציג חוזר אליכם',
     step2Text: 'בדרך כלל בתוך 24 שעות.',
@@ -117,8 +117,8 @@ const translations = {
 
     badge: 'Проверка бесплатно и без обязательств',
 
-    heroTitle: 'У вас есть деньги в пенсионных кассах?',
-    heroTitle2: 'Давайте проверим, что с ними можно сделать.',
+    heroTitle: 'Давайте проверим, есть ли у вас средства',
+    heroTitle2: 'и что с ними можно сделать.',
     heroText:
       'Мы помогаем найти ваши накопления и кассы, понять что там находится и узнать, какие возможности могут быть доступны.',
     heroButton: 'Бесплатная проверка',
@@ -128,15 +128,15 @@ const translations = {
     freeText:
       'Первичная проверка и объяснение найденных средств полностью бесплатны и ни к чему вас не обязывают.',
 
-    sliderTitle: 'Где могут находиться ваши деньги?',
+    sliderTitle: 'Где могут находиться ваши средства?',
     sliderText:
-      'Ваши накопления могут находиться в разных компаниях. Мы помогаем навести порядок.',
+      'Ваши средства могут находиться в разных компаниях. Мы помогаем навести порядок.',
 
     servicesTitle: 'Что мы можем проверить?',
     servicesText:
       'Простой сервис, который начинается с бесплатной первичной проверки.',
 
-    service1Title: 'Поиск денег',
+    service1Title: 'Поиск средств',
     service1Text:
       'Проверяем, какие накопления, кассы и фонды могут быть записаны на ваше имя.',
 
@@ -153,7 +153,7 @@ const translations = {
       'Помогаем понять, что у вас есть, где находятся деньги и что можно проверить дальше.',
 
     howTitle: 'Как это работает?',
-    step1: 'Заполняете форму',
+    step1: 'Оставляете данные',
     step1Text: 'Меньше минуты.',
     step2: 'Мы связываемся с вами',
     step2Text: 'Обычно в течение 24 часов.',
@@ -184,7 +184,7 @@ const translations = {
     faq5A:
       'Нет. Первичная проверка проводится бесплатно и без обязательств.',
 
-    formTitle: 'Хотите проверить свои накопления?',
+    formTitle: 'Хотите проверить, что вам положено?',
     formText:
       'Оставьте данные, и представитель свяжется с вами. Первичная проверка бесплатна.',
     name: 'Имя и фамилия',
@@ -205,114 +205,105 @@ const translations = {
   ar: {
     navHome: 'الرئيسية',
     navServices: 'الخدمات',
-    navHow: 'كيف يعمل؟',
-    navFaq: 'الأسئلة الشائعة',
+    navHow: 'كيف بشتغل؟',
+    navFaq: 'أسئلة شائعة',
     navContact: 'تواصل معنا',
 
-    badge: 'فحص مجاني وبدون التزام',
+    badge: 'فحص ببلاش وبدون التزام',
 
-    heroTitle: 'لديكم أموال في صناديق التوفير؟',
-    heroTitle2: 'دعونا نفحص ما يمكن فعله بها.',
+    heroTitle: 'خلّينا نفحص إذا إلك أتعاب',
+    heroTitle2: 'وممكن تكون مستحقة إلك.',
     heroText:
-      'نساعدكم في العثور على المدخرات والصناديق المسجلة باسمكم، وفهم ما الموجود فيها وما هي الخيارات الممكنة.',
-    heroButton: 'فحص مجاني',
-    heroSub: 'بسيط. واضح. بدون التزام.',
+      'فحص بسيط وسريع، بنساعدك تعرف إذا في أتعاب مستحقة إلك وممكن تكون مسجّلة على اسمك.',
+    heroButton: 'فحص ببلاش',
+    heroSub: 'بسيط. سريع. بدون التزام.',
 
-    freeTitle: 'نبدأ بفحص مجاني',
+    freeTitle: 'بنبدأ بفحص ببلاش',
     freeText:
-      'الفحص الأولي وشرح الأموال التي تم العثور عليها مجانيان تماماً وبدون أي التزام.',
+      'الفحص الأولي والشرح عن الأتعاب اللي لقيناها إلك — ببلاش وبدون أي التزام.',
 
-    sliderTitle: 'أين يمكن أن تكون أموالكم؟',
+    sliderTitle: 'خلّينا نفحص شو إلك',
     sliderText:
-      'قد تكون المدخرات موزعة بين جهات مختلفة. نحن نساعدكم على ترتيب الصورة.',
+      'بنفحص إذا في أتعاب مستحقة إلك وممكن تكون مسجّلة على اسمك.',
 
-    servicesTitle: 'ما الذي يمكننا مساعدتكم في فحصه؟',
+    servicesTitle: 'شو ممكن نفحصلك؟',
     servicesText:
-      'خدمة بسيطة وواضحة تبدأ بفحص أولي مجاني.',
+      'خدمة بسيطة وواضحة، بتبدأ بفحص أولي ببلاش.',
 
-    service1Title: 'العثور على الأموال',
+    service1Title: 'العثور على الأتعاب',
     service1Text:
-      'فحص المدخرات والصناديق التي قد تكون مسجلة باسمكم.',
+      'بنفحص إذا في أتعاب مستحقة إلك وممكن تكون مسجّلة على اسمك.',
 
     service2Title: 'فحص إمكانية السحب',
     service2Text:
-      'شرح الخيارات التي قد تكون متاحة حسب وضعكم وشروط الصندوق.',
+      'بنفحص إذا بتقدر تسحب الأتعاب وشو الخيارات المتاحة إلك.',
 
     service3Title: 'قرض مقابل الصندوق',
     service3Text:
-      'فحص إمكانية الحصول على قرض مقابل أموال موجودة في بعض الصناديق.',
+      'بنفحص إذا في إمكانية تاخد قرض مقابل الأتعاب الموجودة بالصندوق.',
 
-    service4Title: 'ترتيب وفهم',
+    service4Title: 'نفهمك شو إلك',
     service4Text:
-      'نساعدكم على فهم ما لديكم وأين توجد الأموال وما الذي يمكن فحصه بعد ذلك.',
+      'بنرتّبلك الصورة وبنشرحلك شو موجود وشو ممكن تعمل.',
 
-    howTitle: 'كيف يعمل الأمر؟',
-    step1: 'تعبئة النموذج',
+    howTitle: 'كيف بشتغل؟',
+    step1: 'بتترك تفاصيلك',
     step1Text: 'أقل من دقيقة.',
-    step2: 'نتواصل معكم',
-    step2Text: 'عادة خلال 24 ساعة.',
-    step3: 'نفحص الخيارات',
-    step3Text: 'تحصلون على شرح واضح.',
-    step4: 'أنتم تقررون',
+    step2: 'ممثل برجعلك',
+    step2Text: 'عادةً خلال 24 ساعة.',
+    step3: 'بنفحص الخيارات',
+    step3Text: 'وبنشرحلك كل شي بشكل واضح.',
+    step4: 'إنت بتقرر',
     step4Text: 'بدون أي التزام.',
 
-    faqTitle: 'الأسئلة الشائعة',
+    faqTitle: 'أسئلة شائعة',
 
-    faq1Q: 'كم يستغرق الأمر؟',
+    faq1Q: 'قديش بياخد وقت؟',
     faq1A:
-      'تعبئة النموذج — أقل من دقيقة. سيتواصل معكم ممثل خلال 24 ساعة (الأحد–الخميس، 9:00–18:00). سحب الأموال يستغرق عادةً 7–14 يوم عمل، حسب الشروط والجهة المديرة.',
+      'تعبئة التفاصيل بتاخد أقل من دقيقة. ممثل برجعلك خلال 24 ساعة، من الأحد للخميس، بين الساعة 9:00 و18:00. سحب الأتعاب عادةً بياخد 7–14 يوم عمل، حسب الشروط والجهة المديرة.',
 
-    faq2Q: 'كيف يمكن أن يكون الفحص مجانياً؟',
+    faq2Q: 'كيف الفحص ببلاش؟',
     faq2A:
-      'الفحص الأولي مجاني تماماً. الفحص وشرح الأموال التي تم العثور عليها مجانيان. إذا احتاجت العملية إلى مختص مرخّص، سنوضح لكم الخيارات والتكلفة، وأنتم تقررون إذا كنتم تريدون المتابعة.',
+      'الفحص الأولي ببلاش بالكامل. الفحص والشرح عن الأتعاب اللي لقيناها إلك — ببلاش. إذا احتجت مختص مرخّص لإكمال العملية، بنوضحلك الخيارات والتكلفة وإنت بتقرر إذا بدك تكمل.',
 
-    faq3Q: 'هل يجب عليّ سحب الأموال؟',
+    faq3Q: 'هل لازم أسحب الأتعاب؟',
     faq3A:
-      'لا. الفحص لا يلزمكم بسحب الأموال. الهدف هو فهم ما لديكم وما هي الخيارات المتاحة.',
+      'لا. الفحص ما بلزمك تسحب الأتعاب. الهدف إنك تعرف شو إلك وشو الخيارات المتاحة قدامك.',
 
-    faq4Q: 'هل يمكن الحصول على قرض مقابل الصندوق؟',
+    faq4Q: 'هل ممكن آخد قرض مقابل الصندوق؟',
     faq4A:
-      'في بعض المنتجات قد تكون هناك إمكانية للحصول على قرض مقابل المدخرات. الشروط تعتمد على الصندوق وبيانات العميل.',
+      'بعض الصناديق ممكن تتيح إمكانية الحصول على قرض مقابل الأتعاب الموجودة فيها. الشروط بتعتمد على الصندوق وبيانات العميل.',
 
-    faq5Q: 'هل يوجد أي التزام؟',
+    faq5Q: 'في أي التزام؟',
     faq5A:
-      'لا. الفحص الأولي مجاني وبدون أي التزام.',
+      'لا. الفحص الأولي ببلاش وبدون أي التزام.',
 
-    formTitle: 'هل تريدون فحص مدخراتكم؟',
+    formTitle: 'بدك تعرف شو إلك؟',
     formText:
-      'اتركوا بياناتكم وسيتواصل معكم ممثل. الفحص الأولي مجاني وبدون التزام.',
+      'اترك تفاصيلك وممثل برجعلك. الفحص الأولي ببلاش وبدون التزام.',
     name: 'الاسم الكامل',
-    phone: 'الهاتف',
-    submit: 'فحص مجاني',
+    phone: 'التلفون',
+    submit: 'فحص ببلاش',
     sending: 'جارٍ الإرسال...',
-    sent: 'تم استلام البيانات',
-    sentText: 'سنتواصل معكم في أقرب وقت.',
+    sent: 'وصلتنا التفاصيل',
+    sentText: 'ممثل رح يتواصل معك بأقرب وقت.',
 
     privacy:
-      'إرسال البيانات لا يعني الالتزام بتنفيذ أي عملية.',
+      'ترك التفاصيل ما يعني إنك ملتزم تعمل أي عملية.',
 
     footerText:
-      'بانسرا تقدم خدمات معلومات وبحث وتوجيه. الخدمات التي تتطلب ترخيصاً يتم تقديمها بواسطة مختص مرخص عند الحاجة وفقاً للقانون.',
+      'بانسرا بتقدم خدمات معلومات، بحث وتوجيه. الخدمات اللي بتحتاج ترخيص بتتم عن طريق مختص مرخّص، حسب القانون.',
     rights: 'جميع الحقوق محفوظة.'
   }
 }
 
 const t = computed(() => translations[language.value])
+
 const currentDir = computed(() => {
   return languages.find(x => x.id === language.value)?.dir || 'rtl'
 })
 
-const companies = [
-  {
-    name: 'חברות ביטוח',
-    icon: '◈',
-    text: 'קופות, קרנות ומוצרי חיסכון'
-  },
-  {
-    name: 'בתי השקעות',
-    icon: '◆',
-    text: 'חסכונות ומוצרים פיננסיים'
-  },
+const sliderItems = [
   {
     name: 'קרנות השתלמות',
     icon: '◇',
@@ -321,12 +312,32 @@ const companies = [
   {
     name: 'קופות גמל',
     icon: '◉',
-    text: 'קופות וחסכונות'
+    text: 'קופות וכספים'
   },
   {
     name: 'קרנות פנסיה',
     icon: '✦',
-    text: 'מוצרי חיסכון פנסיוני'
+    text: 'מוצרים פנסיוניים'
+  },
+  {
+    name: 'חברות ביטוח',
+    icon: '◈',
+    text: 'קופות וקרנות'
+  },
+  {
+    name: 'בתי השקעות',
+    icon: '◆',
+    text: 'מוצרים פיננסיים'
+  },
+  {
+    name: 'בדיקת משיכה',
+    icon: '₪',
+    text: 'בדיקת אפשרויות'
+  },
+  {
+    name: 'הלוואה כנגד קופה',
+    icon: '↗',
+    text: 'בדיקת אפשרויות'
   }
 ]
 
@@ -384,6 +395,8 @@ const faqs = computed(() => [
   { q: t.value.faq5Q, a: t.value.faq5A }
 ])
 
+let sliderTimer = null
+
 function setLanguage(id) {
   language.value = id
   mobileMenu.value = false
@@ -395,22 +408,23 @@ function toggleFaq(index) {
 
 function nextSlide() {
   currentSlide.value =
-    (currentSlide.value + 1) % companies.length
+    (currentSlide.value + 1) % sliderItems.length
 }
 
 function previousSlide() {
   currentSlide.value =
-    (currentSlide.value - 1 + companies.length) % companies.length
+    (currentSlide.value - 1 + sliderItems.length) %
+    sliderItems.length
 }
 
 function slideClass(index) {
   const diff =
-    (index - currentSlide.value + companies.length) %
-    companies.length
+    (index - currentSlide.value + sliderItems.length) %
+    sliderItems.length
 
   if (diff === 0) return 'active'
   if (diff === 1) return 'next'
-  if (diff === companies.length - 1) return 'previous'
+  if (diff === sliderItems.length - 1) return 'previous'
 
   return 'hidden-slide'
 }
@@ -422,6 +436,16 @@ function submitForm() {
     formSent.value = false
   }, 5000)
 }
+
+onMounted(() => {
+  sliderTimer = setInterval(() => {
+    nextSlide()
+  }, 3000)
+})
+
+onUnmounted(() => {
+  clearInterval(sliderTimer)
+})
 </script>
 
 <template>
@@ -453,7 +477,6 @@ function submitForm() {
 
         <!-- LANGUAGE SWITCHER -->
         <div class="language-switcher">
-
           <button
             v-for="item in languages"
             :key="item.id"
@@ -480,7 +503,6 @@ function submitForm() {
               {{ item.label }}
             </span>
           </button>
-
         </div>
 
         <button
@@ -551,7 +573,12 @@ function submitForm() {
 
               <div>
                 <span class="trust-icon">✓</span>
-                ללא התחייבות
+                {{ language === 'ar'
+                  ? 'بدون التزام'
+                  : language === 'ru'
+                  ? 'Без обязательств'
+                  : 'ללא התחייבות'
+                }}
               </div>
 
             </div>
@@ -563,9 +590,19 @@ function submitForm() {
 
             <div class="floating-card card-top">
               <span class="mini-icon">₪</span>
+
               <div>
                 <strong>+</strong>
-                <small>חסכונות</small>
+
+                <small>
+                  {{
+                    language === 'ar'
+                      ? 'أتعاب'
+                      : language === 'ru'
+                      ? 'Средства'
+                      : 'כספים'
+                  }}
+                </small>
               </div>
             </div>
 
@@ -589,18 +626,59 @@ function submitForm() {
               </div>
 
               <div class="visual-bottom">
-                <span>קופות וחסכונות</span>
-                <strong>בדיקה</strong>
+
+                <span>
+                  {{
+                    language === 'ar'
+                      ? 'الأتعاب والصناديق'
+                      : language === 'ru'
+                      ? 'Кассы и средства'
+                      : 'קופות וכספים'
+                  }}
+                </span>
+
+                <strong>
+                  {{
+                    language === 'ar'
+                      ? 'فحص'
+                      : language === 'ru'
+                      ? 'Проверка'
+                      : 'בדיקה'
+                  }}
+                </strong>
+
               </div>
 
             </div>
 
             <div class="floating-card card-bottom">
+
               <span class="check-circle">✓</span>
+
               <div>
-                <strong>בדיקה</strong>
-                <small>ללא עלות</small>
+
+                <strong>
+                  {{
+                    language === 'ar'
+                      ? 'فحص'
+                      : language === 'ru'
+                      ? 'Проверка'
+                      : 'בדיקה'
+                  }}
+                </strong>
+
+                <small>
+                  {{
+                    language === 'ar'
+                      ? 'ببلاش'
+                      : language === 'ru'
+                      ? 'Бесплатно'
+                      : 'ללא עלות'
+                  }}
+                </small>
+
               </div>
+
             </div>
 
           </div>
@@ -609,19 +687,30 @@ function submitForm() {
 
         <!-- FREE STRIP -->
         <div class="free-strip">
+
           <div class="free-strip-inner">
+
             <span class="strip-icon">✓</span>
-            <strong>{{ t.freeTitle }}</strong>
-            <span>{{ t.freeText }}</span>
+
+            <strong>
+              {{ t.freeTitle }}
+            </strong>
+
+            <span>
+              {{ t.freeText }}
+            </span>
+
           </div>
+
         </div>
 
       </section>
 
-      <!-- COMPANIES SLIDER -->
+      <!-- MOVING SLIDER -->
       <section class="companies-section">
 
         <div class="section-heading">
+
           <span class="eyebrow">
             פנסרה
           </span>
@@ -633,6 +722,7 @@ function submitForm() {
           <p>
             {{ t.sliderText }}
           </p>
+
         </div>
 
         <div class="company-slider">
@@ -648,23 +738,51 @@ function submitForm() {
           <div class="company-track">
 
             <article
-              v-for="(company, index) in companies"
-              :key="company.name"
+              v-for="(item, index) in sliderItems"
+              :key="item.name"
               class="company-card"
               :class="slideClass(index)"
               @mouseenter="currentSlide = index"
             >
 
               <div class="company-icon">
-                {{ company.icon }}
+                {{ item.icon }}
               </div>
 
               <h3>
-                {{ company.name }}
+                {{
+                  language === 'ar'
+                    ? (
+                        index === 0 ? 'صناديق استكمال' :
+                        index === 1 ? 'صناديق توفير' :
+                        index === 2 ? 'صناديق تقاعد' :
+                        index === 3 ? 'شركات تأمين' :
+                        index === 4 ? 'بيوت استثمار' :
+                        index === 5 ? 'فحص السحب' :
+                        'قرض مقابل الصندوق'
+                      )
+                    : language === 'ru'
+                    ? (
+                        index === 0 ? 'Учебные фонды' :
+                        index === 1 ? 'Накопительные кассы' :
+                        index === 2 ? 'Пенсионные фонды' :
+                        index === 3 ? 'Страховые компании' :
+                        index === 4 ? 'Инвестиционные дома' :
+                        index === 5 ? 'Проверка снятия' :
+                        'Кредит под кассу'
+                      )
+                    : item.name
+                }}
               </h3>
 
               <p>
-                {{ company.text }}
+                {{
+                  language === 'ar'
+                    ? 'فحص الأتعاب والخيارات'
+                    : language === 'ru'
+                    ? 'Проверка средств и вариантов'
+                    : item.text
+                }}
               </p>
 
               <div class="company-line"></div>
@@ -690,7 +808,7 @@ function submitForm() {
         <div class="slider-dots">
 
           <button
-            v-for="(_, index) in companies"
+            v-for="(_, index) in sliderItems"
             :key="index"
             :class="{ active: currentSlide === index }"
             @click="currentSlide = index"
@@ -707,8 +825,9 @@ function submitForm() {
       >
 
         <div class="section-heading">
+
           <span class="eyebrow">
-            השירותים שלנו
+            {{ t.navServices }}
           </span>
 
           <h2>
@@ -718,6 +837,7 @@ function submitForm() {
           <p>
             {{ t.servicesText }}
           </p>
+
         </div>
 
         <div class="services-grid">
@@ -762,13 +882,21 @@ function submitForm() {
       >
 
         <div class="section-heading">
+
           <span class="eyebrow">
-            פשוט וברור
+            {{
+              language === 'ar'
+                ? 'بسيط وواضح'
+                : language === 'ru'
+                ? 'Просто и понятно'
+                : 'פשוט וברור'
+            }}
           </span>
 
           <h2>
             {{ t.howTitle }}
           </h2>
+
         </div>
 
         <div class="steps">
@@ -818,6 +946,7 @@ function submitForm() {
           </div>
 
           <div>
+
             <span class="cta-small">
               {{ t.badge }}
             </span>
@@ -829,6 +958,7 @@ function submitForm() {
             <p>
               {{ t.formText }}
             </p>
+
           </div>
 
           <a
@@ -850,6 +980,7 @@ function submitForm() {
       >
 
         <div class="section-heading">
+
           <span class="eyebrow">
             FAQ
           </span>
@@ -857,6 +988,7 @@ function submitForm() {
           <h2>
             {{ t.faqTitle }}
           </h2>
+
         </div>
 
         <div class="faq-list">
@@ -907,8 +1039,11 @@ function submitForm() {
           <div class="contact-copy">
 
             <div class="free-badge dark-badge">
+
               <span class="pulse-dot"></span>
+
               {{ t.badge }}
+
             </div>
 
             <h2>
@@ -947,21 +1082,21 @@ function submitForm() {
 
               <label>
                 {{ t.name }}
+
                 <input
                   type="text"
                   required
                   autocomplete="name"
-                  placeholder=""
                 />
               </label>
 
               <label>
                 {{ t.phone }}
+
                 <input
                   type="tel"
                   required
                   autocomplete="tel"
-                  placeholder=""
                 />
               </label>
 
@@ -1089,9 +1224,7 @@ a {
   text-decoration: none;
 }
 
-/* =========================
-   NAVBAR
-========================= */
+/* NAVBAR */
 
 .navbar {
   position: absolute;
@@ -1102,7 +1235,7 @@ a {
   width: 100%;
 
   background:
-    rgba(255, 253, 248, .72);
+    rgba(255, 253, 248, .78);
 
   backdrop-filter:
     blur(18px);
@@ -1182,49 +1315,48 @@ a {
   color: var(--blue);
 }
 
-/* =========================
-   LANGUAGES
-========================= */
+/* LANGUAGES */
 
 .language-switcher {
   display: flex;
   align-items: center;
   gap: 7px;
 
-  padding: 6px;
+  padding: 7px;
 
   background:
-    rgba(255,255,255,.90);
+    rgba(255,255,255,.95);
 
   border:
     1px solid
     rgba(24,37,43,.10);
 
-  border-radius: 18px;
+  border-radius: 20px;
 
   box-shadow:
     0 8px 25px
-    rgba(25,50,60,.06);
+    rgba(25,50,60,.08);
 }
 
 .language-button {
-  min-height: 45px;
+  min-height: 52px;
 
-  padding: 7px 12px;
+  padding: 8px 15px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
 
-  border-radius: 13px;
+  gap: 8px;
+
+  border-radius: 15px;
 
   background: transparent;
 
   color: #65757d;
 
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 800;
 
   cursor: pointer;
 
@@ -1239,27 +1371,27 @@ a {
   color: white;
 
   transform:
-    translateY(-1px);
+    translateY(-2px);
 
   box-shadow:
-    0 6px 18px
-    rgba(22,167,199,.25);
+    0 8px 22px
+    rgba(22,167,199,.30);
 }
 
 .language-icon {
-  font-size: 20px;
+  font-size: 23px;
 }
 
 .arabic-icon {
-  width: 25px;
-  height: 25px;
+  width: 29px;
+  height: 29px;
 
   display: grid;
   place-items: center;
 
   border-radius: 50%;
 
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
 
   background:
@@ -1302,9 +1434,7 @@ a {
   background: var(--text);
 }
 
-/* =========================
-   HERO
-========================= */
+/* HERO */
 
 .hero {
   position: relative;
@@ -1364,6 +1494,7 @@ a {
 .free-badge {
   display: inline-flex;
   align-items: center;
+
   gap: 10px;
 
   padding: 10px 17px;
@@ -1452,6 +1583,7 @@ a {
 .hero-actions {
   display: flex;
   align-items: center;
+
   gap: 14px;
 
   margin-top: 34px;
@@ -1469,6 +1601,7 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   gap: 16px;
 
   border-radius: 16px;
@@ -1545,6 +1678,7 @@ a {
 .hero-trust div {
   display: flex;
   align-items: center;
+
   gap: 7px;
 }
 
@@ -1751,6 +1885,7 @@ a {
 
   display: flex;
   align-items: center;
+
   gap: 13px;
 
   background:
@@ -1922,9 +2057,7 @@ a {
   font-weight: 800;
 }
 
-/* =========================
-   GENERAL SECTIONS
-========================= */
+/* GENERAL SECTIONS */
 
 section:not(.hero) {
   padding:
@@ -1983,9 +2116,7 @@ section:not(.hero) {
   line-height: 1.6;
 }
 
-/* =========================
-   COMPANIES SLIDER
-========================= */
+/* MOVING SLIDER */
 
 .companies-section {
   background:
@@ -1999,278 +2130,247 @@ section:not(.hero) {
 
   margin: auto;
 
-  padding:
-    0 45px;
+  min-height: 320px;
 
   display: flex;
   align-items: center;
 }
 
 .company-track {
+  position: relative;
+
   width: 100%;
+  height: 300px;
 
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 32px;
-
-  align-items: center;
+  overflow: visible;
 }
 
 .company-card {
-  min-height: 315px;
+  position: absolute;
 
-  padding: 34px;
+  top: 50%;
+  left: 50%;
 
-  position: relative;
+  width: 310px;
+  min-height: 235px;
 
-  overflow: hidden;
+  padding: 30px;
+
+  border-radius: 28px;
 
   background:
-    rgba(255,255,255,.92);
+    rgba(255,255,255,.96);
 
   border:
     1px solid
-    rgba(24,37,43,.09);
-
-  border-radius: 24px;
+    rgba(22,167,199,.12);
 
   box-shadow:
-    0 15px 45px
-    rgba(35,55,65,.07);
+    0 25px 70px
+    rgba(35,65,75,.10);
 
   transition:
-    transform .5s cubic-bezier(.2,.8,.2,1),
+    transform .65s cubic-bezier(.2,.8,.2,1),
     opacity .5s,
-    box-shadow .5s,
-    border-color .5s;
+    filter .5s,
+    box-shadow .5s;
 
-  cursor: pointer;
+  transform:
+    translate(-50%, -50%)
+    scale(.72);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  filter: blur(3px);
 }
 
-.company-card::before {
-  content: '';
-
-  position: absolute;
-
-  width: 180px;
-  height: 180px;
-
-  top: -90px;
-  right: -90px;
-
-  border-radius: 50%;
-
-  background:
-    rgba(22,167,199,.07);
-
-  transition: .5s;
-}
-
-.company-card:hover,
 .company-card.active {
   transform:
-    scale(1.04)
-    translateY(-6px);
+    translate(-50%, -50%)
+    scale(1.08);
 
-  border-color:
-    rgba(22,167,199,.45);
+  opacity: 1;
+
+  pointer-events: auto;
+
+  filter: blur(0);
+
+  z-index: 5;
 
   box-shadow:
-    0 25px 65px
-    rgba(22,167,199,.13);
+    0 30px 90px
+    rgba(22,167,199,.18);
 }
 
-.company-card:hover::before,
-.company-card.active::before {
+.company-card.next {
   transform:
-    scale(1.5);
+    translate(
+      calc(-50% + 360px),
+      -50%
+    )
+    scale(.82);
 
-  background:
-    rgba(22,167,199,.12);
+  opacity: .65;
+
+  z-index: 3;
+
+  filter: blur(1px);
 }
 
-.company-card.next,
 .company-card.previous {
-  opacity: .78;
+  transform:
+    translate(
+      calc(-50% - 360px),
+      -50%
+    )
+    scale(.82);
+
+  opacity: .65;
+
+  z-index: 3;
+
+  filter: blur(1px);
 }
 
 .company-card.hidden-slide {
-  display: none;
+  opacity: 0;
+}
+
+.company-card:hover {
+  box-shadow:
+    0 35px 100px
+    rgba(22,167,199,.23);
 }
 
 .company-icon {
-  position: relative;
-
-  width: 67px;
-  height: 67px;
+  width: 58px;
+  height: 58px;
 
   display: grid;
   place-items: center;
 
-  margin-bottom: 28px;
+  border-radius: 18px;
 
-  border-radius: 20px;
-
-  color: var(--blue);
-
-  background:
-    rgba(22,167,199,.09);
-
-  font-size: 28px;
-
-  transition: .4s;
-}
-
-.company-card:hover .company-icon,
-.company-card.active .company-icon {
   color: white;
 
-  background: var(--blue);
+  background:
+    linear-gradient(
+      135deg,
+      var(--blue-light),
+      var(--blue-dark)
+    );
 
-  transform:
-    rotate(-5deg)
-    scale(1.08);
+  font-size: 27px;
+
+  box-shadow:
+    0 15px 35px
+    rgba(22,167,199,.20);
 }
 
 .company-card h3 {
-  position: relative;
+  margin:
+    22px 0 8px;
 
-  margin: 0;
-
-  font-size: 27px;
+  font-size: 23px;
 
   font-weight: 800;
 }
 
 .company-card p {
-  position: relative;
-
-  margin:
-    10px 0 0;
+  margin: 0;
 
   color: var(--muted);
 
-  font-size: 17px;
+  font-size: 16px;
+
+  line-height: 1.5;
 }
 
 .company-line {
-  width: 48px;
+  width: 45px;
   height: 3px;
 
-  margin-top: 30px;
+  margin-top: 24px;
 
-  border-radius: 20px;
+  border-radius: 10px;
 
   background: var(--blue);
-
-  transition: .4s;
-}
-
-.company-card:hover .company-line,
-.company-card.active .company-line {
-  width: 90px;
 }
 
 .company-arrow {
   position: absolute;
 
-  bottom: 30px;
-  right: 30px;
+  bottom: 25px;
+  right: 28px;
 
   color: var(--blue);
 
-  font-size: 25px;
-
-  opacity: .55;
-
-  transition: .4s;
+  font-size: 24px;
 }
-
-.company-card:hover .company-arrow,
-.company-card.active .company-arrow {
-  opacity: 1;
-
-  transform:
-    translateX(-7px);
-}
-
-/* SLIDER ARROWS */
 
 .slider-arrow {
   position: absolute;
 
-  z-index: 10;
+  z-index: 20;
 
-  width: 64px;
-  height: 64px;
+  width: 58px;
+  height: 58px;
 
   display: grid;
   place-items: center;
 
-  border:
-    2px solid
-    rgba(22,167,199,.42);
-
   border-radius: 50%;
+
+  color: var(--blue);
 
   background:
     rgba(255,255,255,.96);
 
-  color: var(--blue);
-
-  font-size: 27px;
-  font-weight: 800;
-
-  cursor: pointer;
+  border:
+    1px solid
+    rgba(22,167,199,.15);
 
   box-shadow:
-    0 10px 30px
-    rgba(22,167,199,.14),
+    0 15px 40px
+    rgba(30,60,70,.12);
 
-    0 0 25px
-    rgba(22,167,199,.08);
+  font-size: 27px;
+
+  cursor: pointer;
 
   transition: .3s;
 }
 
 .slider-arrow:hover {
   transform:
-    scale(1.18);
+    scale(1.12);
 
   color: white;
 
-  background:
-    var(--blue);
-
-  border-color:
-    var(--blue);
+  background: var(--blue);
 
   box-shadow:
-    0 0 25px
-      rgba(22,167,199,.48),
-
-    0 0 60px
-      rgba(22,167,199,.20);
+    0 15px 40px
+    rgba(22,167,199,.30);
 }
 
 .slider-arrow-left {
-  left: 7px;
+  left: 0;
 }
 
 .slider-arrow-right {
-  right: 7px;
+  right: 0;
 }
 
 .slider-dots {
-  margin-top: 35px;
-
   display: flex;
   justify-content: center;
 
   gap: 8px;
+
+  margin-top: 20px;
 }
 
 .slider-dots button {
@@ -2282,7 +2382,7 @@ section:not(.hero) {
   border-radius: 50%;
 
   background:
-    #cbd7da;
+    rgba(22,167,199,.20);
 
   cursor: pointer;
 
@@ -2290,17 +2390,14 @@ section:not(.hero) {
 }
 
 .slider-dots button.active {
-  width: 30px;
+  width: 28px;
 
   border-radius: 10px;
 
-  background:
-    var(--blue);
+  background: var(--blue);
 }
 
-/* =========================
-   SERVICES
-========================= */
+/* SERVICES */
 
 .services-section {
   background:
@@ -2308,7 +2405,7 @@ section:not(.hero) {
 }
 
 .services-grid {
-  width: min(92vw, 1200px);
+  width: min(92vw, 1300px);
 
   margin: auto;
 
@@ -2325,24 +2422,23 @@ section:not(.hero) {
 
   min-height: 330px;
 
-  padding: 32px;
+  padding: 30px;
 
   overflow: hidden;
+
+  border-radius: 26px;
 
   background:
     rgba(255,255,255,.88);
 
   border:
     1px solid
-    var(--border);
-
-  border-radius: 24px;
+    rgba(24,37,43,.07);
 
   box-shadow:
-    0 12px 40px
-    rgba(30,50,60,.05);
+    var(--shadow);
 
-  transition: .4s;
+  transition: .35s;
 }
 
 .service-card:hover {
@@ -2350,82 +2446,78 @@ section:not(.hero) {
     translateY(-8px);
 
   border-color:
-    rgba(22,167,199,.35);
+    rgba(22,167,199,.25);
 
   box-shadow:
-    0 22px 55px
-    rgba(22,167,199,.11);
+    0 30px 80px
+    rgba(30,65,75,.13);
 }
 
 .service-number {
   position: absolute;
 
   top: 20px;
-  left: 25px;
+  right: 25px;
 
   color:
-    rgba(22,167,199,.12);
+    rgba(22,167,199,.16);
 
-  font-size: 54px;
+  font-size: 42px;
+
   font-weight: 800;
 }
 
 .service-icon {
-  width: 65px;
-  height: 65px;
+  width: 58px;
+  height: 58px;
 
   display: grid;
   place-items: center;
 
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 
-  border-radius: 19px;
+  border-radius: 18px;
 
   color: white;
 
   background:
     linear-gradient(
-      145deg,
+      135deg,
       var(--blue-light),
       var(--blue)
     );
 
-  font-size: 28px;
-  font-weight: 800;
-
-  box-shadow:
-    0 12px 25px
-    rgba(22,167,199,.18);
+  font-size: 26px;
 }
 
 .service-card h3 {
-  margin: 0;
+  margin: 0 0 13px;
 
-  font-size: 24px;
+  font-size: 23px;
+
   font-weight: 800;
 }
 
 .service-card p {
-  margin:
-    12px 0 0;
+  margin: 0;
 
   color: var(--muted);
 
-  font-size: 17px;
+  font-size: 16px;
 
-  line-height: 1.55;
+  line-height: 1.65;
 }
 
 .service-bottom {
   position: absolute;
 
+  left: 30px;
+  right: 30px;
   bottom: 25px;
-  left: 32px;
-  right: 32px;
 
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 }
 
 .service-bottom span {
@@ -2440,19 +2532,10 @@ section:not(.hero) {
 .service-bottom b {
   color: var(--blue);
 
-  font-size: 24px;
-
-  transition: .3s;
+  font-size: 23px;
 }
 
-.service-card:hover .service-bottom b {
-  transform:
-    translateX(-7px);
-}
-
-/* =========================
-   HOW
-========================= */
+/* HOW */
 
 .how-section {
   background:
@@ -2460,7 +2543,7 @@ section:not(.hero) {
 }
 
 .steps {
-  width: min(90vw, 1150px);
+  width: min(90vw, 1200px);
 
   margin: auto;
 
@@ -2469,7 +2552,7 @@ section:not(.hero) {
   grid-template-columns:
     repeat(4, 1fr);
 
-  gap: 20px;
+  gap: 30px;
 }
 
 .step {
@@ -2479,49 +2562,43 @@ section:not(.hero) {
 }
 
 .step-number {
-  width: 90px;
-  height: 90px;
-
-  margin: 0 auto 25px;
+  width: 75px;
+  height: 75px;
 
   display: grid;
   place-items: center;
 
+  margin: 0 auto 22px;
+
   border-radius: 50%;
 
-  color: var(--blue);
-
-  background:
-    rgba(22,167,199,.08);
-
-  border:
-    2px solid
-    rgba(22,167,199,.16);
-
-  font-size: 23px;
-  font-weight: 800;
-
-  transition: .4s;
-}
-
-.step:hover .step-number {
   color: white;
 
-  background: var(--blue);
+  background:
+    linear-gradient(
+      135deg,
+      var(--blue-light),
+      var(--blue-dark)
+    );
 
-  transform:
-    scale(1.08);
+  font-size: 20px;
+  font-weight: 800;
+
+  box-shadow:
+    0 15px 35px
+    rgba(22,167,199,.20);
 }
 
-.step h3 {
-  margin: 0;
+.step-content h3 {
+  margin: 0 0 8px;
 
-  font-size: 22px;
+  font-size: 21px;
+
   font-weight: 800;
 }
 
-.step p {
-  margin-top: 8px;
+.step-content p {
+  margin: 0;
 
   color: var(--muted);
 
@@ -2531,162 +2608,149 @@ section:not(.hero) {
 .step-line {
   position: absolute;
 
-  top: 45px;
+  top: 37px;
 
-  left: calc(50% + 65px);
+  left: 75%;
 
-  width: calc(100% - 130px);
+  width: 50%;
 
-  height: 2px;
+  height: 1px;
 
   background:
-    linear-gradient(
-      90deg,
-      rgba(22,167,199,.25),
-      transparent
-    );
+    rgba(22,167,199,.20);
 }
 
-/* =========================
-   CTA
-========================= */
+/* CTA */
 
 .free-cta {
   position: relative;
 
-  width: min(92vw, 1250px);
-
-  min-height: 250px;
-
-  margin:
-    40px auto 100px;
-
-  padding:
-    45px 55px;
-
   overflow: hidden;
 
-  border-radius: 30px;
-
-  color: white;
+  padding:
+    75px 0;
 
   background:
     linear-gradient(
       135deg,
-      #159fbd,
-      #087d99
+      #0a829d,
+      #16a7c7
     );
 
-  box-shadow:
-    0 30px 70px
-    rgba(22,167,199,.22);
+  color: white;
 }
 
 .free-cta-glow {
   position: absolute;
 
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
 
-  top: -230px;
-  right: -100px;
+  top: -250px;
+  right: -150px;
 
   border-radius: 50%;
 
   background:
-    rgba(255,255,255,.10);
+    rgba(255,255,255,.13);
 
   filter:
-    blur(5px);
+    blur(20px);
 }
 
 .free-cta-content {
   position: relative;
   z-index: 2;
 
-  display: flex;
+  width: min(90vw, 1200px);
 
+  margin: auto;
+
+  display: flex;
   align-items: center;
 
   gap: 30px;
 }
 
 .big-free-icon {
-  flex: 0 0 auto;
-
   width: 80px;
   height: 80px;
+
+  flex: 0 0 auto;
 
   display: grid;
   place-items: center;
 
-  border-radius: 24px;
-
-  color: white;
-
-  background:
-    rgba(255,255,255,.14);
-
-  border:
-    1px solid
-    rgba(255,255,255,.25);
-
-  font-size: 36px;
-  font-weight: 800;
-}
-
-.cta-small {
-  display: block;
-
-  margin-bottom: 5px;
-
-  opacity: .85;
-
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.free-cta h2 {
-  margin: 0;
-
-  font-size:
-    clamp(28px, 4vw, 44px);
-
-  font-weight: 800;
-}
-
-.free-cta p {
-  max-width: 650px;
-
-  margin:
-    8px 0 0;
-
-  opacity: .85;
-
-  font-size: 17px;
-}
-
-.white-button {
-  margin-right: auto;
-
-  min-height: 58px;
-
-  padding:
-    0 25px;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-
-  white-space: nowrap;
-
-  border-radius: 15px;
+  border-radius: 25px;
 
   color: var(--blue-dark);
 
   background: white;
 
+  font-size: 35px;
   font-weight: 800;
+
+  box-shadow:
+    0 20px 45px
+    rgba(0,0,0,.12);
+}
+
+.cta-small {
+  font-size: 15px;
+
+  font-weight: 800;
+
+  opacity: .85;
+}
+
+.free-cta h2 {
+  margin:
+    8px 0 5px;
+
+  font-size: 37px;
+
+  line-height: 1.1;
+}
+
+.free-cta p {
+  margin: 0;
+
+  opacity: .88;
+
+  font-size: 17px;
+
+  line-height: 1.5;
+}
+
+.white-button {
+  margin-right: auto;
+
+  min-height: 60px;
+
+  padding:
+    0 27px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+
+  border-radius: 16px;
+
+  color: var(--blue-dark);
+
+  background: white;
+
+  font-size: 17px;
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  box-shadow:
+    0 15px 35px
+    rgba(0,0,0,.12);
 
   transition: .3s;
 }
@@ -2696,13 +2760,11 @@ section:not(.hero) {
     translateY(-4px);
 
   box-shadow:
-    0 15px 30px
-    rgba(0,0,0,.14);
+    0 20px 45px
+    rgba(0,0,0,.18);
 }
 
-/* =========================
-   FAQ
-========================= */
+/* FAQ */
 
 .faq-section {
   background:
@@ -2720,87 +2782,73 @@ section:not(.hero) {
 
   overflow: hidden;
 
-  background:
-    rgba(255,255,255,.80);
-
   border:
     1px solid
-    var(--border);
+    rgba(24,37,43,.08);
 
-  border-radius: 17px;
+  border-radius: 18px;
+
+  background:
+    rgba(255,255,255,.88);
 
   transition: .3s;
 }
 
-.faq-item:hover,
 .faq-item.opened {
   border-color:
-    rgba(22,167,199,.30);
+    rgba(22,167,199,.25);
 
   box-shadow:
-    0 10px 30px
-    rgba(30,60,70,.05);
+    0 15px 45px
+    rgba(30,65,75,.08);
 }
 
 .faq-question {
   width: 100%;
 
+  min-height: 70px;
+
   padding:
-    23px 26px;
+    0 25px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  gap: 25px;
-
-  color: var(--text);
+  gap: 20px;
 
   background: transparent;
 
-  text-align: start;
+  color: var(--text);
 
-  font-size: 20px;
+  text-align: inherit;
+
+  font-size: 18px;
   font-weight: 800;
 
   cursor: pointer;
 }
 
 .faq-plus {
+  color: var(--blue);
+
+  font-size: 28px;
+
   flex: 0 0 auto;
-
-  width: 34px;
-  height: 34px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 50%;
-
-  color: white;
-
-  background:
-    var(--blue);
-
-  font-size: 23px;
-
-  line-height: 1;
 }
 
 .faq-answer {
   padding:
-    0 26px 25px;
+    0 25px 25px;
 
   color: var(--muted);
 
-  font-size: 18px;
+  font-size: 17px;
 
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
-/* =========================
-   CONTACT
-========================= */
+/* CONTACT */
 
 .contact-section {
   background:
@@ -2808,61 +2856,43 @@ section:not(.hero) {
 }
 
 .contact-container {
-  width: min(92vw, 1150px);
+  width: min(90vw, 1150px);
 
   margin: auto;
-
-  padding:
-    65px;
 
   display: grid;
 
   grid-template-columns:
     1fr
-    .8fr;
+    .85fr;
 
   gap: 70px;
 
-  border-radius: 32px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #f1fafb,
-      #ffffff
-    );
-
-  border:
-    1px solid
-    rgba(22,167,199,.10);
-
-  box-shadow:
-    var(--shadow);
-}
-
-.dark-badge {
-  margin-bottom: 22px;
+  align-items: center;
 }
 
 .contact-copy h2 {
-  margin: 0;
+  margin:
+    20px 0 12px;
 
-  font-size:
-    clamp(35px, 4vw, 55px);
+  font-size: 47px;
 
   line-height: 1.05;
-
-  letter-spacing: -1.5px;
 }
 
 .contact-copy > p {
-  max-width: 550px;
+  max-width: 580px;
 
   color: var(--muted);
 
   font-size: 19px;
 
-  line-height: 1.6;
+  line-height: 1.65;
+}
+
+.dark-badge {
+  background:
+    rgba(22,167,199,.10);
 }
 
 .contact-benefits {
@@ -2870,22 +2900,26 @@ section:not(.hero) {
 
   gap: 12px;
 
-  margin-top: 30px;
+  margin-top: 25px;
 
-  color: #5e7077;
+  color: #61727a;
+
+  font-size: 16px;
 
   font-weight: 600;
 }
 
 .contact-benefits div {
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 }
 
 .contact-benefits span {
-  width: 27px;
-  height: 27px;
+  width: 26px;
+  height: 26px;
 
   display: grid;
   place-items: center;
@@ -2896,29 +2930,26 @@ section:not(.hero) {
 
   background: var(--blue);
 
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .contact-form {
-  min-height: 340px;
+  padding: 38px;
 
-  padding: 35px;
-
-  display: flex;
-  align-items: center;
-
-  border-radius: 25px;
+  border-radius: 30px;
 
   background: white;
 
+  border:
+    1px solid
+    rgba(24,37,43,.08);
+
   box-shadow:
-    0 20px 50px
-    rgba(30,60,70,.08);
+    0 30px 80px
+    rgba(35,65,75,.10);
 }
 
 .form-fields {
-  width: 100%;
-
   display: grid;
 
   gap: 18px;
@@ -2927,34 +2958,34 @@ section:not(.hero) {
 .form-fields label {
   display: grid;
 
-  gap: 7px;
+  gap: 8px;
 
-  color: #50636a;
+  color: var(--text);
 
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .form-fields input {
   width: 100%;
 
-  height: 56px;
+  height: 58px;
 
   padding:
     0 17px;
 
   border:
     1px solid
-    #d9e1e3;
+    rgba(24,37,43,.12);
 
-  border-radius: 13px;
+  border-radius: 14px;
 
   outline: none;
 
-  color: var(--text);
-
   background:
-    #fbfcfc;
+    #fffdfa;
+
+  color: var(--text);
 
   font-size: 17px;
 
@@ -2967,18 +2998,20 @@ section:not(.hero) {
 
   box-shadow:
     0 0 0 4px
-    rgba(22,167,199,.09);
+    rgba(22,167,199,.10);
 }
 
 .form-button {
-  min-height: 58px;
+  min-height: 61px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   gap: 15px;
 
-  border-radius: 14px;
+  border-radius: 15px;
 
   color: white;
 
@@ -2990,13 +3023,14 @@ section:not(.hero) {
     );
 
   font-size: 18px;
+
   font-weight: 800;
 
   cursor: pointer;
 
   box-shadow:
-    0 12px 25px
-    rgba(22,167,199,.20);
+    0 15px 35px
+    rgba(22,167,199,.22);
 
   transition: .3s;
 }
@@ -3004,30 +3038,36 @@ section:not(.hero) {
 .form-button:hover {
   transform:
     translateY(-3px);
+
+  box-shadow:
+    0 20px 45px
+    rgba(22,167,199,.30);
 }
 
 .form-fields small {
-  color: #88979c;
-
-  text-align: center;
-
-  font-size: 13px;
+  color: #87959a;
 
   line-height: 1.5;
+
+  text-align: center;
 }
 
 .success-message {
-  width: 100%;
+  min-height: 300px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
 
   text-align: center;
 }
 
 .success-icon {
-  width: 80px;
-  height: 80px;
-
-  margin:
-    0 auto 20px;
+  width: 70px;
+  height: 70px;
 
   display: grid;
   place-items: center;
@@ -3036,77 +3076,80 @@ section:not(.hero) {
 
   color: white;
 
-  background:
-    var(--blue);
+  background: var(--blue);
 
-  font-size: 35px;
+  font-size: 30px;
+
   font-weight: 800;
+
+  margin-bottom: 20px;
 }
 
 .success-message h3 {
-  margin: 0;
+  margin: 0 0 8px;
 
-  font-size: 26px;
+  font-size: 25px;
 }
 
 .success-message p {
-  color: var(--muted);
+  margin: 0;
 
-  font-size: 17px;
+  color: var(--muted);
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 .footer {
   padding:
     45px 0;
 
   background:
-    #17252b;
+    #18252b;
 
   color: white;
 }
 
 .footer-inner {
-  width: min(92vw, 1200px);
+  width: min(90vw, 1200px);
 
   margin: auto;
 
-  display: flex;
+  display: grid;
+
+  grid-template-columns:
+    auto
+    1fr
+    auto;
+
   align-items: center;
 
-  gap: 30px;
+  gap: 35px;
 }
 
 .footer-logo {
   display: flex;
+
   align-items: center;
 
   gap: 10px;
 
   font-size: 23px;
-
-  white-space: nowrap;
 }
 
 .footer-logo .logo-mark {
   width: 38px;
   height: 38px;
 
-  border-radius: 11px;
-
-  font-size: 19px;
+  font-size: 18px;
 }
 
-.footer-inner p {
-  max-width: 650px;
-
+.footer p {
   margin: 0;
 
+  max-width: 700px;
+
   color:
-    rgba(255,255,255,.66);
+    rgba(255,255,255,.65);
 
   font-size: 14px;
 
@@ -3114,24 +3157,54 @@ section:not(.hero) {
 }
 
 .footer-rights {
-  margin-right: auto;
-
-  white-space: nowrap;
-
   color:
     rgba(255,255,255,.55);
 
   font-size: 13px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
-@media (max-width: 1100px) {
+@media (max-width: 1000px) {
 
   .desktop-nav {
-    gap: 18px;
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: block;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+
+    gap: 30px;
+
+    padding-top: 140px;
+
+    text-align: center;
+  }
+
+  .hero-content {
+    margin: auto;
+  }
+
+  .hero-actions,
+  .hero-trust {
+    justify-content: center;
+  }
+
+  .hero-text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-visual {
+    min-height: 420px;
+  }
+
+  .main-visual-card {
+    height: 410px;
   }
 
   .services-grid {
@@ -3150,204 +3223,27 @@ section:not(.hero) {
     display: none;
   }
 
-  .hero-inner {
-    gap: 40px;
-  }
-}
-
-@media (max-width: 850px) {
-
-  .nav-inner {
-    min-height: 80px;
-  }
-
-  .desktop-nav {
-    position: absolute;
-
-    top: 82px;
-    left: 3vw;
-    right: 3vw;
-
-    padding: 25px;
-
-    display: none;
-
-    flex-direction: column;
-
-    align-items: stretch;
-
-    gap: 0;
-
-    background:
-      rgba(255,255,255,.98);
-
-    border-radius: 20px;
-
-    box-shadow:
-      0 20px 50px
-      rgba(30,50,60,.14);
-  }
-
-  .desktop-nav.open {
-    display: flex;
-  }
-
-  .desktop-nav a {
-    padding: 16px;
-
-    border-bottom:
-      1px solid
-      rgba(24,37,43,.07);
-  }
-
-  .mobile-menu-button {
-    display: block;
-  }
-
-  .language-switcher {
-    margin-right: auto;
-  }
-
-  .language-button {
-    min-width: 43px;
-
-    padding:
-      7px 9px;
-  }
-
-  .language-label {
-    display: none;
-  }
-
-  .hero {
-    min-height: auto;
-  }
-
-  .hero-inner {
-    min-height: auto;
-
-    padding-top: 130px;
-    padding-bottom: 120px;
-
-    grid-template-columns: 1fr;
-
-    text-align: center;
-  }
-
-  .hero-content {
-    margin: auto;
-  }
-
-  .hero-actions {
-    justify-content: center;
-  }
-
-  .hero-trust {
-    justify-content: center;
-  }
-
-  .hero-visual {
-    min-height: 430px;
-  }
-
-  .main-visual-card {
-    height: 420px;
-  }
-
-  .visual-number {
-    margin:
-      55px auto 40px;
-  }
-
-  .card-top {
-    right: 2%;
-  }
-
-  .card-bottom {
-    left: 2%;
-  }
-
-  .free-strip-inner {
-    flex-wrap: wrap;
-
-    padding:
-      14px 0;
-
-    font-size: 15px;
-  }
-
-  .company-slider {
-    width: 100%;
-
-    padding:
-      0 30px;
-  }
-
-  .company-track {
-    grid-template-columns: 1fr;
-  }
-
-  .company-card {
-    min-height: 290px;
-  }
-
-  .company-card.next,
-  .company-card.previous {
-    display: none;
-  }
-
-  .company-card.active {
-    display: block;
-
-    transform:
-      scale(1.01);
-  }
-
-  .slider-arrow-left {
-    left: -3px;
-  }
-
-  .slider-arrow-right {
-    right: -3px;
-  }
-
   .contact-container {
     grid-template-columns: 1fr;
 
-    padding: 40px 25px;
-
-    gap: 35px;
-  }
-
-  .free-cta {
-    padding: 35px 28px;
-  }
-
-  .free-cta-content {
-    flex-direction: column;
-
-    text-align: center;
-  }
-
-  .white-button {
-    margin: 0;
+    gap: 40px;
   }
 
   .footer-inner {
-    flex-direction: column;
+    grid-template-columns: 1fr;
 
     text-align: center;
-  }
 
-  .footer-rights {
-    margin: 0;
+    justify-items: center;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 
   .nav-inner {
-    width: 94vw;
+    min-height: 76px;
+
+    gap: 10px;
   }
 
   .logo {
@@ -3355,38 +3251,51 @@ section:not(.hero) {
   }
 
   .logo-mark {
-    width: 39px;
-    height: 39px;
+    width: 38px;
+    height: 38px;
   }
 
   .language-switcher {
     gap: 3px;
+
+    padding: 4px;
   }
 
   .language-button {
-    min-width: 39px;
-    min-height: 39px;
+    min-height: 43px;
 
-    padding: 5px;
+    padding:
+      6px 8px;
+
+    font-size: 12px;
+
+    gap: 4px;
   }
 
   .language-icon {
-    font-size: 18px;
+    font-size: 17px;
   }
 
   .arabic-icon {
-    width: 23px;
-    height: 23px;
+    width: 22px;
+    height: 22px;
+
+    font-size: 14px;
   }
 
-  .mobile-menu-button {
-    width: 43px;
-    height: 43px;
+  .hero {
+    min-height: 880px;
+  }
+
+  .hero-inner {
+    width: 90vw;
+
+    padding-top: 120px;
   }
 
   .hero h1 {
     font-size:
-      clamp(39px, 11vw, 57px);
+      clamp(39px, 11vw, 58px);
 
     letter-spacing: -1.8px;
   }
@@ -3404,41 +3313,79 @@ section:not(.hero) {
     width: 100%;
   }
 
+  .hero-trust {
+    font-size: 13px;
+
+    gap: 12px;
+  }
+
   .hero-visual {
-    min-height: 390px;
+    min-height: 350px;
   }
 
   .main-visual-card {
-    width: 310px;
-    height: 380px;
+    width: 280px;
+    height: 350px;
 
-    padding: 25px;
+    padding: 23px;
   }
 
   .visual-number {
-    width: 120px;
-    height: 120px;
+    width: 110px;
+    height: 110px;
 
     margin:
-      60px auto 40px;
+      55px auto 35px;
 
-    font-size: 48px;
+    font-size: 45px;
+  }
+
+  .visual-bottom {
+    left: 23px;
+    right: 23px;
+    bottom: 22px;
+
+    font-size: 11px;
   }
 
   .floating-card {
-    min-width: 155px;
+    min-width: 145px;
 
-    padding: 12px;
+    padding:
+      11px 13px;
+
+    gap: 8px;
+  }
+
+  .mini-icon,
+  .check-circle {
+    width: 35px;
+    height: 35px;
+
+    font-size: 16px;
   }
 
   .card-top {
-    top: 25px;
-    right: 0;
+    top: 30px;
+    right: -5px;
   }
 
   .card-bottom {
-    bottom: 20px;
-    left: 0;
+    bottom: 15px;
+    left: -5px;
+  }
+
+  .free-strip-inner {
+    min-height: 95px;
+
+    padding:
+      15px 10px;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    font-size: 14px;
   }
 
   section:not(.hero) {
@@ -3447,97 +3394,146 @@ section:not(.hero) {
   }
 
   .section-heading {
-    margin-bottom: 40px;
+    margin-bottom: 35px;
   }
 
   .section-heading h2 {
-    font-size: 37px;
+    font-size: 36px;
   }
 
   .section-heading p {
     font-size: 17px;
   }
 
-  .services-grid {
-    width: 90vw;
+  .company-slider {
+    min-height: 340px;
+  }
 
+  .company-track {
+    height: 300px;
+  }
+
+  .company-card {
+    width: 270px;
+
+    min-height: 230px;
+
+    padding: 25px;
+  }
+
+  .company-card.next {
+    transform:
+      translate(
+        calc(-50% + 180px),
+        -50%
+      )
+      scale(.72);
+
+    opacity: .25;
+  }
+
+  .company-card.previous {
+    transform:
+      translate(
+        calc(-50% - 180px),
+        -50%
+      )
+      scale(.72);
+
+    opacity: .25;
+  }
+
+  .slider-arrow {
+    width: 45px;
+    height: 45px;
+
+    font-size: 21px;
+  }
+
+  .slider-arrow-left {
+    left: 5px;
+  }
+
+  .slider-arrow-right {
+    right: 5px;
+  }
+
+  .services-grid {
     grid-template-columns: 1fr;
   }
 
-  .steps {
-    width: 90vw;
+  .service-card {
+    min-height: 300px;
+  }
 
+  .steps {
     grid-template-columns: 1fr;
 
     gap: 35px;
   }
 
-  .free-cta {
-    width: 90vw;
+  .free-cta-content {
+    flex-direction: column;
 
-    margin-bottom: 60px;
+    text-align: center;
   }
 
-  .faq-list {
-    width: 90vw;
+  .white-button {
+    margin-right: 0;
+
+    width: 100%;
+  }
+
+  .free-cta h2 {
+    font-size: 31px;
+  }
+
+  .contact-copy h2 {
+    font-size: 39px;
+  }
+
+  .contact-form {
+    padding: 25px;
   }
 
   .faq-question {
-    padding:
-      20px;
+    min-height: 65px;
 
-    font-size: 18px;
+    padding:
+      0 18px;
+
+    font-size: 16px;
   }
 
   .faq-answer {
     padding:
-      0 20px 22px;
+      0 18px 20px;
 
-    font-size: 17px;
-  }
-
-  .contact-container {
-    width: 90vw;
-  }
-
-  .contact-form {
-    padding: 22px;
-  }
-
-  .contact-copy h2 {
-    font-size: 38px;
+    font-size: 16px;
   }
 }
 
-/* =========================
-   ACCESSIBILITY
-========================= */
-
-:focus-visible {
-  outline:
-    3px solid
-    rgba(22,167,199,.55);
-
-  outline-offset:
-    3px;
+[dir="ltr"] .hero-inner {
+  direction: ltr;
 }
 
-@media (prefers-reduced-motion: reduce) {
+[dir="rtl"] .company-arrow {
+  transform:
+    scaleX(-1);
+}
 
-  *,
-  *::before,
-  *::after {
-    animation-duration:
-      .01ms !important;
+[dir="ltr"] .company-arrow {
+  transform:
+    scaleX(1);
+}
 
-    animation-iteration-count:
-      1 !important;
+[dir="rtl"] .white-button {
+  margin-right: auto;
+  margin-left: 0;
+}
 
-    scroll-behavior:
-      auto !important;
-
-    transition-duration:
-      .01ms !important;
-  }
+[dir="ltr"] .white-button {
+  margin-left: auto;
+  margin-right: 0;
 }
 </style>
