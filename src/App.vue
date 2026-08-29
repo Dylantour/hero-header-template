@@ -1,16 +1,27 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const language = ref('he')
-const mobileMenu = ref(false)
 const openFaq = ref(null)
-const currentSlide = ref(0)
+const mobileMenu = ref(false)
 const formSent = ref(false)
+const currentSlide = ref(0)
 
 const languages = [
-  { id: 'he', label: 'עברית', icon: '🇮🇱', dir: 'rtl' },
-  { id: 'ru', label: 'Русский', icon: '🇷🇺', dir: 'ltr' },
-  { id: 'ar', label: 'العربية', icon: 'ع', dir: 'rtl' }
+  { id: 'he', label: 'עברית', flag: '🇮🇱' },
+  { id: 'ru', label: 'Русский', flag: '🇷🇺' },
+  { id: 'ar', label: 'العربية', flag: null }
+]
+
+const services = [
+  'איתור כספים',
+  'קרנות השתלמות',
+  'קופות גמל',
+  'קרנות פנסיה',
+  'בדיקת אפשרות למשיכה',
+  'הלוואה כנגד קופה',
+  'חסכונות פנסיוניים',
+  'בדיקה ללא עלות וללא התחייבות'
 ]
 
 const translations = {
@@ -19,54 +30,51 @@ const translations = {
     navServices: 'השירותים שלנו',
     navHow: 'איך זה עובד',
     navFaq: 'שאלות נפוצות',
-    navContact: 'צור קשר',
+    navContact: 'השארת פרטים',
 
     badge: 'בדיקה ללא עלות וללא התחייבות',
 
     heroTitle: 'יש לכם כספים בקופות?',
     heroTitle2: 'בואו נבדוק מה אפשר לעשות איתם.',
     heroText:
-      'אנחנו עוזרים לכם לאתר את החסכונות והקופות שלכם, להבין מה נמצא שם ולקבל הכוונה לגבי האפשרויות העומדות בפניכם.',
-    heroButton: 'בדיקה ללא עלות',
-    heroSub: 'פשוט. ברור. ללא התחייבות.',
+      'אנחנו עוזרים לכם לאתר כספים וחסכונות, להבין מה נמצא שם ולבחון אילו אפשרויות עשויות להיות רלוונטיות עבורכם.',
+    cta: 'בדיקה ללא עלות',
+    secondary: 'איך זה עובד?',
 
-    freeTitle: 'מתחילים בבדיקה ללא עלות',
-    freeText:
-      'הבדיקה הראשונית וההדרכה על הכספים שאיתרנו עבורכם הן ללא עלות וללא התחייבות.',
+    stats1: 'משיכות שבוצעו',
+    stats2: 'בדיקות בתהליך',
+    stats3: 'לקוחות שקיבלו מענה',
 
-    sliderTitle: 'איפה יכולים להיות הכספים שלכם?',
+    sliderTitle: 'עושים סדר בכספים שלכם',
     sliderText:
-      'החסכונות שלכם יכולים להיות מפוזרים בין גופים שונים. אנחנו עוזרים לעשות סדר.',
+      'בדיקה פשוטה וברורה שמתחילה ללא עלות וללא התחייבות.',
 
-    servicesTitle: 'מה אנחנו יכולים לעזור לכם לבדוק?',
+    servicesTitle: 'מה אפשר לבדוק?',
     servicesText:
-      'שירות פשוט וברור שמתחיל בבדיקה ראשונית ללא עלות.',
+      'אנחנו מתחילים בבדיקה ומסבירים לכם בצורה פשוטה מה האפשרויות.',
 
-    service1Title: 'איתור כספים',
+    service1: 'איתור כספים',
     service1Text:
-      'בדיקה ואיתור של חסכונות, קופות וקרנות שעשויים להיות רשומים על שמכם.',
-
-    service2Title: 'בדיקת אפשרויות משיכה',
+      'בדיקה ואיתור של חסכונות וקופות שעשויים להיות רשומים על שמכם.',
+    service2: 'בדיקת אפשרות למשיכה',
     service2Text:
-      'הבנת האפשרויות הקיימות סביב הכספים והאם קיימת אפשרות למשיכה בהתאם לנסיבות שלכם.',
-
-    service3Title: 'הלוואה כנגד קופה',
+      'הבנת האפשרויות הקיימות סביב הכספים והאם קיימת אפשרות למשיכה.',
+    service3: 'הלוואה כנגד קופה',
     service3Text:
-      'בדיקה האם קיימת אפשרות לקבלת הלוואה כנגד כספים שנמצאים בקופות מסוימות.',
-
-    service4Title: 'סדר והבנה',
+      'בדיקה האם קיימת אפשרות להלוואה כנגד כספים בקופות מסוימות.',
+    service4: 'סדר והבנה',
     service4Text:
-      'עוזרים לכם להבין מה יש לכם, איפה הכספים נמצאים ומה כדאי לבדוק הלאה.',
+      'להבין מה יש לכם, איפה הכספים נמצאים ומה אפשר לבדוק הלאה.',
 
     howTitle: 'איך זה עובד?',
     step1: 'משאירים פרטים',
     step1Text: 'פחות מדקה.',
     step2: 'נציג חוזר אליכם',
-    step2Text: ' תוך 24 שעות',
-    step3: 'בודקים את הזכאות',
-    step3Text: 'מקבלים הסבר ברור לפני שמחליטים.',
-    step4: 'מחליטים אם להמשיך',
-    step4Text: 'אין התחייבות להמשיך בתהליך.',
+    step2Text: 'בדרך כלל בתוך 24 שעות.',
+    step3: 'בודקים את האפשרויות',
+    step3Text: 'מקבלים הסבר ברור.',
+    step4: 'אתם מחליטים',
+    step4Text: 'ללא התחייבות להמשיך.',
 
     faqTitle: 'שאלות נפוצות',
 
@@ -84,7 +92,7 @@ const translations = {
 
     faq4Q: 'האם אפשר לקבל הלוואה כנגד קופה?',
     faq4A:
-      'בחלק מהמוצרים והקופות עשויה להיות אפשרות לקבלת הלוואה כנגד הכספים. הזכאות והתנאים נקבעים על ידי הגוף המנהל ובהתאם לנתוני הלקוח.',
+      'בחלק מהמוצרים והקופות עשויה להיות אפשרות לקבלת הלוואה כנגד הכספים. הזכאות והתנאים נקבעים על ידי הגוף המנהל.',
 
     faq5Q: 'האם יש התחייבות?',
     faq5A:
@@ -96,110 +104,99 @@ const translations = {
     name: 'שם מלא',
     phone: 'טלפון',
     submit: 'בדיקה ללא עלות',
-    sending: 'שולח...',
-    sent: 'הפרטים התקבלו בהצלחה',
-    sentText: 'נציג יחזור אליכם בהקדם.',
 
-    privacy:
-      'השארת פרטים אינה מהווה התחייבות לביצוע פעולה כלשהי.',
+    successTitle: 'הפרטים התקבלו בהצלחה',
+    successText: 'נציג יחזור אליכם בהקדם.',
 
-    footerText:
-      'פנסרה מספקת שירותי מידע, איתור והכוונה. שירותים הדורשים רישיון יינתנו באמצעות בעל רישיון מתאים, ככל שנדרש על פי דין.',
-    rights: 'כל הזכויות שמורות.'
+    footer:
+      'פנסרה מספקת שירותי מידע, איתור והכוונה. שירותים הדורשים רישיון יינתנו באמצעות בעל רישיון מתאים, ככל שנדרש על פי דין.'
   },
 
   ru: {
     navHome: 'Главная',
-    navServices: 'Наши услуги',
+    navServices: 'Услуги',
     navHow: 'Как это работает',
-    navFaq: 'Частые вопросы',
-    navContact: 'Связаться',
+    navFaq: 'Вопросы',
+    navContact: 'Оставить данные',
 
     badge: 'Проверка бесплатно и без обязательств',
 
-    heroTitle: 'У вас есть деньги в пенсионных кассах?',
-    heroTitle2: 'Давайте проверим, что с ними можно сделать.',
+    heroTitle: 'У вас есть деньги в кассах?',
+    heroTitle2: 'Давайте проверим, что можно с ними сделать.',
     heroText:
-      'Мы помогаем найти ваши накопления и кассы, понять что там находится и узнать, какие возможности могут быть доступны.',
-    heroButton: 'Бесплатная проверка',
-    heroSub: 'Просто. Понятно. Без обязательств.',
+      'Помогаем найти накопления, понять что у вас есть и какие варианты могут быть доступны.',
+    cta: 'Бесплатная проверка',
+    secondary: 'Как это работает?',
 
-    freeTitle: 'Начинаем с бесплатной проверки',
-    freeText:
-      'Первичная проверка и объяснение найденных средств полностью бесплатны и ни к чему вас не обязывают.',
+    stats1: 'Выполненные снятия',
+    stats2: 'Проверки в процессе',
+    stats3: 'Клиенты получили ответ',
 
-    sliderTitle: 'Где могут находиться ваши деньги?',
+    sliderTitle: 'Наводим порядок в ваших накоплениях',
     sliderText:
-      'Ваши накопления могут находиться в разных компаниях. Мы помогаем навести порядок.',
+      'Простая и понятная проверка, которая начинается бесплатно.',
 
-    servicesTitle: 'Что мы можем проверить?',
+    servicesTitle: 'Что можно проверить?',
     servicesText:
-      'Простой сервис, который начинается с бесплатной первичной проверки.',
+      'Начинаем с проверки и простыми словами объясняем возможные варианты.',
 
-    service1Title: 'Поиск денег',
+    service1: 'Поиск денег',
     service1Text:
-      'Проверяем, какие накопления, кассы и фонды могут быть записаны на ваше имя.',
-
-    service2Title: 'Проверка возможности снять деньги',
+      'Проверка накоплений и касс, которые могут быть записаны на ваше имя.',
+    service2: 'Проверка возможности снятия',
     service2Text:
-      'Объясняем, какие варианты могут быть доступны в вашей ситуации.',
-
-    service3Title: 'Кредит под накопления',
+      'Объясняем возможные варианты использования накоплений.',
+    service3: 'Кредит под накопления',
     service3Text:
-      'Проверяем, возможно ли получить кредит под деньги, которые находятся в определённых кассах.',
-
-    service4Title: 'Порядок и понимание',
+      'Проверяем возможность кредита под деньги в определённых кассах.',
+    service4: 'Порядок и понимание',
     service4Text:
-      'Помогаем понять, что у вас есть, где находятся деньги и что можно проверить дальше.',
+      'Помогаем понять, что у вас есть и что можно проверить дальше.',
 
     howTitle: 'Как это работает?',
-    step1: 'Заполняете форму',
+    step1: 'Оставляете данные',
     step1Text: 'Меньше минуты.',
-    step2: 'Мы связываемся с вами',
+    step2: 'Представитель связывается',
     step2Text: 'Обычно в течение 24 часов.',
     step3: 'Проверяем варианты',
     step3Text: 'Получаете понятное объяснение.',
     step4: 'Решаете сами',
-    step4Text: 'Никаких обязательств.',
+    step4Text: 'Без обязательств.',
 
     faqTitle: 'Частые вопросы',
 
     faq1Q: 'Сколько это занимает?',
     faq1A:
-      'Заполнение формы — меньше минуты. Представитель свяжется с вами в течение 24 часов (вс–чт, 9:00–18:00). Получение денег обычно занимает 7–14 рабочих дней, в зависимости от условий и управляющей организации.',
+      'Заполнение формы — меньше минуты. Представитель свяжется с вами в течение 24 часов (вс–чт, 9:00–18:00). Получение денег обычно занимает 7–14 рабочих дней.',
 
     faq2Q: 'Как это может быть бесплатно?',
     faq2A:
-      'Первичная проверка полностью бесплатна. Проверка и объяснение найденных средств — бесплатно. Если для дальнейшего действия потребуется лицензированный специалист, вам объяснят варианты и стоимость, и вы сами решите, продолжать или нет.',
+      'Первичная проверка полностью бесплатна. Если для дальнейшего действия потребуется лицензированный специалист, вам объяснят варианты и стоимость, и вы сами решите, продолжать или нет.',
 
     faq3Q: 'Я обязан снимать деньги?',
     faq3A:
-      'Нет. Проверка не обязывает вас снимать деньги. Вы сначала узнаёте, что у вас есть и какие варианты существуют.',
+      'Нет. Проверка не обязывает вас снимать деньги.',
 
     faq4Q: 'Можно ли получить кредит под кассу?',
     faq4A:
-      'В некоторых продуктах может существовать возможность кредита под накопления. Условия зависят от конкретной кассы и данных клиента.',
+      'В некоторых продуктах может существовать такая возможность. Условия зависят от конкретной кассы.',
 
     faq5Q: 'Есть ли обязательство?',
     faq5A:
-      'Нет. Первичная проверка проводится бесплатно и без обязательств.',
+      'Нет. Первичная проверка бесплатна и без обязательств.',
 
     formTitle: 'Хотите проверить свои накопления?',
     formText:
-      'Оставьте данные, и представитель свяжется с вами. Первичная проверка бесплатна.',
+      'Оставьте данные, и представитель свяжется с вами.',
     name: 'Имя и фамилия',
     phone: 'Телефон',
     submit: 'Бесплатная проверка',
-    sending: 'Отправка...',
-    sent: 'Данные получены',
-    sentText: 'Мы свяжемся с вами как можно скорее.',
 
-    privacy:
-      'Оставление данных не означает обязательство выполнить какую-либо операцию.',
+    successTitle: 'Данные получены',
+    successText: 'Мы свяжемся с вами в ближайшее время.',
 
-    footerText:
-      'Пансера предоставляет информационные услуги, поиск и навигацию. Услуги, требующие лицензии, предоставляются соответствующим лицензированным специалистом, когда это требуется законом.',
-    rights: 'Все права защищены.'
+    footer:
+      'Пансера предоставляет информационные услуги, поиск и навигацию. Услуги, требующие лицензии, предоставляются соответствующим специалистом.'
   },
 
   ar: {
@@ -207,72 +204,69 @@ const translations = {
     navServices: 'الخدمات',
     navHow: 'كيف يعمل؟',
     navFaq: 'الأسئلة الشائعة',
-    navContact: 'تواصل معنا',
+    navContact: 'ترك التفاصيل',
 
     badge: 'فحص مجاني وبدون التزام',
 
-    heroTitle: 'لديكم أموال في صناديق التوفير؟',
+    heroTitle: 'لديكم أموال في الصناديق؟',
     heroTitle2: 'دعونا نفحص ما يمكن فعله بها.',
     heroText:
-      'نساعدكم في العثور على المدخرات والصناديق المسجلة باسمكم، وفهم ما الموجود فيها وما هي الخيارات الممكنة.',
-    heroButton: 'فحص مجاني',
-    heroSub: 'بسيط. واضح. بدون التزام.',
+      'نساعدكم في العثور على المدخرات وفهم ما لديكم وما هي الخيارات التي قد تكون متاحة لكم.',
+    cta: 'فحص مجاني',
+    secondary: 'كيف يعمل؟',
 
-    freeTitle: 'نبدأ بفحص مجاني',
-    freeText:
-      'الفحص الأولي وشرح الأموال التي تم العثور عليها مجانيان تماماً وبدون أي التزام.',
+    stats1: 'عمليات سحب تمت',
+    stats2: 'فحوصات قيد المعالجة',
+    stats3: 'عملاء حصلوا على رد',
 
-    sliderTitle: 'أين يمكن أن تكون أموالكم؟',
+    sliderTitle: 'نرتب الصورة المالية لكم',
     sliderText:
-      'قد تكون المدخرات موزعة بين جهات مختلفة. نحن نساعدكم على ترتيب الصورة.',
+      'فحص بسيط وواضح يبدأ مجاناً وبدون التزام.',
 
-    servicesTitle: 'ما الذي يمكننا مساعدتكم في فحصه؟',
+    servicesTitle: 'ماذا يمكننا فحصه؟',
     servicesText:
-      'خدمة بسيطة وواضحة تبدأ بفحص أولي مجاني.',
+      'نبدأ بالفحص ونشرح لكم الخيارات بطريقة بسيطة.',
 
-    service1Title: 'العثور على الأموال',
+    service1: 'العثور على الأموال',
     service1Text:
       'فحص المدخرات والصناديق التي قد تكون مسجلة باسمكم.',
-
-    service2Title: 'فحص إمكانية السحب',
+    service2: 'فحص إمكانية السحب',
     service2Text:
-      'شرح الخيارات التي قد تكون متاحة حسب وضعكم وشروط الصندوق.',
-
-    service3Title: 'قرض مقابل الصندوق',
+      'شرح الخيارات الممكنة المتعلقة بالأموال الموجودة.',
+    service3: 'قرض مقابل الصندوق',
     service3Text:
-      'فحص إمكانية الحصول على قرض مقابل أموال موجودة في بعض الصناديق.',
-
-    service4Title: 'ترتيب وفهم',
+      'فحص إمكانية الحصول على قرض مقابل الأموال الموجودة في بعض الصناديق.',
+    service4: 'ترتيب وفهم',
     service4Text:
-      'نساعدكم على فهم ما لديكم وأين توجد الأموال وما الذي يمكن فحصه بعد ذلك.',
+      'نساعدكم على فهم ما لديكم وما الذي يمكن فحصه بعد ذلك.',
 
     howTitle: 'كيف يعمل الأمر؟',
-    step1: 'تعبئة النموذج',
+    step1: 'تتركون التفاصيل',
     step1Text: 'أقل من دقيقة.',
     step2: 'نتواصل معكم',
     step2Text: 'عادة خلال 24 ساعة.',
     step3: 'نفحص الخيارات',
     step3Text: 'تحصلون على شرح واضح.',
     step4: 'أنتم تقررون',
-    step4Text: 'بدون أي التزام.',
+    step4Text: 'بدون التزام.',
 
     faqTitle: 'الأسئلة الشائعة',
 
     faq1Q: 'كم يستغرق الأمر؟',
     faq1A:
-      'تعبئة النموذج — أقل من دقيقة. سيتواصل معكم ممثل خلال 24 ساعة (الأحد–الخميس، 9:00–18:00). سحب الأموال يستغرق عادةً 7–14 يوم عمل، حسب الشروط والجهة المديرة.',
+      'تعبئة النموذج — أقل من دقيقة. سيتواصل معكم ممثل خلال 24 ساعة (الأحد–الخميس، 9:00–18:00). سحب الأموال يستغرق عادةً 7–14 يوم عمل.',
 
     faq2Q: 'كيف يمكن أن يكون الفحص مجانياً؟',
     faq2A:
-      'الفحص الأولي مجاني تماماً. الفحص وشرح الأموال التي تم العثور عليها مجانيان. إذا احتاجت العملية إلى مختص مرخّص، سنوضح لكم الخيارات والتكلفة، وأنتم تقررون إذا كنتم تريدون المتابعة.',
+      'الفحص الأولي مجاني تماماً. إذا احتاجت العملية إلى مختص مرخص، سنوضح لكم الخيارات والتكلفة وأنتم تقررون إذا كنتم تريدون المتابعة.',
 
     faq3Q: 'هل يجب عليّ سحب الأموال؟',
     faq3A:
-      'لا. الفحص لا يلزمكم بسحب الأموال. الهدف هو فهم ما لديكم وما هي الخيارات المتاحة.',
+      'لا. الفحص لا يلزمكم بسحب الأموال.',
 
     faq4Q: 'هل يمكن الحصول على قرض مقابل الصندوق؟',
     faq4A:
-      'في بعض المنتجات قد تكون هناك إمكانية للحصول على قرض مقابل المدخرات. الشروط تعتمد على الصندوق وبيانات العميل.',
+      'في بعض المنتجات قد تكون هناك إمكانية للحصول على قرض مقابل المدخرات. الشروط تعتمد على الصندوق.',
 
     faq5Q: 'هل يوجد أي التزام؟',
     faq5A:
@@ -280,75 +274,44 @@ const translations = {
 
     formTitle: 'هل تريدون فحص مدخراتكم؟',
     formText:
-      'اتركوا بياناتكم وسيتواصل معكم ممثل. الفحص الأولي مجاني وبدون التزام.',
+      'اتركوا التفاصيل وسيتواصل معكم ممثل.',
     name: 'الاسم الكامل',
     phone: 'الهاتف',
     submit: 'فحص مجاني',
-    sending: 'جارٍ الإرسال...',
-    sent: 'تم استلام البيانات',
-    sentText: 'سنتواصل معكم في أقرب وقت.',
 
-    privacy:
-      'إرسال البيانات لا يعني الالتزام بتنفيذ أي عملية.',
+    successTitle: 'تم استلام البيانات',
+    successText: 'سنتواصل معكم في أقرب وقت.',
 
-    footerText:
-      'بانسرا تقدم خدمات معلومات وبحث وتوجيه. الخدمات التي تتطلب ترخيصاً يتم تقديمها بواسطة مختص مرخص عند الحاجة وفقاً للقانون.',
-    rights: 'جميع الحقوق محفوظة.'
+    footer:
+      'بانسرا تقدم خدمات معلومات وبحث وتوجيه. الخدمات التي تتطلب ترخيصاً يتم تقديمها بواسطة مختص مرخص عند الحاجة.'
   }
 }
 
 const t = computed(() => translations[language.value])
-const currentDir = computed(() => {
-  return languages.find(x => x.id === language.value)?.dir || 'rtl'
-})
 
-const companies = [
-  {
-    name: 'חברות ביטוח',
-    icon: '◈',
-    text: 'קופות, קרנות ומוצרי חיסכון'
-  },
-  {
-    name: 'בתי השקעות',
-    icon: '◆',
-    text: 'חסכונות ומוצרים פיננסיים'
-  },
-  {
-    name: 'קרנות השתלמות',
-    icon: '◇',
-    text: 'בדיקה ואיתור כספים'
-  },
-  {
-    name: 'קופות גמל',
-    icon: '◉',
-    text: 'קופות וחסכונות'
-  },
-  {
-    name: 'קרנות פנסיה',
-    icon: '✦',
-    text: 'מוצרי חיסכון פנסיוני'
-  }
-]
+const direction = computed(() =>
+  language.value === 'ru' ? 'ltr' : 'rtl'
+)
 
-const services = computed(() => [
+const currentServices = computed(() => [
   {
     icon: '⌕',
-    title: t.value.service1Title,
+    title: t.value.service1,
     text: t.value.service1Text
   },
   {
     icon: '₪',
-    title: t.value.service2Title,
+    title: t.value.service2,
     text: t.value.service2Text
   },
   {
     icon: '↗',
-    title: t.value.service3Title,
+    title: t.value.service3,
     text: t.value.service3Text
   },
   {
     icon: '✓',
-    title: t.value.service4Title,
+    title: t.value.service4,
     text: t.value.service4Text
   }
 ])
@@ -384,35 +347,15 @@ const faqs = computed(() => [
   { q: t.value.faq5Q, a: t.value.faq5A }
 ])
 
-function setLanguage(id) {
+function changeLanguage(id) {
   language.value = id
-  mobileMenu.value = false
 }
 
 function toggleFaq(index) {
-  openFaq.value = openFaq.value === index ? null : index
-}
-
-function nextSlide() {
-  currentSlide.value =
-    (currentSlide.value + 1) % companies.length
-}
-
-function previousSlide() {
-  currentSlide.value =
-    (currentSlide.value - 1 + companies.length) % companies.length
-}
-
-function slideClass(index) {
-  const diff =
-    (index - currentSlide.value + companies.length) %
-    companies.length
-
-  if (diff === 0) return 'active'
-  if (diff === 1) return 'next'
-  if (diff === companies.length - 1) return 'previous'
-
-  return 'hidden-slide'
+  openFaq.value =
+    openFaq.value === index
+      ? null
+      : index
 }
 
 function submitForm() {
@@ -422,61 +365,97 @@ function submitForm() {
     formSent.value = false
   }, 5000)
 }
+
+let sliderTimer
+
+onMounted(() => {
+  sliderTimer = setInterval(() => {
+    currentSlide.value =
+      (currentSlide.value + 1) % services.length
+  }, 2400)
+})
+
+onUnmounted(() => {
+  clearInterval(sliderTimer)
+})
 </script>
 
 <template>
   <div
     class="site"
-    :dir="currentDir"
+    :dir="direction"
     :lang="language"
   >
 
     <!-- NAVBAR -->
+
     <header class="navbar">
       <div class="nav-inner">
 
-        <a href="#" class="logo">
-          <span class="logo-mark">פ</span>
-          <span class="logo-name">פנסרה</span>
+        <a
+          href="#home"
+          class="logo"
+        >
+          <span class="logo-mark">
+            פ
+          </span>
+
+          <span>
+            פנסרה
+          </span>
         </a>
 
         <nav
-          class="desktop-nav"
+          class="nav-links"
           :class="{ open: mobileMenu }"
         >
-          <a href="#home">{{ t.navHome }}</a>
-          <a href="#services">{{ t.navServices }}</a>
-          <a href="#how">{{ t.navHow }}</a>
-          <a href="#faq">{{ t.navFaq }}</a>
-          <a href="#contact">{{ t.navContact }}</a>
+          <a href="#home">
+            {{ t.navHome }}
+          </a>
+
+          <a href="#services">
+            {{ t.navServices }}
+          </a>
+
+          <a href="#how">
+            {{ t.navHow }}
+          </a>
+
+          <a href="#faq">
+            {{ t.navFaq }}
+          </a>
+
+          <a href="#contact">
+            {{ t.navContact }}
+          </a>
         </nav>
 
-        <!-- LANGUAGE SWITCHER -->
-        <div class="language-switcher">
+        <!-- LANGUAGES -->
+
+        <div class="languages">
 
           <button
             v-for="item in languages"
             :key="item.id"
             class="language-button"
-            :class="{ selected: language === item.id }"
-            @click="setLanguage(item.id)"
-            :aria-label="item.label"
+            :class="{ active: language === item.id }"
+            @click="changeLanguage(item.id)"
           >
             <span
-              v-if="item.id !== 'ar'"
-              class="language-icon"
+              v-if="item.flag"
+              class="flag"
             >
-              {{ item.icon }}
+              {{ item.flag }}
             </span>
 
             <span
               v-else
-              class="arabic-icon"
+              class="arabic-symbol"
             >
               ع
             </span>
 
-            <span class="language-label">
+            <span class="language-name">
               {{ item.label }}
             </span>
           </button>
@@ -484,9 +463,8 @@ function submitForm() {
         </div>
 
         <button
-          class="mobile-menu-button"
+          class="hamburger"
           @click="mobileMenu = !mobileMenu"
-          aria-label="Menu"
         >
           <span></span>
           <span></span>
@@ -497,531 +475,595 @@ function submitForm() {
     </header>
 
     <!-- HERO -->
-    <main id="home">
 
-      <section class="hero">
+    <section
+      id="home"
+      class="hero"
+    >
 
-        <div class="hero-background-circle circle-one"></div>
-        <div class="hero-background-circle circle-two"></div>
+      <div class="hero-orb orb-1"></div>
+      <div class="hero-orb orb-2"></div>
 
-        <div class="hero-inner">
+      <div class="hero-inner">
 
-          <div class="hero-content">
+        <div class="hero-content">
 
-            <div class="free-badge">
-              <span class="pulse-dot"></span>
-              {{ t.badge }}
-            </div>
-
-            <h1>
-              {{ t.heroTitle }}
-              <br />
-              <span>{{ t.heroTitle2 }}</span>
-            </h1>
-
-            <p class="hero-text">
-              {{ t.heroText }}
-            </p>
-
-            <div class="hero-actions">
-
-              <a
-                href="#contact"
-                class="primary-button"
-              >
-                {{ t.heroButton }}
-                <span class="button-arrow">←</span>
-              </a>
-
-              <a
-                href="#how"
-                class="secondary-button"
-              >
-                {{ t.heroSub }}
-              </a>
-
-            </div>
-
-            <div class="hero-trust">
-
-              <div>
-                <span class="trust-icon">✓</span>
-                {{ t.badge }}
-              </div>
-
-              <div>
-                <span class="trust-icon">✓</span>
-                ללא התחייבות
-              </div>
-
-            </div>
-
+          <div class="free-badge">
+            <span class="live-dot"></span>
+            {{ t.badge }}
           </div>
 
-          <!-- HERO VISUAL -->
-          <div class="hero-visual">
+          <h1>
+            {{ t.heroTitle }}
+            <br />
+            <span>
+              {{ t.heroTitle2 }}
+            </span>
+          </h1>
 
-            <div class="floating-card card-top">
-              <span class="mini-icon">₪</span>
-              <div>
-                <strong>+</strong>
-                <small>חסכונות</small>
-              </div>
-            </div>
-
-            <div class="main-visual-card">
-
-              <div class="visual-glow"></div>
-
-              <div class="visual-header">
-                <span>פנסרה</span>
-                <span class="secure">✓</span>
-              </div>
-
-              <div class="visual-number">
-                ₪
-              </div>
-
-              <div class="visual-lines">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-
-              <div class="visual-bottom">
-                <span>קופות וחסכונות</span>
-                <strong>בדיקה</strong>
-              </div>
-
-            </div>
-
-            <div class="floating-card card-bottom">
-              <span class="check-circle">✓</span>
-              <div>
-                <strong>בדיקה</strong>
-                <small>ללא עלות</small>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- FREE STRIP -->
-        <div class="free-strip">
-          <div class="free-strip-inner">
-            <span class="strip-icon">✓</span>
-            <strong>{{ t.freeTitle }}</strong>
-            <span>{{ t.freeText }}</span>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- COMPANIES SLIDER -->
-      <section class="companies-section">
-
-        <div class="section-heading">
-          <span class="eyebrow">
-            פנסרה
-          </span>
-
-          <h2>
-            {{ t.sliderTitle }}
-          </h2>
-
-          <p>
-            {{ t.sliderText }}
+          <p class="hero-description">
+            {{ t.heroText }}
           </p>
-        </div>
 
-        <div class="company-slider">
+          <div class="hero-buttons">
 
-          <button
-            class="slider-arrow slider-arrow-left"
-            @click="previousSlide"
-            aria-label="Previous"
-          >
-            {{ currentDir === 'rtl' ? '→' : '←' }}
-          </button>
-
-          <div class="company-track">
-
-            <article
-              v-for="(company, index) in companies"
-              :key="company.name"
-              class="company-card"
-              :class="slideClass(index)"
-              @mouseenter="currentSlide = index"
+            <a
+              href="#contact"
+              class="primary-button"
             >
+              {{ t.cta }}
 
-              <div class="company-icon">
-                {{ company.icon }}
-              </div>
-
-              <h3>
-                {{ company.name }}
-              </h3>
-
-              <p>
-                {{ company.text }}
-              </p>
-
-              <div class="company-line"></div>
-
-              <span class="company-arrow">
+              <span>
                 ←
               </span>
+            </a>
 
-            </article>
+            <a
+              href="#how"
+              class="secondary-button"
+            >
+              {{ t.secondary }}
+            </a>
 
           </div>
 
-          <button
-            class="slider-arrow slider-arrow-right"
-            @click="nextSlide"
-            aria-label="Next"
-          >
-            {{ currentDir === 'rtl' ? '←' : '→' }}
-          </button>
+          <div class="hero-checks">
+
+            <span>
+              ✓ {{ t.badge }}
+            </span>
+
+            <span>
+              ✓ ללא התחייבות
+            </span>
+
+          </div>
 
         </div>
 
-        <div class="slider-dots">
+        <!-- HERO CARD -->
 
-          <button
-            v-for="(_, index) in companies"
+        <div class="hero-visual">
+
+          <div class="glow-ring"></div>
+
+          <div class="finance-card">
+
+            <div class="finance-card-top">
+              <strong>
+                פנסרה
+              </strong>
+
+              <span class="verified">
+                ✓
+              </span>
+            </div>
+
+            <div class="finance-icon">
+              ₪
+            </div>
+
+            <div class="finance-lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <div class="finance-bottom">
+              <span>
+                חסכונות וקופות
+              </span>
+
+              <strong>
+                בדיקה
+              </strong>
+            </div>
+
+          </div>
+
+          <div class="floating-stat floating-top">
+            <div class="float-icon">
+              ₪
+            </div>
+
+            <div>
+              <strong>
+                בדיקה
+              </strong>
+
+              <small>
+                ללא עלות
+              </small>
+            </div>
+          </div>
+
+          <div class="floating-stat floating-bottom">
+            <div class="float-check">
+              ✓
+            </div>
+
+            <div>
+              <strong>
+                ללא התחייבות
+              </strong>
+
+              <small>
+                פשוט וברור
+              </small>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- HERO STATS -->
+
+      <div class="stats-bar">
+
+        <div class="stats-inner">
+
+          <div class="stat">
+            <strong>
+              386
+            </strong>
+
+            <span>
+              {{ t.stats1 }}
+            </span>
+          </div>
+
+          <div class="stat-divider"></div>
+
+          <div class="stat">
+            <strong>
+              24
+            </strong>
+
+            <span>
+              {{ t.stats2 }}
+            </span>
+          </div>
+
+          <div class="stat-divider"></div>
+
+          <div class="stat">
+            <strong>
+              —
+            </strong>
+
+            <span>
+              {{ t.stats3 }}
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- RUNNING SLIDER -->
+
+    <section class="ticker-section">
+
+      <div class="ticker-glow"></div>
+
+      <div class="section-heading compact">
+
+        <span class="eyebrow">
+          פנסרה
+        </span>
+
+        <h2>
+          {{ t.sliderTitle }}
+        </h2>
+
+        <p>
+          {{ t.sliderText }}
+        </p>
+
+      </div>
+
+      <div class="ticker-window">
+
+        <div
+          class="ticker-track"
+          :style="{
+            transform:
+              `translateX(-${currentSlide * 25}%)`
+          }"
+        >
+
+          <!-- duplicated items for seamless visual -->
+
+          <div
+            v-for="(item, index) in [...services, ...services]"
             :key="index"
-            :class="{ active: currentSlide === index }"
-            @click="currentSlide = index"
-          ></button>
+            class="ticker-card"
+          >
+
+            <span class="ticker-icon">
+              ✦
+            </span>
+
+            <strong>
+              {{ item }}
+            </strong>
+
+            <span class="ticker-arrow">
+              →
+            </span>
+
+          </div>
 
         </div>
 
-      </section>
+      </div>
 
-      <!-- SERVICES -->
-      <section
-        id="services"
-        class="services-section"
-      >
+    </section>
 
-        <div class="section-heading">
-          <span class="eyebrow">
-            השירותים שלנו
+    <!-- SERVICES -->
+
+    <section
+      id="services"
+      class="services-section"
+    >
+
+      <div class="section-heading">
+
+        <span class="eyebrow">
+          השירותים שלנו
+        </span>
+
+        <h2>
+          {{ t.servicesTitle }}
+        </h2>
+
+        <p>
+          {{ t.servicesText }}
+        </p>
+
+      </div>
+
+      <div class="services-grid">
+
+        <article
+          v-for="(service, index) in currentServices"
+          :key="index"
+          class="service-card"
+        >
+
+          <span class="service-number">
+            0{{ index + 1 }}
+          </span>
+
+          <div class="service-icon">
+            {{ service.icon }}
+          </div>
+
+          <h3>
+            {{ service.title }}
+          </h3>
+
+          <p>
+            {{ service.text }}
+          </p>
+
+          <div class="service-bottom">
+            <span></span>
+            →
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- HOW -->
+
+    <section
+      id="how"
+      class="how-section"
+    >
+
+      <div class="section-heading">
+
+        <span class="eyebrow">
+          פשוט וברור
+        </span>
+
+        <h2>
+          {{ t.howTitle }}
+        </h2>
+
+      </div>
+
+      <div class="steps">
+
+        <article
+          v-for="(step, index) in steps"
+          :key="index"
+          class="step"
+        >
+
+          <div class="step-circle">
+            {{ step.number }}
+          </div>
+
+          <h3>
+            {{ step.title }}
+          </h3>
+
+          <p>
+            {{ step.text }}
+          </p>
+
+          <div
+            v-if="index < 3"
+            class="step-connector"
+          ></div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- CTA -->
+
+    <section class="big-cta">
+
+      <div class="cta-glow"></div>
+
+      <div class="cta-inner">
+
+        <div class="cta-check">
+          ✓
+        </div>
+
+        <div class="cta-copy">
+
+          <span>
+            {{ t.badge }}
           </span>
 
           <h2>
-            {{ t.servicesTitle }}
+            {{ t.formTitle }}
           </h2>
 
           <p>
-            {{ t.servicesText }}
+            {{ t.formText }}
           </p>
+
         </div>
 
-        <div class="services-grid">
+        <a
+          href="#contact"
+          class="white-button"
+        >
+          {{ t.cta }}
+          <span>
+            ←
+          </span>
+        </a>
 
-          <article
-            v-for="(service, index) in services"
-            :key="index"
-            class="service-card"
+      </div>
+
+    </section>
+
+    <!-- FAQ -->
+
+    <section
+      id="faq"
+      class="faq-section"
+    >
+
+      <div class="section-heading">
+
+        <span class="eyebrow">
+          FAQ
+        </span>
+
+        <h2>
+          {{ t.faqTitle }}
+        </h2>
+
+      </div>
+
+      <div class="faq-list">
+
+        <article
+          v-for="(faq, index) in faqs"
+          :key="index"
+          class="faq-item"
+          :class="{ open: openFaq === index }"
+        >
+
+          <button
+            class="faq-question"
+            @click="toggleFaq(index)"
           >
 
-            <div class="service-number">
-              0{{ index + 1 }}
-            </div>
+            <span>
+              {{ faq.q }}
+            </span>
 
-            <div class="service-icon">
-              {{ service.icon }}
+            <strong>
+              {{ openFaq === index ? '−' : '+' }}
+            </strong>
+
+          </button>
+
+          <div
+            v-if="openFaq === index"
+            class="faq-answer"
+          >
+            {{ faq.a }}
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- CONTACT -->
+
+    <section
+      id="contact"
+      class="contact-section"
+    >
+
+      <div class="contact-box">
+
+        <div class="contact-info">
+
+          <div class="free-badge">
+            <span class="live-dot"></span>
+            {{ t.badge }}
+          </div>
+
+          <h2>
+            {{ t.formTitle }}
+          </h2>
+
+          <p>
+            {{ t.formText }}
+          </p>
+
+          <div class="contact-list">
+
+            <span>
+              ✓ {{ t.badge }}
+            </span>
+
+            <span>
+              ✓ {{ t.secondary }}
+            </span>
+
+            <span>
+              ✓ ללא התחייבות
+            </span>
+
+          </div>
+
+        </div>
+
+        <form
+          class="contact-form"
+          @submit.prevent="submitForm"
+        >
+
+          <template v-if="!formSent">
+
+            <label>
+              {{ t.name }}
+
+              <input
+                type="text"
+                required
+                autocomplete="name"
+              />
+            </label>
+
+            <label>
+              {{ t.phone }}
+
+              <input
+                type="tel"
+                required
+                autocomplete="tel"
+              />
+            </label>
+
+            <button
+              type="submit"
+              class="form-submit"
+            >
+              {{ t.submit }}
+
+              <span>
+                ←
+              </span>
+            </button>
+
+            <small>
+              השארת פרטים אינה מהווה התחייבות.
+            </small>
+
+          </template>
+
+          <div
+            v-else
+            class="success"
+          >
+
+            <div class="success-icon">
+              ✓
             </div>
 
             <h3>
-              {{ service.title }}
+              {{ t.successTitle }}
             </h3>
 
             <p>
-              {{ service.text }}
+              {{ t.successText }}
             </p>
-
-            <div class="service-bottom">
-              <span></span>
-              <b>→</b>
-            </div>
-
-          </article>
-
-        </div>
-
-      </section>
-
-      <!-- HOW IT WORKS -->
-      <section
-        id="how"
-        class="how-section"
-      >
-
-        <div class="section-heading">
-          <span class="eyebrow">
-            פשוט וברור
-          </span>
-
-          <h2>
-            {{ t.howTitle }}
-          </h2>
-        </div>
-
-        <div class="steps">
-
-          <article
-            v-for="(step, index) in steps"
-            :key="index"
-            class="step"
-          >
-
-            <div class="step-number">
-              {{ step.number }}
-            </div>
-
-            <div class="step-content">
-
-              <h3>
-                {{ step.title }}
-              </h3>
-
-              <p>
-                {{ step.text }}
-              </p>
-
-            </div>
-
-            <div
-              v-if="index < steps.length - 1"
-              class="step-line"
-            ></div>
-
-          </article>
-
-        </div>
-
-      </section>
-
-      <!-- FREE CTA -->
-      <section class="free-cta">
-
-        <div class="free-cta-glow"></div>
-
-        <div class="free-cta-content">
-
-          <div class="big-free-icon">
-            ✓
-          </div>
-
-          <div>
-            <span class="cta-small">
-              {{ t.badge }}
-            </span>
-
-            <h2>
-              {{ t.formTitle }}
-            </h2>
-
-            <p>
-              {{ t.formText }}
-            </p>
-          </div>
-
-          <a
-            href="#contact"
-            class="white-button"
-          >
-            {{ t.heroButton }}
-            <span>←</span>
-          </a>
-
-        </div>
-
-      </section>
-
-      <!-- FAQ -->
-      <section
-        id="faq"
-        class="faq-section"
-      >
-
-        <div class="section-heading">
-          <span class="eyebrow">
-            FAQ
-          </span>
-
-          <h2>
-            {{ t.faqTitle }}
-          </h2>
-        </div>
-
-        <div class="faq-list">
-
-          <article
-            v-for="(faq, index) in faqs"
-            :key="index"
-            class="faq-item"
-            :class="{ opened: openFaq === index }"
-          >
-
-            <button
-              class="faq-question"
-              @click="toggleFaq(index)"
-            >
-
-              <span>
-                {{ faq.q }}
-              </span>
-
-              <span class="faq-plus">
-                {{ openFaq === index ? '−' : '+' }}
-              </span>
-
-            </button>
-
-            <div
-              v-if="openFaq === index"
-              class="faq-answer"
-            >
-              {{ faq.a }}
-            </div>
-
-          </article>
-
-        </div>
-
-      </section>
-
-      <!-- CONTACT FORM -->
-      <section
-        id="contact"
-        class="contact-section"
-      >
-
-        <div class="contact-container">
-
-          <div class="contact-copy">
-
-            <div class="free-badge dark-badge">
-              <span class="pulse-dot"></span>
-              {{ t.badge }}
-            </div>
-
-            <h2>
-              {{ t.formTitle }}
-            </h2>
-
-            <p>
-              {{ t.formText }}
-            </p>
-
-            <div class="contact-benefits">
-
-              <div>
-                <span>✓</span>
-                {{ t.badge }}
-              </div>
-
-              <div>
-                <span>✓</span>
-                {{ t.privacy }}
-              </div>
-
-            </div>
 
           </div>
 
-          <form
-            class="contact-form"
-            @submit.prevent="submitForm"
-          >
+        </form>
 
-            <div
-              v-if="!formSent"
-              class="form-fields"
-            >
+      </div>
 
-              <label>
-                {{ t.name }}
-                <input
-                  type="text"
-                  required
-                  autocomplete="name"
-                  placeholder=""
-                />
-              </label>
-
-              <label>
-                {{ t.phone }}
-                <input
-                  type="tel"
-                  required
-                  autocomplete="tel"
-                  placeholder=""
-                />
-              </label>
-
-              <button
-                type="submit"
-                class="form-button"
-              >
-                {{ t.submit }}
-                <span>←</span>
-              </button>
-
-              <small>
-                {{ t.privacy }}
-              </small>
-
-            </div>
-
-            <div
-              v-else
-              class="success-message"
-            >
-
-              <div class="success-icon">
-                ✓
-              </div>
-
-              <h3>
-                {{ t.sent }}
-              </h3>
-
-              <p>
-                {{ t.sentText }}
-              </p>
-
-            </div>
-
-          </form>
-
-        </div>
-
-      </section>
-
-    </main>
+    </section>
 
     <!-- FOOTER -->
+
     <footer class="footer">
 
       <div class="footer-inner">
 
-        <div class="footer-logo">
-          <span class="logo-mark">פ</span>
-          <strong>פנסרה</strong>
+        <div class="footer-brand">
+
+          <span class="logo-mark">
+            פ
+          </span>
+
+          <strong>
+            פנסרה
+          </strong>
+
         </div>
 
         <p>
-          {{ t.footerText }}
+          {{ t.footer }}
         </p>
 
-        <span class="footer-rights">
-          © {{ new Date().getFullYear() }} {{ t.rights }}
+        <span class="copyright">
+          © {{ new Date().getFullYear() }}
         </span>
 
       </div>
@@ -1032,26 +1074,24 @@ function submitForm() {
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap');
 
 :root {
   --cream: #faf8f2;
-  --cream-dark: #f1eee5;
+  --cream-2: #f4f1e9;
   --white: #ffffff;
 
-  --blue: #16a7c7;
-  --blue-dark: #087d99;
-  --blue-light: #55cde4;
+  --blue: #12a9c9;
+  --blue-dark: #087f9b;
+  --blue-light: #58d6e9;
 
-  --text: #18252b;
-  --muted: #65757d;
+  --text: #17262c;
+  --muted: #66777e;
 
-  --border: rgba(24, 37, 43, .10);
+  --border: rgba(23, 38, 44, .10);
 
   --shadow:
-    0 20px 60px rgba(35, 65, 75, .09);
-
-  --radius: 24px;
+    0 25px 70px rgba(24, 59, 69, .09);
 }
 
 * {
@@ -1064,11 +1104,13 @@ html {
 
 body {
   margin: 0;
+
   background: var(--cream);
+
   color: var(--text);
+
   font-family:
     'Assistant',
-    'Rubik',
     Arial,
     sans-serif;
 
@@ -1077,7 +1119,7 @@ body {
 
 button,
 input {
-  font-family: inherit;
+  font: inherit;
 }
 
 button {
@@ -1085,65 +1127,68 @@ button {
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
 }
 
-/* =========================
-   NAVBAR
-========================= */
+/* NAV */
 
 .navbar {
   position: absolute;
-  z-index: 100;
+
   top: 0;
   left: 0;
 
   width: 100%;
 
+  z-index: 100;
+
   background:
-    rgba(255, 253, 248, .72);
+    rgba(255, 253, 248, .78);
 
   backdrop-filter:
     blur(18px);
 
   border-bottom:
     1px solid
-    rgba(24, 37, 43, .06);
+    rgba(23,38,44,.06);
 }
 
 .nav-inner {
-  width: min(94vw, 1450px);
-  min-height: 92px;
+  width: min(94vw, 1400px);
+
+  min-height: 88px;
 
   margin: auto;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
-  gap: 28px;
+  gap: 25px;
 }
 
 .logo {
   display: flex;
   align-items: center;
+
   gap: 10px;
 
-  font-size: 28px;
+  font-size: 27px;
   font-weight: 800;
+
+  white-space: nowrap;
 }
 
 .logo-mark {
-  width: 44px;
-  height: 44px;
+  width: 43px;
+  height: 43px;
 
   display: grid;
   place-items: center;
 
-  color: white;
-
   border-radius: 14px;
+
+  color: white;
 
   background:
     linear-gradient(
@@ -1154,77 +1199,75 @@ a {
 
   box-shadow:
     0 10px 25px
-    rgba(22, 167, 199, .20);
+    rgba(18,169,201,.20);
 }
 
-.logo-name {
-  letter-spacing: -1px;
-}
-
-.desktop-nav {
+.nav-links {
   display: flex;
   align-items: center;
-  gap: 34px;
 
-  margin-right: auto;
-  margin-left: auto;
+  gap: 30px;
+
+  margin:
+    0 auto;
 }
 
-.desktop-nav a {
-  color: #51636a;
+.nav-links a {
+  color: #586a71;
+
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 700;
 
   transition: .25s;
 }
 
-.desktop-nav a:hover {
+.nav-links a:hover {
   color: var(--blue);
 }
 
-/* =========================
-   LANGUAGES
-========================= */
+/* LANGUAGE */
 
-.language-switcher {
+.languages {
   display: flex;
   align-items: center;
-  gap: 7px;
 
-  padding: 6px;
+  gap: 5px;
 
-  background:
-    rgba(255,255,255,.90);
+  padding: 5px;
+
+  background: white;
 
   border:
     1px solid
-    rgba(24,37,43,.10);
+    rgba(23,38,44,.09);
 
-  border-radius: 18px;
+  border-radius: 17px;
 
   box-shadow:
     0 8px 25px
-    rgba(25,50,60,.06);
+    rgba(25,55,65,.07);
 }
 
 .language-button {
-  min-height: 45px;
+  min-height: 44px;
 
-  padding: 7px 12px;
+  padding:
+    6px 11px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
 
-  border-radius: 13px;
+  gap: 6px;
+
+  border-radius: 12px;
 
   background: transparent;
 
-  color: #65757d;
+  color: #66777e;
 
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
 
   cursor: pointer;
 
@@ -1232,66 +1275,57 @@ a {
 }
 
 .language-button:hover,
-.language-button.selected {
+.language-button.active {
+  color: white;
+
   background:
     var(--blue);
 
-  color: white;
-
-  transform:
-    translateY(-1px);
-
   box-shadow:
-    0 6px 18px
-    rgba(22,167,199,.25);
+    0 7px 20px
+    rgba(18,169,201,.22);
 }
 
-.language-icon {
-  font-size: 20px;
+.flag {
+  font-size: 19px;
 }
 
-.arabic-icon {
-  width: 25px;
-  height: 25px;
+.arabic-symbol {
+  width: 24px;
+  height: 24px;
 
   display: grid;
   place-items: center;
 
   border-radius: 50%;
 
-  font-size: 16px;
-  font-weight: 800;
+  color: var(--blue);
 
   background:
-    rgba(22,167,199,.10);
-
-  color:
-    var(--blue);
+    rgba(18,169,201,.10);
 }
 
-.language-button.selected .arabic-icon {
-  background: rgba(255,255,255,.20);
+.language-button.active .arabic-symbol {
   color: white;
+
+  background:
+    rgba(255,255,255,.18);
 }
 
-.mobile-menu-button {
+.hamburger {
   display: none;
 
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
 
-  border-radius: 14px;
+  border-radius: 13px;
 
   background: white;
 
   cursor: pointer;
-
-  box-shadow:
-    0 8px 25px
-    rgba(25,50,60,.08);
 }
 
-.mobile-menu-button span {
+.hamburger span {
   display: block;
 
   width: 22px;
@@ -1302,35 +1336,33 @@ a {
   background: var(--text);
 }
 
-/* =========================
-   HERO
-========================= */
+/* HERO */
 
 .hero {
   position: relative;
 
-  min-height: 820px;
+  min-height: 850px;
 
   overflow: hidden;
 
   background:
     radial-gradient(
-      circle at 75% 25%,
-      rgba(22,167,199,.13),
-      transparent 34%
+      circle at 76% 25%,
+      rgba(18,169,201,.13),
+      transparent 32%
     ),
 
     radial-gradient(
-      circle at 10% 80%,
-      rgba(210,190,150,.16),
+      circle at 12% 85%,
+      rgba(216,195,156,.15),
       transparent 35%
     ),
 
     linear-gradient(
       135deg,
-      #fffdf8 0%,
-      #faf8f2 55%,
-      #f1eee6 100%
+      #fffefa,
+      #faf8f2 60%,
+      #f1eee5
     );
 }
 
@@ -1338,19 +1370,19 @@ a {
   position: relative;
   z-index: 2;
 
-  width: min(92vw, 1350px);
+  width: min(92vw, 1300px);
 
-  min-height: 730px;
+  min-height: 750px;
+
+  padding-top: 135px;
 
   margin: auto;
-
-  padding-top: 155px;
 
   display: grid;
 
   grid-template-columns:
-    1.05fr
-    .95fr;
+    1fr
+    .85fr;
 
   align-items: center;
 
@@ -1358,15 +1390,17 @@ a {
 }
 
 .hero-content {
-  max-width: 720px;
+  max-width: 700px;
 }
 
 .free-badge {
   display: inline-flex;
   align-items: center;
+
   gap: 10px;
 
-  padding: 10px 17px;
+  padding:
+    10px 17px;
 
   border-radius: 999px;
 
@@ -1374,70 +1408,63 @@ a {
     var(--blue-dark);
 
   background:
-    rgba(22,167,199,.10);
+    rgba(18,169,201,.09);
 
   border:
     1px solid
-    rgba(22,167,199,.18);
+    rgba(18,169,201,.17);
 
   font-size: 16px;
   font-weight: 800;
-
-  margin-bottom: 25px;
 }
 
-.pulse-dot {
+.live-dot {
   width: 9px;
   height: 9px;
 
   border-radius: 50%;
 
-  background: var(--blue);
+  background:
+    var(--blue);
 
   box-shadow:
     0 0 0 6px
-    rgba(22,167,199,.10);
+    rgba(18,169,201,.09);
 
   animation:
     pulse 1.8s infinite;
 }
 
 @keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
   50% {
-    transform: scale(1.35);
-    opacity: .7;
+    transform: scale(1.4);
+    opacity: .65;
   }
 }
 
 .hero h1 {
-  margin: 0;
+  margin:
+    25px 0 0;
 
   font-size:
-    clamp(46px, 5.3vw, 76px);
+    clamp(45px, 5.5vw, 76px);
 
   line-height: 1.02;
 
-  letter-spacing: -2.8px;
+  letter-spacing: -2.7px;
 
   font-weight: 800;
-
-  color: var(--text);
 }
 
 .hero h1 span {
   color: var(--blue);
 }
 
-.hero-text {
-  max-width: 650px;
+.hero-description {
+  max-width: 640px;
 
   margin:
-    30px 0 0;
+    28px 0 0;
 
   color:
     var(--muted);
@@ -1445,18 +1472,16 @@ a {
   font-size: 21px;
 
   line-height: 1.65;
-
-  font-weight: 400;
 }
 
-.hero-actions {
+.hero-buttons {
   display: flex;
-  align-items: center;
-  gap: 14px;
-
-  margin-top: 34px;
 
   flex-wrap: wrap;
+
+  gap: 13px;
+
+  margin-top: 34px;
 }
 
 .primary-button,
@@ -1464,12 +1489,13 @@ a {
   min-height: 61px;
 
   padding:
-    0 28px;
+    0 27px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+
+  gap: 14px;
 
   border-radius: 16px;
 
@@ -1491,7 +1517,7 @@ a {
 
   box-shadow:
     0 15px 35px
-    rgba(22,167,199,.23);
+    rgba(18,169,201,.23);
 }
 
 .primary-button:hover {
@@ -1500,23 +1526,23 @@ a {
 
   box-shadow:
     0 20px 45px
-    rgba(22,167,199,.32);
+    rgba(18,169,201,.32);
 }
 
-.button-arrow {
-  font-size: 24px;
+.primary-button span {
+  font-size: 25px;
 }
 
 .secondary-button {
-  color:
-    var(--text);
-
   background:
     rgba(255,255,255,.78);
 
   border:
     1px solid
     var(--border);
+
+  color:
+    var(--text);
 }
 
 .secondary-button:hover {
@@ -1524,44 +1550,31 @@ a {
     translateY(-3px);
 
   border-color:
-    rgba(22,167,199,.35);
+    rgba(18,169,201,.35);
 }
 
-.hero-trust {
+.hero-checks {
   display: flex;
+
   flex-wrap: wrap;
 
-  gap: 24px;
+  gap: 22px;
 
-  margin-top: 25px;
+  margin-top: 23px;
 
   color:
-    #74838a;
+    #718188;
 
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.hero-trust div {
+.hero-checks span {
   display: flex;
+
   align-items: center;
-  gap: 7px;
-}
 
-.trust-icon {
-  width: 22px;
-  height: 22px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 50%;
-
-  color: white;
-
-  background: var(--blue);
-
-  font-size: 13px;
+  gap: 6px;
 }
 
 /* HERO VISUAL */
@@ -1569,38 +1582,39 @@ a {
 .hero-visual {
   position: relative;
 
-  min-height: 500px;
+  min-height: 520px;
 
   display: grid;
   place-items: center;
 }
 
-.main-visual-card {
+.finance-card {
   position: relative;
+  z-index: 2;
 
-  width: min(420px, 80vw);
-  height: 500px;
+  width: 390px;
+  height: 470px;
 
   padding: 32px;
 
   overflow: hidden;
 
-  border-radius: 36px;
+  border-radius: 34px;
 
   background:
     linear-gradient(
       145deg,
       #ffffff,
-      #edf9fb
+      #e9f9fb
     );
 
   border:
     1px solid
-    rgba(22,167,199,.16);
+    rgba(18,169,201,.14);
 
   box-shadow:
     0 35px 90px
-    rgba(30,70,80,.13);
+    rgba(25,65,75,.13);
 
   transform:
     rotate(3deg);
@@ -1608,44 +1622,25 @@ a {
   transition: .5s;
 }
 
-.main-visual-card:hover {
+.finance-card:hover {
   transform:
     rotate(0deg)
     scale(1.025);
 }
 
-.visual-glow {
-  position: absolute;
-
-  width: 300px;
-  height: 300px;
-
-  top: -100px;
-  right: -80px;
-
-  border-radius: 50%;
-
-  background:
-    rgba(22,167,199,.18);
-
-  filter:
-    blur(30px);
-}
-
-.visual-header {
-  position: relative;
-  z-index: 2;
-
+.finance-card-top {
   display: flex;
+
   justify-content: space-between;
 
+  align-items: center;
+
   font-size: 24px;
-  font-weight: 800;
 }
 
-.secure {
-  width: 38px;
-  height: 38px;
+.verified {
+  width: 39px;
+  height: 39px;
 
   display: grid;
   place-items: center;
@@ -1654,15 +1649,13 @@ a {
 
   color: white;
 
-  background: var(--blue);
+  background:
+    var(--blue);
 }
 
-.visual-number {
-  position: relative;
-  z-index: 2;
-
-  width: 160px;
-  height: 160px;
+.finance-icon {
+  width: 150px;
+  height: 150px;
 
   margin:
     85px auto 50px;
@@ -1674,9 +1667,6 @@ a {
 
   color: white;
 
-  font-size: 65px;
-  font-weight: 800;
-
   background:
     linear-gradient(
       145deg,
@@ -1684,44 +1674,42 @@ a {
       var(--blue-dark)
     );
 
+  font-size: 57px;
+  font-weight: 800;
+
   box-shadow:
-    0 25px 55px
-    rgba(22,167,199,.25);
+    0 25px 60px
+    rgba(18,169,201,.25);
 }
 
-.visual-lines {
-  position: relative;
-  z-index: 2;
-
+.finance-lines {
   display: grid;
 
-  gap: 14px;
+  gap: 13px;
 }
 
-.visual-lines span {
-  display: block;
-
-  height: 11px;
+.finance-lines span {
+  height: 10px;
 
   border-radius: 20px;
 
   background:
-    rgba(22,167,199,.12);
+    rgba(18,169,201,.11);
 }
 
-.visual-lines span:nth-child(1) {
+.finance-lines span:nth-child(1) {
   width: 100%;
 }
 
-.visual-lines span:nth-child(2) {
+.finance-lines span:nth-child(2) {
   width: 70%;
 }
 
-.visual-lines span:nth-child(3) {
+.finance-lines span:nth-child(3) {
   width: 85%;
 }
 
-.visual-bottom {
+.finance-bottom {
   position: absolute;
 
   bottom: 28px;
@@ -1731,51 +1719,69 @@ a {
   display: flex;
   justify-content: space-between;
 
-  color: #72848b;
-
-  font-size: 14px;
-  font-weight: 600;
+  color:
+    #74858c;
 }
 
-.visual-bottom strong {
-  color: var(--blue);
+.finance-bottom strong {
+  color:
+    var(--blue);
 }
 
-.floating-card {
+.glow-ring {
   position: absolute;
-  z-index: 5;
 
-  min-width: 190px;
+  width: 440px;
+  height: 440px;
 
-  padding: 17px 20px;
-
-  display: flex;
-  align-items: center;
-  gap: 13px;
-
-  background:
-    rgba(255,255,255,.94);
+  border-radius: 50%;
 
   border:
     1px solid
-    rgba(22,167,199,.14);
+    rgba(18,169,201,.12);
+
+  box-shadow:
+    0 0 80px
+    rgba(18,169,201,.10);
+}
+
+.floating-stat {
+  position: absolute;
+  z-index: 5;
+
+  min-width: 185px;
+
+  padding:
+    15px 18px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
 
   border-radius: 18px;
 
+  background:
+    rgba(255,255,255,.95);
+
+  border:
+    1px solid
+    rgba(18,169,201,.12);
+
   box-shadow:
     0 20px 45px
-    rgba(30,60,70,.12);
+    rgba(30,60,70,.11);
 
   animation:
-    floatCard 4s ease-in-out infinite;
+    float 4s ease-in-out infinite;
 }
 
-.card-top {
-  top: 70px;
+.floating-top {
+  top: 55px;
   right: 0;
 }
 
-.card-bottom {
+.floating-bottom {
   bottom: 55px;
   left: 0;
 
@@ -1783,18 +1789,15 @@ a {
     -1.5s;
 }
 
-@keyframes floatCard {
-  0%, 100% {
-    transform: translateY(0);
-  }
-
+@keyframes float {
   50% {
-    transform: translateY(-12px);
+    transform:
+      translateY(-12px);
   }
 }
 
-.mini-icon,
-.check-circle {
+.float-icon,
+.float-check {
   width: 43px;
   height: 43px;
 
@@ -1805,167 +1808,210 @@ a {
 
   color: white;
 
-  background: var(--blue);
+  background:
+    var(--blue);
 
-  font-size: 20px;
   font-weight: 800;
 }
 
-.floating-card strong {
+.floating-stat strong {
   display: block;
-
-  font-size: 18px;
 }
 
-.floating-card small {
-  display: block;
-
-  color: #829097;
-
-  margin-top: 2px;
+.floating-stat small {
+  color:
+    #84949a;
 }
 
-/* BACKGROUND */
+/* ORBS */
 
-.hero-background-circle {
+.hero-orb {
   position: absolute;
 
   border-radius: 50%;
 
-  filter: blur(2px);
-
   pointer-events: none;
 }
 
-.circle-one {
-  width: 420px;
-  height: 420px;
+.orb-1 {
+  width: 500px;
+  height: 500px;
 
-  top: 30%;
-  right: -200px;
+  top: 25%;
+  right: -300px;
 
   border:
     1px solid
-    rgba(22,167,199,.10);
+    rgba(18,169,201,.09);
 }
 
-.circle-two {
-  width: 280px;
-  height: 280px;
+.orb-2 {
+  width: 300px;
+  height: 300px;
 
-  bottom: -150px;
+  bottom: -190px;
   left: -100px;
 
   background:
-    rgba(213,191,147,.08);
+    rgba(215,194,153,.08);
 }
 
-/* FREE STRIP */
+/* STATS */
 
-.free-strip {
+.stats-bar {
   position: absolute;
-  z-index: 5;
 
   bottom: 0;
   left: 0;
 
   width: 100%;
 
+  z-index: 10;
+
   background:
-    rgba(255,255,255,.84);
+    rgba(255,255,255,.88);
 
   border-top:
     1px solid
-    rgba(24,37,43,.07);
+    rgba(23,38,44,.07);
 
   backdrop-filter:
     blur(15px);
 }
 
-.free-strip-inner {
-  width: min(92vw, 1200px);
+.stats-inner {
+  width: min(92vw, 950px);
 
-  min-height: 80px;
+  min-height: 105px;
 
   margin: auto;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 17px;
-
-  text-align: center;
-
-  color: #68787f;
-
-  font-size: 17px;
-}
-
-.free-strip-inner strong {
-  color: var(--text);
-}
-
-.strip-icon {
-  width: 32px;
-  height: 32px;
-
   display: grid;
-  place-items: center;
 
-  border-radius: 50%;
+  grid-template-columns:
+    1fr
+    1px
+    1fr
+    1px
+    1fr;
 
-  color: white;
+  align-items: center;
+}
 
-  background: var(--blue);
+.stat {
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+
+  color:
+    var(--blue);
+
+  font-size: 39px;
+
+  line-height: 1;
 
   font-weight: 800;
 }
 
-/* =========================
-   GENERAL SECTIONS
-========================= */
+.stat span {
+  display: block;
 
-section:not(.hero) {
+  margin-top: 6px;
+
+  color:
+    #687980;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 42px;
+
+  background:
+    rgba(23,38,44,.10);
+}
+
+/* TICKER */
+
+.ticker-section {
+  position: relative;
+
+  overflow: hidden;
+
   padding:
-    115px 0;
+    105px 0 100px;
+
+  background:
+    #fffdf8;
+}
+
+.ticker-glow {
+  position: absolute;
+
+  width: 500px;
+  height: 200px;
+
+  top: 45%;
+
+  left: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    rgba(18,169,201,.08);
+
+  filter:
+    blur(70px);
+
+  pointer-events: none;
 }
 
 .section-heading {
+  position: relative;
+  z-index: 2;
+
   width: min(90vw, 850px);
 
   margin:
-    0 auto 55px;
+    0 auto 50px;
 
   text-align: center;
+}
+
+.section-heading.compact {
+  margin-bottom: 42px;
 }
 
 .eyebrow {
   display: inline-block;
 
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 
-  color: var(--blue);
+  color:
+    var(--blue);
 
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
 
   letter-spacing: 1.5px;
-
-  text-transform: uppercase;
 }
 
 .section-heading h2 {
   margin: 0;
 
-  color: var(--text);
-
   font-size:
-    clamp(35px, 4vw, 54px);
+    clamp(35px, 4vw, 53px);
 
   line-height: 1.08;
 
-  letter-spacing: -1.8px;
+  letter-spacing: -1.6px;
 
   font-weight: 800;
 }
@@ -1974,335 +2020,200 @@ section:not(.hero) {
   max-width: 650px;
 
   margin:
-    20px auto 0;
+    18px auto 0;
 
-  color: var(--muted);
+  color:
+    var(--muted);
 
   font-size: 19px;
 
   line-height: 1.6;
 }
 
-/* =========================
-   COMPANIES SLIDER
-========================= */
-
-.companies-section {
-  background:
-    #fffdf8;
-}
-
-.company-slider {
+.ticker-window {
   position: relative;
+  z-index: 2;
 
-  width: min(94vw, 1450px);
-
-  margin: auto;
-
-  padding:
-    0 45px;
-
-  display: flex;
-  align-items: center;
-}
-
-.company-track {
   width: 100%;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 32px;
-
-  align-items: center;
-}
-
-.company-card {
-  min-height: 315px;
-
-  padding: 34px;
-
-  position: relative;
 
   overflow: hidden;
 
+  padding:
+    15px 0 30px;
+}
+
+.ticker-track {
+  width: max-content;
+
+  display: flex;
+
+  gap: 18px;
+
+  transition:
+    transform 1s
+    cubic-bezier(.22,.8,.2,1);
+
+  will-change: transform;
+}
+
+.ticker-card {
+  position: relative;
+
+  width: 270px;
+  min-height: 115px;
+
+  padding:
+    25px;
+
+  flex: 0 0 270px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  border-radius: 22px;
+
   background:
-    rgba(255,255,255,.92);
+    rgba(255,255,255,.94);
 
   border:
     1px solid
-    rgba(24,37,43,.09);
-
-  border-radius: 24px;
+    rgba(18,169,201,.11);
 
   box-shadow:
-    0 15px 45px
-    rgba(35,55,65,.07);
+    0 15px 40px
+    rgba(25,60,70,.07);
 
-  transition:
-    transform .5s cubic-bezier(.2,.8,.2,1),
-    opacity .5s,
-    box-shadow .5s,
-    border-color .5s;
+  transition: .35s;
 
-  cursor: pointer;
+  overflow: hidden;
 }
 
-.company-card::before {
+.ticker-card::before {
   content: '';
 
   position: absolute;
 
-  width: 180px;
-  height: 180px;
+  width: 100px;
+  height: 100px;
 
-  top: -90px;
-  right: -90px;
+  top: -55px;
+  right: -40px;
 
   border-radius: 50%;
 
   background:
-    rgba(22,167,199,.07);
+    rgba(18,169,201,.08);
 
-  transition: .5s;
+  filter:
+    blur(2px);
 }
 
-.company-card:hover,
-.company-card.active {
+.ticker-card::after {
+  content: '';
+
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 70%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.75),
+      transparent
+    );
+
   transform:
-    scale(1.04)
-    translateY(-6px);
+    skewX(-20deg);
+
+  animation:
+    shine 4.5s infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+
+  45%,
+  100% {
+    left: 150%;
+  }
+}
+
+.ticker-card:hover {
+  transform:
+    translateY(-7px)
+    scale(1.04);
 
   border-color:
-    rgba(22,167,199,.45);
+    rgba(18,169,201,.38);
 
   box-shadow:
-    0 25px 65px
-    rgba(22,167,199,.13);
+    0 25px 55px
+    rgba(18,169,201,.14);
 }
 
-.company-card:hover::before,
-.company-card.active::before {
-  transform:
-    scale(1.5);
-
-  background:
-    rgba(22,167,199,.12);
-}
-
-.company-card.next,
-.company-card.previous {
-  opacity: .78;
-}
-
-.company-card.hidden-slide {
-  display: none;
-}
-
-.company-icon {
+.ticker-icon {
   position: relative;
+  z-index: 2;
 
-  width: 67px;
-  height: 67px;
-
-  display: grid;
-  place-items: center;
-
-  margin-bottom: 28px;
-
-  border-radius: 20px;
-
-  color: var(--blue);
-
-  background:
-    rgba(22,167,199,.09);
-
-  font-size: 28px;
-
-  transition: .4s;
-}
-
-.company-card:hover .company-icon,
-.company-card.active .company-icon {
-  color: white;
-
-  background: var(--blue);
-
-  transform:
-    rotate(-5deg)
-    scale(1.08);
-}
-
-.company-card h3 {
-  position: relative;
-
-  margin: 0;
-
-  font-size: 27px;
-
-  font-weight: 800;
-}
-
-.company-card p {
-  position: relative;
-
-  margin:
-    10px 0 0;
-
-  color: var(--muted);
-
-  font-size: 17px;
-}
-
-.company-line {
   width: 48px;
-  height: 3px;
+  height: 48px;
 
-  margin-top: 30px;
-
-  border-radius: 20px;
-
-  background: var(--blue);
-
-  transition: .4s;
-}
-
-.company-card:hover .company-line,
-.company-card.active .company-line {
-  width: 90px;
-}
-
-.company-arrow {
-  position: absolute;
-
-  bottom: 30px;
-  right: 30px;
-
-  color: var(--blue);
-
-  font-size: 25px;
-
-  opacity: .55;
-
-  transition: .4s;
-}
-
-.company-card:hover .company-arrow,
-.company-card.active .company-arrow {
-  opacity: 1;
-
-  transform:
-    translateX(-7px);
-}
-
-/* SLIDER ARROWS */
-
-.slider-arrow {
-  position: absolute;
-
-  z-index: 10;
-
-  width: 64px;
-  height: 64px;
+  flex: 0 0 auto;
 
   display: grid;
   place-items: center;
 
-  border:
-    2px solid
-    rgba(22,167,199,.42);
-
-  border-radius: 50%;
-
-  background:
-    rgba(255,255,255,.96);
-
-  color: var(--blue);
-
-  font-size: 27px;
-  font-weight: 800;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 10px 30px
-    rgba(22,167,199,.14),
-
-    0 0 25px
-    rgba(22,167,199,.08);
-
-  transition: .3s;
-}
-
-.slider-arrow:hover {
-  transform:
-    scale(1.18);
+  border-radius: 15px;
 
   color: white;
 
   background:
-    var(--blue);
-
-  border-color:
-    var(--blue);
+    linear-gradient(
+      145deg,
+      var(--blue-light),
+      var(--blue)
+    );
 
   box-shadow:
-    0 0 25px
-      rgba(22,167,199,.48),
-
-    0 0 60px
-      rgba(22,167,199,.20);
+    0 8px 22px
+    rgba(18,169,201,.22);
 }
 
-.slider-arrow-left {
-  left: 7px;
+.ticker-card strong {
+  position: relative;
+  z-index: 2;
+
+  font-size: 18px;
+  font-weight: 800;
 }
 
-.slider-arrow-right {
-  right: 7px;
-}
+.ticker-arrow {
+  position: relative;
+  z-index: 2;
 
-.slider-dots {
-  margin-top: 35px;
+  margin-right: auto;
 
-  display: flex;
-  justify-content: center;
-
-  gap: 8px;
-}
-
-.slider-dots button {
-  width: 9px;
-  height: 9px;
-
-  padding: 0;
-
-  border-radius: 50%;
-
-  background:
-    #cbd7da;
-
-  cursor: pointer;
-
-  transition: .3s;
-}
-
-.slider-dots button.active {
-  width: 30px;
-
-  border-radius: 10px;
-
-  background:
+  color:
     var(--blue);
+
+  font-size: 22px;
 }
 
-/* =========================
-   SERVICES
-========================= */
+/* SERVICES */
 
 .services-section {
+  padding:
+    110px 0;
+
   background:
     var(--cream);
 }
@@ -2323,11 +2234,13 @@ section:not(.hero) {
 .service-card {
   position: relative;
 
-  min-height: 330px;
+  min-height: 325px;
 
   padding: 32px;
 
   overflow: hidden;
+
+  border-radius: 24px;
 
   background:
     rgba(255,255,255,.88);
@@ -2335,8 +2248,6 @@ section:not(.hero) {
   border:
     1px solid
     var(--border);
-
-  border-radius: 24px;
 
   box-shadow:
     0 12px 40px
@@ -2350,36 +2261,36 @@ section:not(.hero) {
     translateY(-8px);
 
   border-color:
-    rgba(22,167,199,.35);
+    rgba(18,169,201,.35);
 
   box-shadow:
-    0 22px 55px
-    rgba(22,167,199,.11);
+    0 25px 55px
+    rgba(18,169,201,.11);
 }
 
 .service-number {
   position: absolute;
 
-  top: 20px;
-  left: 25px;
+  top: 15px;
+  left: 23px;
 
   color:
-    rgba(22,167,199,.12);
+    rgba(18,169,201,.10);
 
-  font-size: 54px;
+  font-size: 57px;
   font-weight: 800;
 }
 
 .service-icon {
-  width: 65px;
-  height: 65px;
+  width: 64px;
+  height: 64px;
+
+  margin-bottom: 34px;
 
   display: grid;
   place-items: center;
 
-  margin-bottom: 35px;
-
-  border-radius: 19px;
+  border-radius: 18px;
 
   color: white;
 
@@ -2390,12 +2301,12 @@ section:not(.hero) {
       var(--blue)
     );
 
-  font-size: 28px;
+  font-size: 27px;
   font-weight: 800;
 
   box-shadow:
     0 12px 25px
-    rgba(22,167,199,.18);
+    rgba(18,169,201,.19);
 }
 
 .service-card h3 {
@@ -2406,10 +2317,10 @@ section:not(.hero) {
 }
 
 .service-card p {
-  margin:
-    12px 0 0;
+  margin-top: 11px;
 
-  color: var(--muted);
+  color:
+    var(--muted);
 
   font-size: 17px;
 
@@ -2419,42 +2330,38 @@ section:not(.hero) {
 .service-bottom {
   position: absolute;
 
-  bottom: 25px;
+  bottom: 24px;
   left: 32px;
   right: 32px;
 
   display: flex;
-  align-items: center;
+
   justify-content: space-between;
+
+  color:
+    var(--blue);
+
+  font-size: 25px;
 }
 
 .service-bottom span {
   width: 45px;
   height: 3px;
 
-  border-radius: 10px;
+  margin-top: 12px;
 
-  background: var(--blue);
+  border-radius: 20px;
+
+  background:
+    var(--blue);
 }
 
-.service-bottom b {
-  color: var(--blue);
-
-  font-size: 24px;
-
-  transition: .3s;
-}
-
-.service-card:hover .service-bottom b {
-  transform:
-    translateX(-7px);
-}
-
-/* =========================
-   HOW
-========================= */
+/* HOW */
 
 .how-section {
+  padding:
+    110px 0;
+
   background:
     #fffdf8;
 }
@@ -2478,36 +2385,39 @@ section:not(.hero) {
   text-align: center;
 }
 
-.step-number {
-  width: 90px;
-  height: 90px;
+.step-circle {
+  width: 88px;
+  height: 88px;
 
-  margin: 0 auto 25px;
+  margin:
+    0 auto 22px;
 
   display: grid;
   place-items: center;
 
   border-radius: 50%;
 
-  color: var(--blue);
+  color:
+    var(--blue);
 
   background:
-    rgba(22,167,199,.08);
+    rgba(18,169,201,.08);
 
   border:
     2px solid
-    rgba(22,167,199,.16);
+    rgba(18,169,201,.15);
 
-  font-size: 23px;
+  font-size: 22px;
   font-weight: 800;
 
-  transition: .4s;
+  transition: .35s;
 }
 
-.step:hover .step-number {
+.step:hover .step-circle {
   color: white;
 
-  background: var(--blue);
+  background:
+    var(--blue);
 
   transform:
     scale(1.08);
@@ -2517,21 +2427,21 @@ section:not(.hero) {
   margin: 0;
 
   font-size: 22px;
-  font-weight: 800;
 }
 
 .step p {
-  margin-top: 8px;
+  margin-top: 7px;
 
-  color: var(--muted);
+  color:
+    var(--muted);
 
   font-size: 16px;
 }
 
-.step-line {
+.step-connector {
   position: absolute;
 
-  top: 45px;
+  top: 44px;
 
   left: calc(50% + 65px);
 
@@ -2542,24 +2452,20 @@ section:not(.hero) {
   background:
     linear-gradient(
       90deg,
-      rgba(22,167,199,.25),
+      rgba(18,169,201,.24),
       transparent
     );
 }
 
-/* =========================
-   CTA
-========================= */
+/* BIG CTA */
 
-.free-cta {
+.big-cta {
   position: relative;
 
   width: min(92vw, 1250px);
 
-  min-height: 250px;
-
   margin:
-    40px auto 100px;
+    20px auto 110px;
 
   padding:
     45px 55px;
@@ -2573,22 +2479,22 @@ section:not(.hero) {
   background:
     linear-gradient(
       135deg,
-      #159fbd,
-      #087d99
+      #15a7c5,
+      #087f9b
     );
 
   box-shadow:
     0 30px 70px
-    rgba(22,167,199,.22);
+    rgba(18,169,201,.21);
 }
 
-.free-cta-glow {
+.cta-glow {
   position: absolute;
 
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
 
-  top: -230px;
+  top: -300px;
   right: -100px;
 
   border-radius: 50%;
@@ -2600,68 +2506,58 @@ section:not(.hero) {
     blur(5px);
 }
 
-.free-cta-content {
+.cta-inner {
   position: relative;
   z-index: 2;
 
   display: flex;
-
   align-items: center;
 
-  gap: 30px;
+  gap: 25px;
 }
 
-.big-free-icon {
-  flex: 0 0 auto;
+.cta-check {
+  width: 76px;
+  height: 76px;
 
-  width: 80px;
-  height: 80px;
+  flex: 0 0 auto;
 
   display: grid;
   place-items: center;
 
-  border-radius: 24px;
-
-  color: white;
+  border-radius: 22px;
 
   background:
     rgba(255,255,255,.14);
 
   border:
     1px solid
-    rgba(255,255,255,.25);
+    rgba(255,255,255,.22);
 
-  font-size: 36px;
+  font-size: 34px;
   font-weight: 800;
 }
 
-.cta-small {
-  display: block;
-
-  margin-bottom: 5px;
-
+.cta-copy span {
   opacity: .85;
 
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
 }
 
-.free-cta h2 {
-  margin: 0;
+.cta-copy h2 {
+  margin:
+    3px 0 0;
 
   font-size:
-    clamp(28px, 4vw, 44px);
-
-  font-weight: 800;
+    clamp(28px, 4vw, 43px);
 }
 
-.free-cta p {
-  max-width: 650px;
-
+.cta-copy p {
   margin:
-    8px 0 0;
+    7px 0 0;
 
-  opacity: .85;
+  opacity: .83;
 
   font-size: 17px;
 }
@@ -2672,19 +2568,22 @@ section:not(.hero) {
   min-height: 58px;
 
   padding:
-    0 25px;
+    0 24px;
 
   display: inline-flex;
   align-items: center;
-  gap: 15px;
+
+  gap: 13px;
 
   white-space: nowrap;
 
   border-radius: 15px;
 
-  color: var(--blue-dark);
+  color:
+    var(--blue-dark);
 
-  background: white;
+  background:
+    white;
 
   font-weight: 800;
 
@@ -2700,11 +2599,12 @@ section:not(.hero) {
     rgba(0,0,0,.14);
 }
 
-/* =========================
-   FAQ
-========================= */
+/* FAQ */
 
 .faq-section {
+  padding:
+    110px 0;
+
   background:
     var(--cream);
 }
@@ -2720,43 +2620,43 @@ section:not(.hero) {
 
   overflow: hidden;
 
+  border-radius: 17px;
+
   background:
-    rgba(255,255,255,.80);
+    rgba(255,255,255,.82);
 
   border:
     1px solid
     var(--border);
 
-  border-radius: 17px;
-
   transition: .3s;
 }
 
-.faq-item:hover,
-.faq-item.opened {
+.faq-item.open {
   border-color:
-    rgba(22,167,199,.30);
+    rgba(18,169,201,.35);
 
   box-shadow:
     0 10px 30px
-    rgba(30,60,70,.05);
+    rgba(25,60,70,.06);
 }
 
 .faq-question {
   width: 100%;
 
   padding:
-    23px 26px;
+    22px 25px;
 
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 
-  gap: 25px;
-
-  color: var(--text);
+  gap: 20px;
 
   background: transparent;
+
+  color:
+    var(--text);
 
   text-align: start;
 
@@ -2766,11 +2666,11 @@ section:not(.hero) {
   cursor: pointer;
 }
 
-.faq-plus {
-  flex: 0 0 auto;
-
+.faq-question strong {
   width: 34px;
   height: 34px;
+
+  flex: 0 0 auto;
 
   display: grid;
   place-items: center;
@@ -2782,132 +2682,107 @@ section:not(.hero) {
   background:
     var(--blue);
 
-  font-size: 23px;
-
-  line-height: 1;
+  font-size: 22px;
 }
 
 .faq-answer {
   padding:
-    0 26px 25px;
+    0 25px 25px;
 
-  color: var(--muted);
+  color:
+    var(--muted);
 
   font-size: 18px;
 
   line-height: 1.65;
 }
 
-/* =========================
-   CONTACT
-========================= */
+/* CONTACT */
 
 .contact-section {
+  padding:
+    110px 0;
+
   background:
     #fffdf8;
 }
 
-.contact-container {
+.contact-box {
   width: min(92vw, 1150px);
 
   margin: auto;
 
   padding:
-    65px;
+    60px;
 
   display: grid;
 
   grid-template-columns:
     1fr
-    .8fr;
+    .75fr;
 
-  gap: 70px;
+  gap: 65px;
 
   border-radius: 32px;
 
   background:
     linear-gradient(
       145deg,
-      #f1fafb,
+      #eefafb,
       #ffffff
     );
 
   border:
     1px solid
-    rgba(22,167,199,.10);
+    rgba(18,169,201,.10);
 
   box-shadow:
     var(--shadow);
 }
 
-.dark-badge {
-  margin-bottom: 22px;
-}
-
-.contact-copy h2 {
-  margin: 0;
+.contact-info h2 {
+  margin:
+    25px 0 0;
 
   font-size:
-    clamp(35px, 4vw, 55px);
+    clamp(38px, 4vw, 56px);
 
   line-height: 1.05;
-
-  letter-spacing: -1.5px;
 }
 
-.contact-copy > p {
-  max-width: 550px;
+.contact-info > p {
+  max-width: 540px;
 
-  color: var(--muted);
+  color:
+    var(--muted);
 
   font-size: 19px;
 
   line-height: 1.6;
 }
 
-.contact-benefits {
+.contact-list {
   display: grid;
 
-  gap: 12px;
-
-  margin-top: 30px;
-
-  color: #5e7077;
-
-  font-weight: 600;
-}
-
-.contact-benefits div {
-  display: flex;
-  align-items: center;
   gap: 10px;
-}
 
-.contact-benefits span {
-  width: 27px;
-  height: 27px;
+  margin-top: 28px;
 
-  display: grid;
-  place-items: center;
+  color:
+    #607279;
 
-  border-radius: 50%;
-
-  color: white;
-
-  background: var(--blue);
-
-  font-size: 14px;
+  font-weight: 700;
 }
 
 .contact-form {
-  min-height: 340px;
+  min-height: 330px;
 
-  padding: 35px;
+  padding: 32px;
 
   display: flex;
   align-items: center;
 
-  border-radius: 25px;
+  border-radius: 24px;
 
   background: white;
 
@@ -2916,42 +2791,39 @@ section:not(.hero) {
     rgba(30,60,70,.08);
 }
 
-.form-fields {
+.contact-form > * {
   width: 100%;
-
-  display: grid;
-
-  gap: 18px;
 }
 
-.form-fields label {
+.contact-form label {
   display: grid;
 
   gap: 7px;
 
-  color: #50636a;
+  margin-bottom: 17px;
+
+  color:
+    #53656c;
 
   font-size: 15px;
   font-weight: 700;
 }
 
-.form-fields input {
+.contact-form input {
   width: 100%;
 
   height: 56px;
 
   padding:
-    0 17px;
+    0 16px;
 
   border:
     1px solid
-    #d9e1e3;
+    #d8e1e3;
 
   border-radius: 13px;
 
   outline: none;
-
-  color: var(--text);
 
   background:
     #fbfcfc;
@@ -2961,22 +2833,25 @@ section:not(.hero) {
   transition: .25s;
 }
 
-.form-fields input:focus {
+.contact-form input:focus {
   border-color:
     var(--blue);
 
   box-shadow:
     0 0 0 4px
-    rgba(22,167,199,.09);
+    rgba(18,169,201,.09);
 }
 
-.form-button {
+.form-submit {
+  width: 100%;
+
   min-height: 58px;
 
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 15px;
+  align-items: center;
+
+  gap: 14px;
 
   border-radius: 14px;
 
@@ -2994,31 +2869,26 @@ section:not(.hero) {
 
   cursor: pointer;
 
-  box-shadow:
-    0 12px 25px
-    rgba(22,167,199,.20);
-
   transition: .3s;
 }
 
-.form-button:hover {
+.form-submit:hover {
   transform:
     translateY(-3px);
 }
 
-.form-fields small {
-  color: #88979c;
+.contact-form small {
+  display: block;
+
+  margin-top: 13px;
+
+  color:
+    #87969b;
 
   text-align: center;
-
-  font-size: 13px;
-
-  line-height: 1.5;
 }
 
-.success-message {
-  width: 100%;
-
+.success {
   text-align: center;
 }
 
@@ -3043,28 +2913,27 @@ section:not(.hero) {
   font-weight: 800;
 }
 
-.success-message h3 {
+.success h3 {
   margin: 0;
 
   font-size: 26px;
 }
 
-.success-message p {
-  color: var(--muted);
+.success p {
+  color:
+    var(--muted);
 
   font-size: 17px;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 .footer {
   padding:
     45px 0;
 
   background:
-    #17252b;
+    #17262c;
 
   color: white;
 }
@@ -3077,10 +2946,10 @@ section:not(.hero) {
   display: flex;
   align-items: center;
 
-  gap: 30px;
+  gap: 28px;
 }
 
-.footer-logo {
+.footer-brand {
   display: flex;
   align-items: center;
 
@@ -3091,13 +2960,11 @@ section:not(.hero) {
   white-space: nowrap;
 }
 
-.footer-logo .logo-mark {
+.footer-brand .logo-mark {
   width: 38px;
   height: 38px;
 
   border-radius: 11px;
-
-  font-size: 19px;
 }
 
 .footer-inner p {
@@ -3106,32 +2973,30 @@ section:not(.hero) {
   margin: 0;
 
   color:
-    rgba(255,255,255,.66);
+    rgba(255,255,255,.65);
 
-  font-size: 14px;
+  font-size: 13px;
 
   line-height: 1.6;
 }
 
-.footer-rights {
+.copyright {
   margin-right: auto;
 
-  white-space: nowrap;
-
   color:
-    rgba(255,255,255,.55);
+    rgba(255,255,255,.50);
+
+  white-space: nowrap;
 
   font-size: 13px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
-@media (max-width: 1100px) {
+@media (max-width: 1050px) {
 
-  .desktop-nav {
-    gap: 18px;
+  .nav-links {
+    gap: 16px;
   }
 
   .services-grid {
@@ -3146,7 +3011,7 @@ section:not(.hero) {
     row-gap: 55px;
   }
 
-  .step-line {
+  .step-connector {
     display: none;
   }
 
@@ -3158,17 +3023,16 @@ section:not(.hero) {
 @media (max-width: 850px) {
 
   .nav-inner {
-    min-height: 80px;
+    min-height: 78px;
   }
 
-  .desktop-nav {
+  .nav-links {
     position: absolute;
 
-    top: 82px;
+    top: 78px;
+
     left: 3vw;
     right: 3vw;
-
-    padding: 25px;
 
     display: none;
 
@@ -3178,45 +3042,43 @@ section:not(.hero) {
 
     gap: 0;
 
-    background:
-      rgba(255,255,255,.98);
+    padding: 20px;
 
     border-radius: 20px;
 
+    background: white;
+
     box-shadow:
       0 20px 50px
-      rgba(30,50,60,.14);
+      rgba(25,50,60,.14);
   }
 
-  .desktop-nav.open {
+  .nav-links.open {
     display: flex;
   }
 
-  .desktop-nav a {
-    padding: 16px;
+  .nav-links a {
+    padding:
+      15px;
 
     border-bottom:
       1px solid
-      rgba(24,37,43,.07);
+      rgba(23,38,44,.07);
   }
 
-  .mobile-menu-button {
+  .hamburger {
     display: block;
   }
 
-  .language-switcher {
-    margin-right: auto;
+  .language-name {
+    display: none;
   }
 
   .language-button {
-    min-width: 43px;
+    width: 43px;
 
     padding:
-      7px 9px;
-  }
-
-  .language-label {
-    display: none;
+      6px;
   }
 
   .hero {
@@ -3226,8 +3088,8 @@ section:not(.hero) {
   .hero-inner {
     min-height: auto;
 
-    padding-top: 130px;
-    padding-bottom: 120px;
+    padding:
+      125px 0 140px;
 
     grid-template-columns: 1fr;
 
@@ -3238,11 +3100,11 @@ section:not(.hero) {
     margin: auto;
   }
 
-  .hero-actions {
+  .hero-buttons {
     justify-content: center;
   }
 
-  .hero-trust {
+  .hero-checks {
     justify-content: center;
   }
 
@@ -3250,80 +3112,26 @@ section:not(.hero) {
     min-height: 430px;
   }
 
-  .main-visual-card {
-    height: 420px;
+  .stats-inner {
+    min-height: 90px;
   }
 
-  .visual-number {
-    margin:
-      55px auto 40px;
+  .stat strong {
+    font-size: 31px;
   }
 
-  .card-top {
-    right: 2%;
+  .stat span {
+    font-size: 13px;
   }
 
-  .card-bottom {
-    left: 2%;
-  }
-
-  .free-strip-inner {
-    flex-wrap: wrap;
-
-    padding:
-      14px 0;
-
-    font-size: 15px;
-  }
-
-  .company-slider {
-    width: 100%;
-
-    padding:
-      0 30px;
-  }
-
-  .company-track {
-    grid-template-columns: 1fr;
-  }
-
-  .company-card {
-    min-height: 290px;
-  }
-
-  .company-card.next,
-  .company-card.previous {
-    display: none;
-  }
-
-  .company-card.active {
-    display: block;
-
-    transform:
-      scale(1.01);
-  }
-
-  .slider-arrow-left {
-    left: -3px;
-  }
-
-  .slider-arrow-right {
-    right: -3px;
-  }
-
-  .contact-container {
+  .contact-box {
     grid-template-columns: 1fr;
 
-    padding: 40px 25px;
-
-    gap: 35px;
+    padding:
+      40px 25px;
   }
 
-  .free-cta {
-    padding: 35px 28px;
-  }
-
-  .free-cta-content {
+  .cta-inner {
     flex-direction: column;
 
     text-align: center;
@@ -3339,16 +3147,12 @@ section:not(.hero) {
     text-align: center;
   }
 
-  .footer-rights {
+  .copyright {
     margin: 0;
   }
 }
 
 @media (max-width: 600px) {
-
-  .nav-inner {
-    width: 94vw;
-  }
 
   .logo {
     font-size: 23px;
@@ -3359,40 +3163,19 @@ section:not(.hero) {
     height: 39px;
   }
 
-  .language-switcher {
-    gap: 3px;
-  }
-
-  .language-button {
-    min-width: 39px;
-    min-height: 39px;
-
-    padding: 5px;
-  }
-
-  .language-icon {
-    font-size: 18px;
-  }
-
-  .arabic-icon {
-    width: 23px;
-    height: 23px;
-  }
-
-  .mobile-menu-button {
-    width: 43px;
-    height: 43px;
-  }
-
   .hero h1 {
     font-size:
-      clamp(39px, 11vw, 57px);
+      clamp(39px, 11vw, 56px);
 
-    letter-spacing: -1.8px;
+    letter-spacing: -1.7px;
   }
 
-  .hero-text {
+  .hero-description {
     font-size: 18px;
+  }
+
+  .hero-buttons {
+    width: 100%;
   }
 
   .primary-button,
@@ -3400,62 +3183,56 @@ section:not(.hero) {
     width: 100%;
   }
 
-  .hero-actions {
-    width: 100%;
-  }
-
-  .hero-visual {
-    min-height: 390px;
-  }
-
-  .main-visual-card {
+  .finance-card {
     width: 310px;
-    height: 380px;
-
-    padding: 25px;
+    height: 390px;
   }
 
-  .visual-number {
+  .finance-icon {
     width: 120px;
     height: 120px;
 
     margin:
       60px auto 40px;
-
-    font-size: 48px;
   }
 
-  .floating-card {
-    min-width: 155px;
+  .floating-stat {
+    min-width: 150px;
 
-    padding: 12px;
+    padding: 11px;
   }
 
-  .card-top {
-    top: 25px;
+  .floating-top {
+    top: 20px;
     right: 0;
   }
 
-  .card-bottom {
+  .floating-bottom {
     bottom: 20px;
     left: 0;
   }
 
-  section:not(.hero) {
-    padding:
-      80px 0;
+  .stats-inner {
+    width: 94vw;
   }
 
-  .section-heading {
-    margin-bottom: 40px;
+  .stat strong {
+    font-size: 27px;
   }
 
-  .section-heading h2 {
-    font-size: 37px;
+  .stat span {
+    font-size: 11px;
   }
 
-  .section-heading p {
-    font-size: 17px;
+  .stat-divider {
+    height: 32px;
+  }
+
+  .ticker-card {
+    width: 235px;
+    flex-basis: 235px;
+
+    min-height: 100px;
   }
 
   .services-grid {
@@ -3468,76 +3245,27 @@ section:not(.hero) {
     width: 90vw;
 
     grid-template-columns: 1fr;
-
-    gap: 35px;
   }
 
-  .free-cta {
+  .big-cta {
     width: 90vw;
 
-    margin-bottom: 60px;
+    padding:
+      35px 25px;
+
+    margin-bottom: 70px;
   }
 
   .faq-list {
     width: 90vw;
   }
 
-  .faq-question {
-    padding:
-      20px;
-
-    font-size: 18px;
-  }
-
-  .faq-answer {
-    padding:
-      0 20px 22px;
-
-    font-size: 17px;
-  }
-
-  .contact-container {
+  .contact-box {
     width: 90vw;
   }
 
   .contact-form {
     padding: 22px;
-  }
-
-  .contact-copy h2 {
-    font-size: 38px;
-  }
-}
-
-/* =========================
-   ACCESSIBILITY
-========================= */
-
-:focus-visible {
-  outline:
-    3px solid
-    rgba(22,167,199,.55);
-
-  outline-offset:
-    3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration:
-      .01ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    scroll-behavior:
-      auto !important;
-
-    transition-duration:
-      .01ms !important;
   }
 }
 </style>
