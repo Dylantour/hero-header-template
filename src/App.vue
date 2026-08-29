@@ -1,27 +1,16 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed } from 'vue'
 
 const language = ref('he')
-const openFaq = ref(null)
 const mobileMenu = ref(false)
-const formSent = ref(false)
+const openFaq = ref(null)
 const currentSlide = ref(0)
+const formSent = ref(false)
 
 const languages = [
-  { id: 'he', label: 'עברית', flag: '🇮🇱' },
-  { id: 'ru', label: 'Русский', flag: '🇷🇺' },
-  { id: 'ar', label: 'العربية', flag: null }
-]
-
-const services = [
-  'איתור כספים',
-  'קרנות השתלמות',
-  'קופות גמל',
-  'קרנות פנסיה',
-  'בדיקת אפשרות למשיכה',
-  'הלוואה כנגד קופה',
-  'חסכונות פנסיוניים',
-  'בדיקה ללא עלות וללא התחייבות'
+  { id: 'he', label: 'עברית', icon: '🇮🇱', dir: 'rtl' },
+  { id: 'ru', label: 'Русский', icon: '🇷🇺', dir: 'ltr' },
+  { id: 'ar', label: 'العربية', icon: 'ع', dir: 'rtl' }
 ]
 
 const translations = {
@@ -30,51 +19,54 @@ const translations = {
     navServices: 'השירותים שלנו',
     navHow: 'איך זה עובד',
     navFaq: 'שאלות נפוצות',
-    navContact: 'השארת פרטים',
+    navContact: 'צור קשר',
 
     badge: 'בדיקה ללא עלות וללא התחייבות',
 
     heroTitle: 'יש לכם כספים בקופות?',
     heroTitle2: 'בואו נבדוק מה אפשר לעשות איתם.',
     heroText:
-      'אנחנו עוזרים לכם לאתר כספים וחסכונות, להבין מה נמצא שם ולבחון אילו אפשרויות עשויות להיות רלוונטיות עבורכם.',
-    cta: 'בדיקה ללא עלות',
-    secondary: 'איך זה עובד?',
+      'אנחנו עוזרים לכם לאתר את החסכונות והקופות שלכם, להבין מה נמצא שם ולקבל הכוונה לגבי האפשרויות העומדות בפניכם.',
+    heroButton: 'בדיקה ללא עלות',
+    heroSub: 'פשוט. ברור. ללא התחייבות.',
 
-    stats1: 'משיכות שבוצעו',
-    stats2: 'בדיקות בתהליך',
-    stats3: 'לקוחות שקיבלו מענה',
+    freeTitle: 'מתחילים בבדיקה ללא עלות',
+    freeText:
+      'הבדיקה הראשונית וההדרכה על הכספים שאיתרנו עבורכם הן ללא עלות וללא התחייבות.',
 
-    sliderTitle: 'עושים סדר בכספים שלכם',
+    sliderTitle: 'איפה יכולים להיות הכספים שלכם?',
     sliderText:
-      'בדיקה פשוטה וברורה שמתחילה ללא עלות וללא התחייבות.',
+      'החסכונות שלכם יכולים להיות מפוזרים בין גופים שונים. אנחנו עוזרים לעשות סדר.',
 
-    servicesTitle: 'מה אפשר לבדוק?',
+    servicesTitle: 'מה אנחנו יכולים לעזור לכם לבדוק?',
     servicesText:
-      'אנחנו מתחילים בבדיקה ומסבירים לכם בצורה פשוטה מה האפשרויות.',
+      'שירות פשוט וברור שמתחיל בבדיקה ראשונית ללא עלות.',
 
-    service1: 'איתור כספים',
+    service1Title: 'איתור כספים',
     service1Text:
-      'בדיקה ואיתור של חסכונות וקופות שעשויים להיות רשומים על שמכם.',
-    service2: 'בדיקת אפשרות למשיכה',
+      'בדיקה ואיתור של חסכונות, קופות וקרנות שעשויים להיות רשומים על שמכם.',
+
+    service2Title: 'בדיקת אפשרויות משיכה',
     service2Text:
-      'הבנת האפשרויות הקיימות סביב הכספים והאם קיימת אפשרות למשיכה.',
-    service3: 'הלוואה כנגד קופה',
+      'הבנת האפשרויות הקיימות סביב הכספים והאם קיימת אפשרות למשיכה בהתאם לנסיבות שלכם.',
+
+    service3Title: 'הלוואה כנגד קופה',
     service3Text:
-      'בדיקה האם קיימת אפשרות להלוואה כנגד כספים בקופות מסוימות.',
-    service4: 'סדר והבנה',
+      'בדיקה האם קיימת אפשרות לקבלת הלוואה כנגד כספים שנמצאים בקופות מסוימות.',
+
+    service4Title: 'סדר והבנה',
     service4Text:
-      'להבין מה יש לכם, איפה הכספים נמצאים ומה אפשר לבדוק הלאה.',
+      'עוזרים לכם להבין מה יש לכם, איפה הכספים נמצאים ומה כדאי לבדוק הלאה.',
 
     howTitle: 'איך זה עובד?',
-    step1: 'משאירים פרטים',
+    step1: 'ממלאים טופס',
     step1Text: 'פחות מדקה.',
     step2: 'נציג חוזר אליכם',
     step2Text: 'בדרך כלל בתוך 24 שעות.',
     step3: 'בודקים את האפשרויות',
-    step3Text: 'מקבלים הסבר ברור.',
-    step4: 'אתם מחליטים',
-    step4Text: 'ללא התחייבות להמשיך.',
+    step3Text: 'מקבלים הסבר ברור לפני שמחליטים.',
+    step4: 'מחליטים אם להמשיך',
+    step4Text: 'אין התחייבות להמשיך בתהליך.',
 
     faqTitle: 'שאלות נפוצות',
 
@@ -92,7 +84,7 @@ const translations = {
 
     faq4Q: 'האם אפשר לקבל הלוואה כנגד קופה?',
     faq4A:
-      'בחלק מהמוצרים והקופות עשויה להיות אפשרות לקבלת הלוואה כנגד הכספים. הזכאות והתנאים נקבעים על ידי הגוף המנהל.',
+      'בחלק מהמוצרים והקופות עשויה להיות אפשרות לקבלת הלוואה כנגד הכספים. הזכאות והתנאים נקבעים על ידי הגוף המנהל ובהתאם לנתוני הלקוח.',
 
     faq5Q: 'האם יש התחייבות?',
     faq5A:
@@ -104,99 +96,110 @@ const translations = {
     name: 'שם מלא',
     phone: 'טלפון',
     submit: 'בדיקה ללא עלות',
+    sending: 'שולח...',
+    sent: 'הפרטים התקבלו בהצלחה',
+    sentText: 'נציג יחזור אליכם בהקדם.',
 
-    successTitle: 'הפרטים התקבלו בהצלחה',
-    successText: 'נציג יחזור אליכם בהקדם.',
+    privacy:
+      'השארת פרטים אינה מהווה התחייבות לביצוע פעולה כלשהי.',
 
-    footer:
-      'פנסרה מספקת שירותי מידע, איתור והכוונה. שירותים הדורשים רישיון יינתנו באמצעות בעל רישיון מתאים, ככל שנדרש על פי דין.'
+    footerText:
+      'פנסרה מספקת שירותי מידע, איתור והכוונה. שירותים הדורשים רישיון יינתנו באמצעות בעל רישיון מתאים, ככל שנדרש על פי דין.',
+    rights: 'כל הזכויות שמורות.'
   },
 
   ru: {
     navHome: 'Главная',
-    navServices: 'Услуги',
+    navServices: 'Наши услуги',
     navHow: 'Как это работает',
-    navFaq: 'Вопросы',
-    navContact: 'Оставить данные',
+    navFaq: 'Частые вопросы',
+    navContact: 'Связаться',
 
     badge: 'Проверка бесплатно и без обязательств',
 
-    heroTitle: 'У вас есть деньги в кассах?',
-    heroTitle2: 'Давайте проверим, что можно с ними сделать.',
+    heroTitle: 'У вас есть деньги в пенсионных кассах?',
+    heroTitle2: 'Давайте проверим, что с ними можно сделать.',
     heroText:
-      'Помогаем найти накопления, понять что у вас есть и какие варианты могут быть доступны.',
-    cta: 'Бесплатная проверка',
-    secondary: 'Как это работает?',
+      'Мы помогаем найти ваши накопления и кассы, понять что там находится и узнать, какие возможности могут быть доступны.',
+    heroButton: 'Бесплатная проверка',
+    heroSub: 'Просто. Понятно. Без обязательств.',
 
-    stats1: 'Выполненные снятия',
-    stats2: 'Проверки в процессе',
-    stats3: 'Клиенты получили ответ',
+    freeTitle: 'Начинаем с бесплатной проверки',
+    freeText:
+      'Первичная проверка и объяснение найденных средств полностью бесплатны и ни к чему вас не обязывают.',
 
-    sliderTitle: 'Наводим порядок в ваших накоплениях',
+    sliderTitle: 'Где могут находиться ваши деньги?',
     sliderText:
-      'Простая и понятная проверка, которая начинается бесплатно.',
+      'Ваши накопления могут находиться в разных компаниях. Мы помогаем навести порядок.',
 
-    servicesTitle: 'Что можно проверить?',
+    servicesTitle: 'Что мы можем проверить?',
     servicesText:
-      'Начинаем с проверки и простыми словами объясняем возможные варианты.',
+      'Простой сервис, который начинается с бесплатной первичной проверки.',
 
-    service1: 'Поиск денег',
+    service1Title: 'Поиск денег',
     service1Text:
-      'Проверка накоплений и касс, которые могут быть записаны на ваше имя.',
-    service2: 'Проверка возможности снятия',
+      'Проверяем, какие накопления, кассы и фонды могут быть записаны на ваше имя.',
+
+    service2Title: 'Проверка возможности снять деньги',
     service2Text:
-      'Объясняем возможные варианты использования накоплений.',
-    service3: 'Кредит под накопления',
+      'Объясняем, какие варианты могут быть доступны в вашей ситуации.',
+
+    service3Title: 'Кредит под накопления',
     service3Text:
-      'Проверяем возможность кредита под деньги в определённых кассах.',
-    service4: 'Порядок и понимание',
+      'Проверяем, возможно ли получить кредит под деньги, которые находятся в определённых кассах.',
+
+    service4Title: 'Порядок и понимание',
     service4Text:
-      'Помогаем понять, что у вас есть и что можно проверить дальше.',
+      'Помогаем понять, что у вас есть, где находятся деньги и что можно проверить дальше.',
 
     howTitle: 'Как это работает?',
-    step1: 'Оставляете данные',
+    step1: 'Заполняете форму',
     step1Text: 'Меньше минуты.',
-    step2: 'Представитель связывается',
+    step2: 'Мы связываемся с вами',
     step2Text: 'Обычно в течение 24 часов.',
     step3: 'Проверяем варианты',
     step3Text: 'Получаете понятное объяснение.',
     step4: 'Решаете сами',
-    step4Text: 'Без обязательств.',
+    step4Text: 'Никаких обязательств.',
 
     faqTitle: 'Частые вопросы',
 
     faq1Q: 'Сколько это занимает?',
     faq1A:
-      'Заполнение формы — меньше минуты. Представитель свяжется с вами в течение 24 часов (вс–чт, 9:00–18:00). Получение денег обычно занимает 7–14 рабочих дней.',
+      'Заполнение формы — меньше минуты. Представитель свяжется с вами в течение 24 часов (вс–чт, 9:00–18:00). Получение денег обычно занимает 7–14 рабочих дней, в зависимости от условий и управляющей организации.',
 
     faq2Q: 'Как это может быть бесплатно?',
     faq2A:
-      'Первичная проверка полностью бесплатна. Если для дальнейшего действия потребуется лицензированный специалист, вам объяснят варианты и стоимость, и вы сами решите, продолжать или нет.',
+      'Первичная проверка полностью бесплатна. Проверка и объяснение найденных средств — бесплатно. Если для дальнейшего действия потребуется лицензированный специалист, вам объяснят варианты и стоимость, и вы сами решите, продолжать или нет.',
 
     faq3Q: 'Я обязан снимать деньги?',
     faq3A:
-      'Нет. Проверка не обязывает вас снимать деньги.',
+      'Нет. Проверка не обязывает вас снимать деньги. Вы сначала узнаёте, что у вас есть и какие варианты существуют.',
 
     faq4Q: 'Можно ли получить кредит под кассу?',
     faq4A:
-      'В некоторых продуктах может существовать такая возможность. Условия зависят от конкретной кассы.',
+      'В некоторых продуктах может существовать возможность кредита под накопления. Условия зависят от конкретной кассы и данных клиента.',
 
     faq5Q: 'Есть ли обязательство?',
     faq5A:
-      'Нет. Первичная проверка бесплатна и без обязательств.',
+      'Нет. Первичная проверка проводится бесплатно и без обязательств.',
 
     formTitle: 'Хотите проверить свои накопления?',
     formText:
-      'Оставьте данные, и представитель свяжется с вами.',
+      'Оставьте данные, и представитель свяжется с вами. Первичная проверка бесплатна.',
     name: 'Имя и фамилия',
     phone: 'Телефон',
     submit: 'Бесплатная проверка',
+    sending: 'Отправка...',
+    sent: 'Данные получены',
+    sentText: 'Мы свяжемся с вами как можно скорее.',
 
-    successTitle: 'Данные получены',
-    successText: 'Мы свяжемся с вами в ближайшее время.',
+    privacy:
+      'Оставление данных не означает обязательство выполнить какую-либо операцию.',
 
-    footer:
-      'Пансера предоставляет информационные услуги, поиск и навигацию. Услуги, требующие лицензии, предоставляются соответствующим специалистом.'
+    footerText:
+      'Пансера предоставляет информационные услуги, поиск и навигацию. Услуги, требующие лицензии, предоставляются соответствующим лицензированным специалистом, когда это требуется законом.',
+    rights: 'Все права защищены.'
   },
 
   ar: {
@@ -204,69 +207,72 @@ const translations = {
     navServices: 'الخدمات',
     navHow: 'كيف يعمل؟',
     navFaq: 'الأسئلة الشائعة',
-    navContact: 'ترك التفاصيل',
+    navContact: 'تواصل معنا',
 
     badge: 'فحص مجاني وبدون التزام',
 
-    heroTitle: 'لديكم أموال في الصناديق؟',
+    heroTitle: 'لديكم أموال في صناديق التوفير؟',
     heroTitle2: 'دعونا نفحص ما يمكن فعله بها.',
     heroText:
-      'نساعدكم في العثور على المدخرات وفهم ما لديكم وما هي الخيارات التي قد تكون متاحة لكم.',
-    cta: 'فحص مجاني',
-    secondary: 'كيف يعمل؟',
+      'نساعدكم في العثور على المدخرات والصناديق المسجلة باسمكم، وفهم ما الموجود فيها وما هي الخيارات الممكنة.',
+    heroButton: 'فحص مجاني',
+    heroSub: 'بسيط. واضح. بدون التزام.',
 
-    stats1: 'عمليات سحب تمت',
-    stats2: 'فحوصات قيد المعالجة',
-    stats3: 'عملاء حصلوا على رد',
+    freeTitle: 'نبدأ بفحص مجاني',
+    freeText:
+      'الفحص الأولي وشرح الأموال التي تم العثور عليها مجانيان تماماً وبدون أي التزام.',
 
-    sliderTitle: 'نرتب الصورة المالية لكم',
+    sliderTitle: 'أين يمكن أن تكون أموالكم؟',
     sliderText:
-      'فحص بسيط وواضح يبدأ مجاناً وبدون التزام.',
+      'قد تكون المدخرات موزعة بين جهات مختلفة. نحن نساعدكم على ترتيب الصورة.',
 
-    servicesTitle: 'ماذا يمكننا فحصه؟',
+    servicesTitle: 'ما الذي يمكننا مساعدتكم في فحصه؟',
     servicesText:
-      'نبدأ بالفحص ونشرح لكم الخيارات بطريقة بسيطة.',
+      'خدمة بسيطة وواضحة تبدأ بفحص أولي مجاني.',
 
-    service1: 'العثور على الأموال',
+    service1Title: 'العثور على الأموال',
     service1Text:
       'فحص المدخرات والصناديق التي قد تكون مسجلة باسمكم.',
-    service2: 'فحص إمكانية السحب',
+
+    service2Title: 'فحص إمكانية السحب',
     service2Text:
-      'شرح الخيارات الممكنة المتعلقة بالأموال الموجودة.',
-    service3: 'قرض مقابل الصندوق',
+      'شرح الخيارات التي قد تكون متاحة حسب وضعكم وشروط الصندوق.',
+
+    service3Title: 'قرض مقابل الصندوق',
     service3Text:
-      'فحص إمكانية الحصول على قرض مقابل الأموال الموجودة في بعض الصناديق.',
-    service4: 'ترتيب وفهم',
+      'فحص إمكانية الحصول على قرض مقابل أموال موجودة في بعض الصناديق.',
+
+    service4Title: 'ترتيب وفهم',
     service4Text:
-      'نساعدكم على فهم ما لديكم وما الذي يمكن فحصه بعد ذلك.',
+      'نساعدكم على فهم ما لديكم وأين توجد الأموال وما الذي يمكن فحصه بعد ذلك.',
 
     howTitle: 'كيف يعمل الأمر؟',
-    step1: 'تتركون التفاصيل',
+    step1: 'تعبئة النموذج',
     step1Text: 'أقل من دقيقة.',
     step2: 'نتواصل معكم',
     step2Text: 'عادة خلال 24 ساعة.',
     step3: 'نفحص الخيارات',
     step3Text: 'تحصلون على شرح واضح.',
     step4: 'أنتم تقررون',
-    step4Text: 'بدون التزام.',
+    step4Text: 'بدون أي التزام.',
 
     faqTitle: 'الأسئلة الشائعة',
 
     faq1Q: 'كم يستغرق الأمر؟',
     faq1A:
-      'تعبئة النموذج — أقل من دقيقة. سيتواصل معكم ممثل خلال 24 ساعة (الأحد–الخميس، 9:00–18:00). سحب الأموال يستغرق عادةً 7–14 يوم عمل.',
+      'تعبئة النموذج — أقل من دقيقة. سيتواصل معكم ممثل خلال 24 ساعة (الأحد–الخميس، 9:00–18:00). سحب الأموال يستغرق عادةً 7–14 يوم عمل، حسب الشروط والجهة المديرة.',
 
     faq2Q: 'كيف يمكن أن يكون الفحص مجانياً؟',
     faq2A:
-      'الفحص الأولي مجاني تماماً. إذا احتاجت العملية إلى مختص مرخص، سنوضح لكم الخيارات والتكلفة وأنتم تقررون إذا كنتم تريدون المتابعة.',
+      'الفحص الأولي مجاني تماماً. الفحص وشرح الأموال التي تم العثور عليها مجانيان. إذا احتاجت العملية إلى مختص مرخّص، سنوضح لكم الخيارات والتكلفة، وأنتم تقررون إذا كنتم تريدون المتابعة.',
 
     faq3Q: 'هل يجب عليّ سحب الأموال؟',
     faq3A:
-      'لا. الفحص لا يلزمكم بسحب الأموال.',
+      'لا. الفحص لا يلزمكم بسحب الأموال. الهدف هو فهم ما لديكم وما هي الخيارات المتاحة.',
 
     faq4Q: 'هل يمكن الحصول على قرض مقابل الصندوق؟',
     faq4A:
-      'في بعض المنتجات قد تكون هناك إمكانية للحصول على قرض مقابل المدخرات. الشروط تعتمد على الصندوق.',
+      'في بعض المنتجات قد تكون هناك إمكانية للحصول على قرض مقابل المدخرات. الشروط تعتمد على الصندوق وبيانات العميل.',
 
     faq5Q: 'هل يوجد أي التزام؟',
     faq5A:
@@ -274,44 +280,75 @@ const translations = {
 
     formTitle: 'هل تريدون فحص مدخراتكم؟',
     formText:
-      'اتركوا التفاصيل وسيتواصل معكم ممثل.',
+      'اتركوا بياناتكم وسيتواصل معكم ممثل. الفحص الأولي مجاني وبدون التزام.',
     name: 'الاسم الكامل',
     phone: 'الهاتف',
     submit: 'فحص مجاني',
+    sending: 'جارٍ الإرسال...',
+    sent: 'تم استلام البيانات',
+    sentText: 'سنتواصل معكم في أقرب وقت.',
 
-    successTitle: 'تم استلام البيانات',
-    successText: 'سنتواصل معكم في أقرب وقت.',
+    privacy:
+      'إرسال البيانات لا يعني الالتزام بتنفيذ أي عملية.',
 
-    footer:
-      'بانسرا تقدم خدمات معلومات وبحث وتوجيه. الخدمات التي تتطلب ترخيصاً يتم تقديمها بواسطة مختص مرخص عند الحاجة.'
+    footerText:
+      'بانسرا تقدم خدمات معلومات وبحث وتوجيه. الخدمات التي تتطلب ترخيصاً يتم تقديمها بواسطة مختص مرخص عند الحاجة وفقاً للقانون.',
+    rights: 'جميع الحقوق محفوظة.'
   }
 }
 
 const t = computed(() => translations[language.value])
+const currentDir = computed(() => {
+  return languages.find(x => x.id === language.value)?.dir || 'rtl'
+})
 
-const direction = computed(() =>
-  language.value === 'ru' ? 'ltr' : 'rtl'
-)
+const companies = [
+  {
+    name: 'חברות ביטוח',
+    icon: '◈',
+    text: 'קופות, קרנות ומוצרי חיסכון'
+  },
+  {
+    name: 'בתי השקעות',
+    icon: '◆',
+    text: 'חסכונות ומוצרים פיננסיים'
+  },
+  {
+    name: 'קרנות השתלמות',
+    icon: '◇',
+    text: 'בדיקה ואיתור כספים'
+  },
+  {
+    name: 'קופות גמל',
+    icon: '◉',
+    text: 'קופות וחסכונות'
+  },
+  {
+    name: 'קרנות פנסיה',
+    icon: '✦',
+    text: 'מוצרי חיסכון פנסיוני'
+  }
+]
 
-const currentServices = computed(() => [
+const services = computed(() => [
   {
     icon: '⌕',
-    title: t.value.service1,
+    title: t.value.service1Title,
     text: t.value.service1Text
   },
   {
     icon: '₪',
-    title: t.value.service2,
+    title: t.value.service2Title,
     text: t.value.service2Text
   },
   {
     icon: '↗',
-    title: t.value.service3,
+    title: t.value.service3Title,
     text: t.value.service3Text
   },
   {
     icon: '✓',
-    title: t.value.service4,
+    title: t.value.service4Title,
     text: t.value.service4Text
   }
 ])
@@ -347,15 +384,35 @@ const faqs = computed(() => [
   { q: t.value.faq5Q, a: t.value.faq5A }
 ])
 
-function changeLanguage(id) {
+function setLanguage(id) {
   language.value = id
+  mobileMenu.value = false
 }
 
 function toggleFaq(index) {
-  openFaq.value =
-    openFaq.value === index
-      ? null
-      : index
+  openFaq.value = openFaq.value === index ? null : index
+}
+
+function nextSlide() {
+  currentSlide.value =
+    (currentSlide.value + 1) % companies.length
+}
+
+function previousSlide() {
+  currentSlide.value =
+    (currentSlide.value - 1 + companies.length) % companies.length
+}
+
+function slideClass(index) {
+  const diff =
+    (index - currentSlide.value + companies.length) %
+    companies.length
+
+  if (diff === 0) return 'active'
+  if (diff === 1) return 'next'
+  if (diff === companies.length - 1) return 'previous'
+
+  return 'hidden-slide'
 }
 
 function submitForm() {
@@ -365,97 +422,61 @@ function submitForm() {
     formSent.value = false
   }, 5000)
 }
-
-let sliderTimer
-
-onMounted(() => {
-  sliderTimer = setInterval(() => {
-    currentSlide.value =
-      (currentSlide.value + 1) % services.length
-  }, 2400)
-})
-
-onUnmounted(() => {
-  clearInterval(sliderTimer)
-})
 </script>
 
 <template>
   <div
     class="site"
-    :dir="direction"
+    :dir="currentDir"
     :lang="language"
   >
 
     <!-- NAVBAR -->
-
     <header class="navbar">
       <div class="nav-inner">
 
-        <a
-          href="#home"
-          class="logo"
-        >
-          <span class="logo-mark">
-            פ
-          </span>
-
-          <span>
-            פנסרה
-          </span>
+        <a href="#" class="logo">
+          <span class="logo-mark">פ</span>
+          <span class="logo-name">פנסרה</span>
         </a>
 
         <nav
-          class="nav-links"
+          class="desktop-nav"
           :class="{ open: mobileMenu }"
         >
-          <a href="#home">
-            {{ t.navHome }}
-          </a>
-
-          <a href="#services">
-            {{ t.navServices }}
-          </a>
-
-          <a href="#how">
-            {{ t.navHow }}
-          </a>
-
-          <a href="#faq">
-            {{ t.navFaq }}
-          </a>
-
-          <a href="#contact">
-            {{ t.navContact }}
-          </a>
+          <a href="#home">{{ t.navHome }}</a>
+          <a href="#services">{{ t.navServices }}</a>
+          <a href="#how">{{ t.navHow }}</a>
+          <a href="#faq">{{ t.navFaq }}</a>
+          <a href="#contact">{{ t.navContact }}</a>
         </nav>
 
-        <!-- LANGUAGES -->
-
-        <div class="languages">
+        <!-- LANGUAGE SWITCHER -->
+        <div class="language-switcher">
 
           <button
             v-for="item in languages"
             :key="item.id"
             class="language-button"
-            :class="{ active: language === item.id }"
-            @click="changeLanguage(item.id)"
+            :class="{ selected: language === item.id }"
+            @click="setLanguage(item.id)"
+            :aria-label="item.label"
           >
             <span
-              v-if="item.flag"
-              class="flag"
+              v-if="item.id !== 'ar'"
+              class="language-icon"
             >
-              {{ item.flag }}
+              {{ item.icon }}
             </span>
 
             <span
               v-else
-              class="arabic-symbol"
+              class="arabic-icon"
             >
               ع
             </span>
 
-            <span class="language-name">
+            <span class="language-label">
               {{ item.label }}
             </span>
           </button>
@@ -463,8 +484,9 @@ onUnmounted(() => {
         </div>
 
         <button
-          class="hamburger"
+          class="mobile-menu-button"
           @click="mobileMenu = !mobileMenu"
+          aria-label="Menu"
         >
           <span></span>
           <span></span>
@@ -475,595 +497,531 @@ onUnmounted(() => {
     </header>
 
     <!-- HERO -->
+    <main id="home">
 
-    <section
-      id="home"
-      class="hero"
-    >
+      <section class="hero">
 
-      <div class="hero-orb orb-1"></div>
-      <div class="hero-orb orb-2"></div>
+        <div class="hero-background-circle circle-one"></div>
+        <div class="hero-background-circle circle-two"></div>
 
-      <div class="hero-inner">
+        <div class="hero-inner">
 
-        <div class="hero-content">
+          <div class="hero-content">
 
-          <div class="free-badge">
-            <span class="live-dot"></span>
-            {{ t.badge }}
-          </div>
-
-          <h1>
-            {{ t.heroTitle }}
-            <br />
-            <span>
-              {{ t.heroTitle2 }}
-            </span>
-          </h1>
-
-          <p class="hero-description">
-            {{ t.heroText }}
-          </p>
-
-          <div class="hero-buttons">
-
-            <a
-              href="#contact"
-              class="primary-button"
-            >
-              {{ t.cta }}
-
-              <span>
-                ←
-              </span>
-            </a>
-
-            <a
-              href="#how"
-              class="secondary-button"
-            >
-              {{ t.secondary }}
-            </a>
-
-          </div>
-
-          <div class="hero-checks">
-
-            <span>
-              ✓ {{ t.badge }}
-            </span>
-
-            <span>
-              ✓ ללא התחייבות
-            </span>
-
-          </div>
-
-        </div>
-
-        <!-- HERO CARD -->
-
-        <div class="hero-visual">
-
-          <div class="glow-ring"></div>
-
-          <div class="finance-card">
-
-            <div class="finance-card-top">
-              <strong>
-                פנסרה
-              </strong>
-
-              <span class="verified">
-                ✓
-              </span>
+            <div class="free-badge">
+              <span class="pulse-dot"></span>
+              {{ t.badge }}
             </div>
 
-            <div class="finance-icon">
-              ₪
+            <h1>
+              {{ t.heroTitle }}
+              <br />
+              <span>{{ t.heroTitle2 }}</span>
+            </h1>
+
+            <p class="hero-text">
+              {{ t.heroText }}
+            </p>
+
+            <div class="hero-actions">
+
+              <a
+                href="#contact"
+                class="primary-button"
+              >
+                {{ t.heroButton }}
+                <span class="button-arrow">←</span>
+              </a>
+
+              <a
+                href="#how"
+                class="secondary-button"
+              >
+                {{ t.heroSub }}
+              </a>
+
             </div>
 
-            <div class="finance-lines">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+            <div class="hero-trust">
 
-            <div class="finance-bottom">
-              <span>
-                חסכונות וקופות
-              </span>
+              <div>
+                <span class="trust-icon">✓</span>
+                {{ t.badge }}
+              </div>
 
-              <strong>
-                בדיקה
-              </strong>
-            </div>
-
-          </div>
-
-          <div class="floating-stat floating-top">
-            <div class="float-icon">
-              ₪
-            </div>
-
-            <div>
-              <strong>
-                בדיקה
-              </strong>
-
-              <small>
-                ללא עלות
-              </small>
-            </div>
-          </div>
-
-          <div class="floating-stat floating-bottom">
-            <div class="float-check">
-              ✓
-            </div>
-
-            <div>
-              <strong>
+              <div>
+                <span class="trust-icon">✓</span>
                 ללא התחייבות
-              </strong>
+              </div>
 
-              <small>
-                פשוט וברור
-              </small>
             </div>
+
           </div>
 
-        </div>
+          <!-- HERO VISUAL -->
+          <div class="hero-visual">
 
-      </div>
+            <div class="floating-card card-top">
+              <span class="mini-icon">₪</span>
+              <div>
+                <strong>+</strong>
+                <small>חסכונות</small>
+              </div>
+            </div>
 
-      <!-- HERO STATS -->
+            <div class="main-visual-card">
 
-      <div class="stats-bar">
+              <div class="visual-glow"></div>
 
-        <div class="stats-inner">
+              <div class="visual-header">
+                <span>פנסרה</span>
+                <span class="secure">✓</span>
+              </div>
 
-          <div class="stat">
-            <strong>
-              386
-            </strong>
+              <div class="visual-number">
+                ₪
+              </div>
 
-            <span>
-              {{ t.stats1 }}
-            </span>
-          </div>
+              <div class="visual-lines">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
 
-          <div class="stat-divider"></div>
+              <div class="visual-bottom">
+                <span>קופות וחסכונות</span>
+                <strong>בדיקה</strong>
+              </div>
 
-          <div class="stat">
-            <strong>
-              24
-            </strong>
+            </div>
 
-            <span>
-              {{ t.stats2 }}
-            </span>
-          </div>
-
-          <div class="stat-divider"></div>
-
-          <div class="stat">
-            <strong>
-              —
-            </strong>
-
-            <span>
-              {{ t.stats3 }}
-            </span>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- RUNNING SLIDER -->
-
-    <section class="ticker-section">
-
-      <div class="ticker-glow"></div>
-
-      <div class="section-heading compact">
-
-        <span class="eyebrow">
-          פנסרה
-        </span>
-
-        <h2>
-          {{ t.sliderTitle }}
-        </h2>
-
-        <p>
-          {{ t.sliderText }}
-        </p>
-
-      </div>
-
-      <div class="ticker-window">
-
-        <div
-          class="ticker-track"
-          :style="{
-            transform:
-              `translateX(-${currentSlide * 25}%)`
-          }"
-        >
-
-          <!-- duplicated items for seamless visual -->
-
-          <div
-            v-for="(item, index) in [...services, ...services]"
-            :key="index"
-            class="ticker-card"
-          >
-
-            <span class="ticker-icon">
-              ✦
-            </span>
-
-            <strong>
-              {{ item }}
-            </strong>
-
-            <span class="ticker-arrow">
-              →
-            </span>
+            <div class="floating-card card-bottom">
+              <span class="check-circle">✓</span>
+              <div>
+                <strong>בדיקה</strong>
+                <small>ללא עלות</small>
+              </div>
+            </div>
 
           </div>
 
         </div>
 
-      </div>
-
-    </section>
-
-    <!-- SERVICES -->
-
-    <section
-      id="services"
-      class="services-section"
-    >
-
-      <div class="section-heading">
-
-        <span class="eyebrow">
-          השירותים שלנו
-        </span>
-
-        <h2>
-          {{ t.servicesTitle }}
-        </h2>
-
-        <p>
-          {{ t.servicesText }}
-        </p>
-
-      </div>
-
-      <div class="services-grid">
-
-        <article
-          v-for="(service, index) in currentServices"
-          :key="index"
-          class="service-card"
-        >
-
-          <span class="service-number">
-            0{{ index + 1 }}
-          </span>
-
-          <div class="service-icon">
-            {{ service.icon }}
+        <!-- FREE STRIP -->
+        <div class="free-strip">
+          <div class="free-strip-inner">
+            <span class="strip-icon">✓</span>
+            <strong>{{ t.freeTitle }}</strong>
+            <span>{{ t.freeText }}</span>
           </div>
-
-          <h3>
-            {{ service.title }}
-          </h3>
-
-          <p>
-            {{ service.text }}
-          </p>
-
-          <div class="service-bottom">
-            <span></span>
-            →
-          </div>
-
-        </article>
-
-      </div>
-
-    </section>
-
-    <!-- HOW -->
-
-    <section
-      id="how"
-      class="how-section"
-    >
-
-      <div class="section-heading">
-
-        <span class="eyebrow">
-          פשוט וברור
-        </span>
-
-        <h2>
-          {{ t.howTitle }}
-        </h2>
-
-      </div>
-
-      <div class="steps">
-
-        <article
-          v-for="(step, index) in steps"
-          :key="index"
-          class="step"
-        >
-
-          <div class="step-circle">
-            {{ step.number }}
-          </div>
-
-          <h3>
-            {{ step.title }}
-          </h3>
-
-          <p>
-            {{ step.text }}
-          </p>
-
-          <div
-            v-if="index < 3"
-            class="step-connector"
-          ></div>
-
-        </article>
-
-      </div>
-
-    </section>
-
-    <!-- CTA -->
-
-    <section class="big-cta">
-
-      <div class="cta-glow"></div>
-
-      <div class="cta-inner">
-
-        <div class="cta-check">
-          ✓
         </div>
 
-        <div class="cta-copy">
+      </section>
 
-          <span>
-            {{ t.badge }}
+      <!-- COMPANIES SLIDER -->
+      <section class="companies-section">
+
+        <div class="section-heading">
+          <span class="eyebrow">
+            פנסרה
           </span>
 
           <h2>
-            {{ t.formTitle }}
+            {{ t.sliderTitle }}
           </h2>
 
           <p>
-            {{ t.formText }}
+            {{ t.sliderText }}
           </p>
-
         </div>
 
-        <a
-          href="#contact"
-          class="white-button"
-        >
-          {{ t.cta }}
-          <span>
-            ←
-          </span>
-        </a>
-
-      </div>
-
-    </section>
-
-    <!-- FAQ -->
-
-    <section
-      id="faq"
-      class="faq-section"
-    >
-
-      <div class="section-heading">
-
-        <span class="eyebrow">
-          FAQ
-        </span>
-
-        <h2>
-          {{ t.faqTitle }}
-        </h2>
-
-      </div>
-
-      <div class="faq-list">
-
-        <article
-          v-for="(faq, index) in faqs"
-          :key="index"
-          class="faq-item"
-          :class="{ open: openFaq === index }"
-        >
+        <div class="company-slider">
 
           <button
-            class="faq-question"
-            @click="toggleFaq(index)"
+            class="slider-arrow slider-arrow-left"
+            @click="previousSlide"
+            aria-label="Previous"
           >
-
-            <span>
-              {{ faq.q }}
-            </span>
-
-            <strong>
-              {{ openFaq === index ? '−' : '+' }}
-            </strong>
-
+            {{ currentDir === 'rtl' ? '→' : '←' }}
           </button>
 
-          <div
-            v-if="openFaq === index"
-            class="faq-answer"
+          <div class="company-track">
+
+            <article
+              v-for="(company, index) in companies"
+              :key="company.name"
+              class="company-card"
+              :class="slideClass(index)"
+              @mouseenter="currentSlide = index"
+            >
+
+              <div class="company-icon">
+                {{ company.icon }}
+              </div>
+
+              <h3>
+                {{ company.name }}
+              </h3>
+
+              <p>
+                {{ company.text }}
+              </p>
+
+              <div class="company-line"></div>
+
+              <span class="company-arrow">
+                ←
+              </span>
+
+            </article>
+
+          </div>
+
+          <button
+            class="slider-arrow slider-arrow-right"
+            @click="nextSlide"
+            aria-label="Next"
           >
-            {{ faq.a }}
-          </div>
-
-        </article>
-
-      </div>
-
-    </section>
-
-    <!-- CONTACT -->
-
-    <section
-      id="contact"
-      class="contact-section"
-    >
-
-      <div class="contact-box">
-
-        <div class="contact-info">
-
-          <div class="free-badge">
-            <span class="live-dot"></span>
-            {{ t.badge }}
-          </div>
-
-          <h2>
-            {{ t.formTitle }}
-          </h2>
-
-          <p>
-            {{ t.formText }}
-          </p>
-
-          <div class="contact-list">
-
-            <span>
-              ✓ {{ t.badge }}
-            </span>
-
-            <span>
-              ✓ {{ t.secondary }}
-            </span>
-
-            <span>
-              ✓ ללא התחייבות
-            </span>
-
-          </div>
+            {{ currentDir === 'rtl' ? '←' : '→' }}
+          </button>
 
         </div>
 
-        <form
-          class="contact-form"
-          @submit.prevent="submitForm"
-        >
+        <div class="slider-dots">
 
-          <template v-if="!formSent">
+          <button
+            v-for="(_, index) in companies"
+            :key="index"
+            :class="{ active: currentSlide === index }"
+            @click="currentSlide = index"
+          ></button>
 
-            <label>
-              {{ t.name }}
+        </div>
 
-              <input
-                type="text"
-                required
-                autocomplete="name"
-              />
-            </label>
+      </section>
 
-            <label>
-              {{ t.phone }}
+      <!-- SERVICES -->
+      <section
+        id="services"
+        class="services-section"
+      >
 
-              <input
-                type="tel"
-                required
-                autocomplete="tel"
-              />
-            </label>
+        <div class="section-heading">
+          <span class="eyebrow">
+            השירותים שלנו
+          </span>
 
-            <button
-              type="submit"
-              class="form-submit"
-            >
-              {{ t.submit }}
+          <h2>
+            {{ t.servicesTitle }}
+          </h2>
 
-              <span>
-                ←
-              </span>
-            </button>
+          <p>
+            {{ t.servicesText }}
+          </p>
+        </div>
 
-            <small>
-              השארת פרטים אינה מהווה התחייבות.
-            </small>
+        <div class="services-grid">
 
-          </template>
-
-          <div
-            v-else
-            class="success"
+          <article
+            v-for="(service, index) in services"
+            :key="index"
+            class="service-card"
           >
 
-            <div class="success-icon">
-              ✓
+            <div class="service-number">
+              0{{ index + 1 }}
+            </div>
+
+            <div class="service-icon">
+              {{ service.icon }}
             </div>
 
             <h3>
-              {{ t.successTitle }}
+              {{ service.title }}
             </h3>
 
             <p>
-              {{ t.successText }}
+              {{ service.text }}
             </p>
+
+            <div class="service-bottom">
+              <span></span>
+              <b>→</b>
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section
+        id="how"
+        class="how-section"
+      >
+
+        <div class="section-heading">
+          <span class="eyebrow">
+            פשוט וברור
+          </span>
+
+          <h2>
+            {{ t.howTitle }}
+          </h2>
+        </div>
+
+        <div class="steps">
+
+          <article
+            v-for="(step, index) in steps"
+            :key="index"
+            class="step"
+          >
+
+            <div class="step-number">
+              {{ step.number }}
+            </div>
+
+            <div class="step-content">
+
+              <h3>
+                {{ step.title }}
+              </h3>
+
+              <p>
+                {{ step.text }}
+              </p>
+
+            </div>
+
+            <div
+              v-if="index < steps.length - 1"
+              class="step-line"
+            ></div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+      <!-- FREE CTA -->
+      <section class="free-cta">
+
+        <div class="free-cta-glow"></div>
+
+        <div class="free-cta-content">
+
+          <div class="big-free-icon">
+            ✓
+          </div>
+
+          <div>
+            <span class="cta-small">
+              {{ t.badge }}
+            </span>
+
+            <h2>
+              {{ t.formTitle }}
+            </h2>
+
+            <p>
+              {{ t.formText }}
+            </p>
+          </div>
+
+          <a
+            href="#contact"
+            class="white-button"
+          >
+            {{ t.heroButton }}
+            <span>←</span>
+          </a>
+
+        </div>
+
+      </section>
+
+      <!-- FAQ -->
+      <section
+        id="faq"
+        class="faq-section"
+      >
+
+        <div class="section-heading">
+          <span class="eyebrow">
+            FAQ
+          </span>
+
+          <h2>
+            {{ t.faqTitle }}
+          </h2>
+        </div>
+
+        <div class="faq-list">
+
+          <article
+            v-for="(faq, index) in faqs"
+            :key="index"
+            class="faq-item"
+            :class="{ opened: openFaq === index }"
+          >
+
+            <button
+              class="faq-question"
+              @click="toggleFaq(index)"
+            >
+
+              <span>
+                {{ faq.q }}
+              </span>
+
+              <span class="faq-plus">
+                {{ openFaq === index ? '−' : '+' }}
+              </span>
+
+            </button>
+
+            <div
+              v-if="openFaq === index"
+              class="faq-answer"
+            >
+              {{ faq.a }}
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+      <!-- CONTACT FORM -->
+      <section
+        id="contact"
+        class="contact-section"
+      >
+
+        <div class="contact-container">
+
+          <div class="contact-copy">
+
+            <div class="free-badge dark-badge">
+              <span class="pulse-dot"></span>
+              {{ t.badge }}
+            </div>
+
+            <h2>
+              {{ t.formTitle }}
+            </h2>
+
+            <p>
+              {{ t.formText }}
+            </p>
+
+            <div class="contact-benefits">
+
+              <div>
+                <span>✓</span>
+                {{ t.badge }}
+              </div>
+
+              <div>
+                <span>✓</span>
+                {{ t.privacy }}
+              </div>
+
+            </div>
 
           </div>
 
-        </form>
+          <form
+            class="contact-form"
+            @submit.prevent="submitForm"
+          >
 
-      </div>
+            <div
+              v-if="!formSent"
+              class="form-fields"
+            >
 
-    </section>
+              <label>
+                {{ t.name }}
+                <input
+                  type="text"
+                  required
+                  autocomplete="name"
+                  placeholder=""
+                />
+              </label>
+
+              <label>
+                {{ t.phone }}
+                <input
+                  type="tel"
+                  required
+                  autocomplete="tel"
+                  placeholder=""
+                />
+              </label>
+
+              <button
+                type="submit"
+                class="form-button"
+              >
+                {{ t.submit }}
+                <span>←</span>
+              </button>
+
+              <small>
+                {{ t.privacy }}
+              </small>
+
+            </div>
+
+            <div
+              v-else
+              class="success-message"
+            >
+
+              <div class="success-icon">
+                ✓
+              </div>
+
+              <h3>
+                {{ t.sent }}
+              </h3>
+
+              <p>
+                {{ t.sentText }}
+              </p>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </section>
+
+    </main>
 
     <!-- FOOTER -->
-
     <footer class="footer">
 
       <div class="footer-inner">
 
-        <div class="footer-brand">
-
-          <span class="logo-mark">
-            פ
-          </span>
-
-          <strong>
-            פנסרה
-          </strong>
-
+        <div class="footer-logo">
+          <span class="logo-mark">פ</span>
+          <strong>פנסרה</strong>
         </div>
 
         <p>
-          {{ t.footer }}
+          {{ t.footerText }}
         </p>
 
-        <span class="copyright">
-          © {{ new Date().getFullYear() }}
+        <span class="footer-rights">
+          © {{ new Date().getFullYear() }} {{ t.rights }}
         </span>
 
       </div>
@@ -1074,24 +1032,26 @@ onUnmounted(() => {
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700;800&display=swap');
 
 :root {
   --cream: #faf8f2;
-  --cream-2: #f4f1e9;
+  --cream-dark: #f1eee5;
   --white: #ffffff;
 
-  --blue: #12a9c9;
-  --blue-dark: #087f9b;
-  --blue-light: #58d6e9;
+  --blue: #16a7c7;
+  --blue-dark: #087d99;
+  --blue-light: #55cde4;
 
-  --text: #17262c;
-  --muted: #66777e;
+  --text: #18252b;
+  --muted: #65757d;
 
-  --border: rgba(23, 38, 44, .10);
+  --border: rgba(24, 37, 43, .10);
 
   --shadow:
-    0 25px 70px rgba(24, 59, 69, .09);
+    0 20px 60px rgba(35, 65, 75, .09);
+
+  --radius: 24px;
 }
 
 * {
@@ -1104,13 +1064,11 @@ html {
 
 body {
   margin: 0;
-
   background: var(--cream);
-
   color: var(--text);
-
   font-family:
     'Assistant',
+    'Rubik',
     Arial,
     sans-serif;
 
@@ -1119,7 +1077,7 @@ body {
 
 button,
 input {
-  font: inherit;
+  font-family: inherit;
 }
 
 button {
@@ -1127,68 +1085,65 @@ button {
 }
 
 a {
-  text-decoration: none;
   color: inherit;
+  text-decoration: none;
 }
 
-/* NAV */
+/* =========================
+   NAVBAR
+========================= */
 
 .navbar {
   position: absolute;
-
+  z-index: 100;
   top: 0;
   left: 0;
 
   width: 100%;
 
-  z-index: 100;
-
   background:
-    rgba(255, 253, 248, .78);
+    rgba(255, 253, 248, .72);
 
   backdrop-filter:
     blur(18px);
 
   border-bottom:
     1px solid
-    rgba(23,38,44,.06);
+    rgba(24, 37, 43, .06);
 }
 
 .nav-inner {
-  width: min(94vw, 1400px);
-
-  min-height: 88px;
+  width: min(94vw, 1450px);
+  min-height: 92px;
 
   margin: auto;
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
-  gap: 25px;
+  gap: 28px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-
   gap: 10px;
 
-  font-size: 27px;
+  font-size: 28px;
   font-weight: 800;
-
-  white-space: nowrap;
 }
 
 .logo-mark {
-  width: 43px;
-  height: 43px;
+  width: 44px;
+  height: 44px;
 
   display: grid;
   place-items: center;
 
-  border-radius: 14px;
-
   color: white;
+
+  border-radius: 14px;
 
   background:
     linear-gradient(
@@ -1199,75 +1154,77 @@ a {
 
   box-shadow:
     0 10px 25px
-    rgba(18,169,201,.20);
+    rgba(22, 167, 199, .20);
 }
 
-.nav-links {
+.logo-name {
+  letter-spacing: -1px;
+}
+
+.desktop-nav {
   display: flex;
   align-items: center;
+  gap: 34px;
 
-  gap: 30px;
-
-  margin:
-    0 auto;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-.nav-links a {
-  color: #586a71;
-
+.desktop-nav a {
+  color: #51636a;
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 600;
 
   transition: .25s;
 }
 
-.nav-links a:hover {
+.desktop-nav a:hover {
   color: var(--blue);
 }
 
-/* LANGUAGE */
+/* =========================
+   LANGUAGES
+========================= */
 
-.languages {
+.language-switcher {
   display: flex;
   align-items: center;
+  gap: 7px;
 
-  gap: 5px;
+  padding: 6px;
 
-  padding: 5px;
-
-  background: white;
+  background:
+    rgba(255,255,255,.90);
 
   border:
     1px solid
-    rgba(23,38,44,.09);
+    rgba(24,37,43,.10);
 
-  border-radius: 17px;
+  border-radius: 18px;
 
   box-shadow:
     0 8px 25px
-    rgba(25,55,65,.07);
+    rgba(25,50,60,.06);
 }
 
 .language-button {
-  min-height: 44px;
+  min-height: 45px;
 
-  padding:
-    6px 11px;
+  padding: 7px 12px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 7px;
 
-  gap: 6px;
-
-  border-radius: 12px;
+  border-radius: 13px;
 
   background: transparent;
 
-  color: #66777e;
+  color: #65757d;
 
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 700;
 
   cursor: pointer;
 
@@ -1275,57 +1232,66 @@ a {
 }
 
 .language-button:hover,
-.language-button.active {
-  color: white;
-
+.language-button.selected {
   background:
     var(--blue);
 
+  color: white;
+
+  transform:
+    translateY(-1px);
+
   box-shadow:
-    0 7px 20px
-    rgba(18,169,201,.22);
+    0 6px 18px
+    rgba(22,167,199,.25);
 }
 
-.flag {
-  font-size: 19px;
+.language-icon {
+  font-size: 20px;
 }
 
-.arabic-symbol {
-  width: 24px;
-  height: 24px;
+.arabic-icon {
+  width: 25px;
+  height: 25px;
 
   display: grid;
   place-items: center;
 
   border-radius: 50%;
 
-  color: var(--blue);
+  font-size: 16px;
+  font-weight: 800;
 
   background:
-    rgba(18,169,201,.10);
+    rgba(22,167,199,.10);
+
+  color:
+    var(--blue);
 }
 
-.language-button.active .arabic-symbol {
+.language-button.selected .arabic-icon {
+  background: rgba(255,255,255,.20);
   color: white;
-
-  background:
-    rgba(255,255,255,.18);
 }
 
-.hamburger {
+.mobile-menu-button {
   display: none;
 
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
 
-  border-radius: 13px;
+  border-radius: 14px;
 
   background: white;
 
   cursor: pointer;
+
+  box-shadow:
+    0 8px 25px
+    rgba(25,50,60,.08);
 }
 
-.hamburger span {
+.mobile-menu-button span {
   display: block;
 
   width: 22px;
@@ -1336,33 +1302,35 @@ a {
   background: var(--text);
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 
 .hero {
   position: relative;
 
-  min-height: 850px;
+  min-height: 820px;
 
   overflow: hidden;
 
   background:
     radial-gradient(
-      circle at 76% 25%,
-      rgba(18,169,201,.13),
-      transparent 32%
+      circle at 75% 25%,
+      rgba(22,167,199,.13),
+      transparent 34%
     ),
 
     radial-gradient(
-      circle at 12% 85%,
-      rgba(216,195,156,.15),
+      circle at 10% 80%,
+      rgba(210,190,150,.16),
       transparent 35%
     ),
 
     linear-gradient(
       135deg,
-      #fffefa,
-      #faf8f2 60%,
-      #f1eee5
+      #fffdf8 0%,
+      #faf8f2 55%,
+      #f1eee6 100%
     );
 }
 
@@ -1370,19 +1338,19 @@ a {
   position: relative;
   z-index: 2;
 
-  width: min(92vw, 1300px);
+  width: min(92vw, 1350px);
 
-  min-height: 750px;
-
-  padding-top: 135px;
+  min-height: 730px;
 
   margin: auto;
+
+  padding-top: 155px;
 
   display: grid;
 
   grid-template-columns:
-    1fr
-    .85fr;
+    1.05fr
+    .95fr;
 
   align-items: center;
 
@@ -1390,17 +1358,15 @@ a {
 }
 
 .hero-content {
-  max-width: 700px;
+  max-width: 720px;
 }
 
 .free-badge {
   display: inline-flex;
   align-items: center;
-
   gap: 10px;
 
-  padding:
-    10px 17px;
+  padding: 10px 17px;
 
   border-radius: 999px;
 
@@ -1408,63 +1374,70 @@ a {
     var(--blue-dark);
 
   background:
-    rgba(18,169,201,.09);
+    rgba(22,167,199,.10);
 
   border:
     1px solid
-    rgba(18,169,201,.17);
+    rgba(22,167,199,.18);
 
   font-size: 16px;
   font-weight: 800;
+
+  margin-bottom: 25px;
 }
 
-.live-dot {
+.pulse-dot {
   width: 9px;
   height: 9px;
 
   border-radius: 50%;
 
-  background:
-    var(--blue);
+  background: var(--blue);
 
   box-shadow:
     0 0 0 6px
-    rgba(18,169,201,.09);
+    rgba(22,167,199,.10);
 
   animation:
     pulse 1.8s infinite;
 }
 
 @keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
   50% {
-    transform: scale(1.4);
-    opacity: .65;
+    transform: scale(1.35);
+    opacity: .7;
   }
 }
 
 .hero h1 {
-  margin:
-    25px 0 0;
+  margin: 0;
 
   font-size:
-    clamp(45px, 5.5vw, 76px);
+    clamp(46px, 5.3vw, 76px);
 
   line-height: 1.02;
 
-  letter-spacing: -2.7px;
+  letter-spacing: -2.8px;
 
   font-weight: 800;
+
+  color: var(--text);
 }
 
 .hero h1 span {
   color: var(--blue);
 }
 
-.hero-description {
-  max-width: 640px;
+.hero-text {
+  max-width: 650px;
 
   margin:
-    28px 0 0;
+    30px 0 0;
 
   color:
     var(--muted);
@@ -1472,16 +1445,18 @@ a {
   font-size: 21px;
 
   line-height: 1.65;
+
+  font-weight: 400;
 }
 
-.hero-buttons {
+.hero-actions {
   display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 13px;
+  align-items: center;
+  gap: 14px;
 
   margin-top: 34px;
+
+  flex-wrap: wrap;
 }
 
 .primary-button,
@@ -1489,13 +1464,12 @@ a {
   min-height: 61px;
 
   padding:
-    0 27px;
+    0 28px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  gap: 14px;
+  gap: 16px;
 
   border-radius: 16px;
 
@@ -1517,7 +1491,7 @@ a {
 
   box-shadow:
     0 15px 35px
-    rgba(18,169,201,.23);
+    rgba(22,167,199,.23);
 }
 
 .primary-button:hover {
@@ -1526,23 +1500,23 @@ a {
 
   box-shadow:
     0 20px 45px
-    rgba(18,169,201,.32);
+    rgba(22,167,199,.32);
 }
 
-.primary-button span {
-  font-size: 25px;
+.button-arrow {
+  font-size: 24px;
 }
 
 .secondary-button {
+  color:
+    var(--text);
+
   background:
     rgba(255,255,255,.78);
 
   border:
     1px solid
     var(--border);
-
-  color:
-    var(--text);
 }
 
 .secondary-button:hover {
@@ -1550,97 +1524,33 @@ a {
     translateY(-3px);
 
   border-color:
-    rgba(18,169,201,.35);
+    rgba(22,167,199,.35);
 }
 
-.hero-checks {
+.hero-trust {
   display: flex;
-
   flex-wrap: wrap;
 
-  gap: 22px;
+  gap: 24px;
 
-  margin-top: 23px;
+  margin-top: 25px;
 
   color:
-    #718188;
+    #74838a;
 
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
-.hero-checks span {
+.hero-trust div {
   display: flex;
-
   align-items: center;
-
-  gap: 6px;
+  gap: 7px;
 }
 
-/* HERO VISUAL */
-
-.hero-visual {
-  position: relative;
-
-  min-height: 520px;
-
-  display: grid;
-  place-items: center;
-}
-
-.finance-card {
-  position: relative;
-  z-index: 2;
-
-  width: 390px;
-  height: 470px;
-
-  padding: 32px;
-
-  overflow: hidden;
-
-  border-radius: 34px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #ffffff,
-      #e9f9fb
-    );
-
-  border:
-    1px solid
-    rgba(18,169,201,.14);
-
-  box-shadow:
-    0 35px 90px
-    rgba(25,65,75,.13);
-
-  transform:
-    rotate(3deg);
-
-  transition: .5s;
-}
-
-.finance-card:hover {
-  transform:
-    rotate(0deg)
-    scale(1.025);
-}
-
-.finance-card-top {
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  font-size: 24px;
-}
-
-.verified {
-  width: 39px;
-  height: 39px;
+.trust-icon {
+  width: 22px;
+  height: 22px;
 
   display: grid;
   place-items: center;
@@ -1649,13 +1559,110 @@ a {
 
   color: white;
 
-  background:
-    var(--blue);
+  background: var(--blue);
+
+  font-size: 13px;
 }
 
-.finance-icon {
-  width: 150px;
-  height: 150px;
+/* HERO VISUAL */
+
+.hero-visual {
+  position: relative;
+
+  min-height: 500px;
+
+  display: grid;
+  place-items: center;
+}
+
+.main-visual-card {
+  position: relative;
+
+  width: min(420px, 80vw);
+  height: 500px;
+
+  padding: 32px;
+
+  overflow: hidden;
+
+  border-radius: 36px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #edf9fb
+    );
+
+  border:
+    1px solid
+    rgba(22,167,199,.16);
+
+  box-shadow:
+    0 35px 90px
+    rgba(30,70,80,.13);
+
+  transform:
+    rotate(3deg);
+
+  transition: .5s;
+}
+
+.main-visual-card:hover {
+  transform:
+    rotate(0deg)
+    scale(1.025);
+}
+
+.visual-glow {
+  position: absolute;
+
+  width: 300px;
+  height: 300px;
+
+  top: -100px;
+  right: -80px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(22,167,199,.18);
+
+  filter:
+    blur(30px);
+}
+
+.visual-header {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.secure {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  color: white;
+
+  background: var(--blue);
+}
+
+.visual-number {
+  position: relative;
+  z-index: 2;
+
+  width: 160px;
+  height: 160px;
 
   margin:
     85px auto 50px;
@@ -1667,6 +1674,9 @@ a {
 
   color: white;
 
+  font-size: 65px;
+  font-weight: 800;
+
   background:
     linear-gradient(
       145deg,
@@ -1674,42 +1684,44 @@ a {
       var(--blue-dark)
     );
 
-  font-size: 57px;
-  font-weight: 800;
-
   box-shadow:
-    0 25px 60px
-    rgba(18,169,201,.25);
+    0 25px 55px
+    rgba(22,167,199,.25);
 }
 
-.finance-lines {
+.visual-lines {
+  position: relative;
+  z-index: 2;
+
   display: grid;
 
-  gap: 13px;
+  gap: 14px;
 }
 
-.finance-lines span {
-  height: 10px;
+.visual-lines span {
+  display: block;
+
+  height: 11px;
 
   border-radius: 20px;
 
   background:
-    rgba(18,169,201,.11);
+    rgba(22,167,199,.12);
 }
 
-.finance-lines span:nth-child(1) {
+.visual-lines span:nth-child(1) {
   width: 100%;
 }
 
-.finance-lines span:nth-child(2) {
+.visual-lines span:nth-child(2) {
   width: 70%;
 }
 
-.finance-lines span:nth-child(3) {
+.visual-lines span:nth-child(3) {
   width: 85%;
 }
 
-.finance-bottom {
+.visual-bottom {
   position: absolute;
 
   bottom: 28px;
@@ -1719,69 +1731,51 @@ a {
   display: flex;
   justify-content: space-between;
 
-  color:
-    #74858c;
+  color: #72848b;
+
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.finance-bottom strong {
-  color:
-    var(--blue);
+.visual-bottom strong {
+  color: var(--blue);
 }
 
-.glow-ring {
-  position: absolute;
-
-  width: 440px;
-  height: 440px;
-
-  border-radius: 50%;
-
-  border:
-    1px solid
-    rgba(18,169,201,.12);
-
-  box-shadow:
-    0 0 80px
-    rgba(18,169,201,.10);
-}
-
-.floating-stat {
+.floating-card {
   position: absolute;
   z-index: 5;
 
-  min-width: 185px;
+  min-width: 190px;
 
-  padding:
-    15px 18px;
+  padding: 17px 20px;
 
   display: flex;
   align-items: center;
-
-  gap: 12px;
-
-  border-radius: 18px;
+  gap: 13px;
 
   background:
-    rgba(255,255,255,.95);
+    rgba(255,255,255,.94);
 
   border:
     1px solid
-    rgba(18,169,201,.12);
+    rgba(22,167,199,.14);
+
+  border-radius: 18px;
 
   box-shadow:
     0 20px 45px
-    rgba(30,60,70,.11);
+    rgba(30,60,70,.12);
 
   animation:
-    float 4s ease-in-out infinite;
+    floatCard 4s ease-in-out infinite;
 }
 
-.floating-top {
-  top: 55px;
+.card-top {
+  top: 70px;
   right: 0;
 }
 
-.floating-bottom {
+.card-bottom {
   bottom: 55px;
   left: 0;
 
@@ -1789,15 +1783,18 @@ a {
     -1.5s;
 }
 
-@keyframes float {
+@keyframes floatCard {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
   50% {
-    transform:
-      translateY(-12px);
+    transform: translateY(-12px);
   }
 }
 
-.float-icon,
-.float-check {
+.mini-icon,
+.check-circle {
   width: 43px;
   height: 43px;
 
@@ -1808,210 +1805,167 @@ a {
 
   color: white;
 
-  background:
-    var(--blue);
+  background: var(--blue);
 
+  font-size: 20px;
   font-weight: 800;
 }
 
-.floating-stat strong {
+.floating-card strong {
   display: block;
+
+  font-size: 18px;
 }
 
-.floating-stat small {
-  color:
-    #84949a;
+.floating-card small {
+  display: block;
+
+  color: #829097;
+
+  margin-top: 2px;
 }
 
-/* ORBS */
+/* BACKGROUND */
 
-.hero-orb {
+.hero-background-circle {
   position: absolute;
 
   border-radius: 50%;
 
+  filter: blur(2px);
+
   pointer-events: none;
 }
 
-.orb-1 {
-  width: 500px;
-  height: 500px;
+.circle-one {
+  width: 420px;
+  height: 420px;
 
-  top: 25%;
-  right: -300px;
+  top: 30%;
+  right: -200px;
 
   border:
     1px solid
-    rgba(18,169,201,.09);
+    rgba(22,167,199,.10);
 }
 
-.orb-2 {
-  width: 300px;
-  height: 300px;
+.circle-two {
+  width: 280px;
+  height: 280px;
 
-  bottom: -190px;
+  bottom: -150px;
   left: -100px;
 
   background:
-    rgba(215,194,153,.08);
+    rgba(213,191,147,.08);
 }
 
-/* STATS */
+/* FREE STRIP */
 
-.stats-bar {
+.free-strip {
   position: absolute;
+  z-index: 5;
 
   bottom: 0;
   left: 0;
 
   width: 100%;
 
-  z-index: 10;
-
   background:
-    rgba(255,255,255,.88);
+    rgba(255,255,255,.84);
 
   border-top:
     1px solid
-    rgba(23,38,44,.07);
+    rgba(24,37,43,.07);
 
   backdrop-filter:
     blur(15px);
 }
 
-.stats-inner {
-  width: min(92vw, 950px);
+.free-strip-inner {
+  width: min(92vw, 1200px);
 
-  min-height: 105px;
+  min-height: 80px;
 
   margin: auto;
 
-  display: grid;
-
-  grid-template-columns:
-    1fr
-    1px
-    1fr
-    1px
-    1fr;
-
+  display: flex;
   align-items: center;
-}
+  justify-content: center;
 
-.stat {
+  gap: 17px;
+
   text-align: center;
+
+  color: #68787f;
+
+  font-size: 17px;
 }
 
-.stat strong {
-  display: block;
+.free-strip-inner strong {
+  color: var(--text);
+}
 
-  color:
-    var(--blue);
+.strip-icon {
+  width: 32px;
+  height: 32px;
 
-  font-size: 39px;
+  display: grid;
+  place-items: center;
 
-  line-height: 1;
+  border-radius: 50%;
+
+  color: white;
+
+  background: var(--blue);
 
   font-weight: 800;
 }
 
-.stat span {
-  display: block;
+/* =========================
+   GENERAL SECTIONS
+========================= */
 
-  margin-top: 6px;
-
-  color:
-    #687980;
-
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.stat-divider {
-  width: 1px;
-  height: 42px;
-
-  background:
-    rgba(23,38,44,.10);
-}
-
-/* TICKER */
-
-.ticker-section {
-  position: relative;
-
-  overflow: hidden;
-
+section:not(.hero) {
   padding:
-    105px 0 100px;
-
-  background:
-    #fffdf8;
-}
-
-.ticker-glow {
-  position: absolute;
-
-  width: 500px;
-  height: 200px;
-
-  top: 45%;
-
-  left: 50%;
-
-  transform:
-    translate(-50%, -50%);
-
-  border-radius: 50%;
-
-  background:
-    rgba(18,169,201,.08);
-
-  filter:
-    blur(70px);
-
-  pointer-events: none;
+    115px 0;
 }
 
 .section-heading {
-  position: relative;
-  z-index: 2;
-
   width: min(90vw, 850px);
 
   margin:
-    0 auto 50px;
+    0 auto 55px;
 
   text-align: center;
-}
-
-.section-heading.compact {
-  margin-bottom: 42px;
 }
 
 .eyebrow {
   display: inline-block;
 
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 
-  color:
-    var(--blue);
+  color: var(--blue);
 
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 1.5px;
+
+  text-transform: uppercase;
 }
 
 .section-heading h2 {
   margin: 0;
 
+  color: var(--text);
+
   font-size:
-    clamp(35px, 4vw, 53px);
+    clamp(35px, 4vw, 54px);
 
   line-height: 1.08;
 
-  letter-spacing: -1.6px;
+  letter-spacing: -1.8px;
 
   font-weight: 800;
 }
@@ -2020,200 +1974,335 @@ a {
   max-width: 650px;
 
   margin:
-    18px auto 0;
+    20px auto 0;
 
-  color:
-    var(--muted);
+  color: var(--muted);
 
   font-size: 19px;
 
   line-height: 1.6;
 }
 
-.ticker-window {
-  position: relative;
-  z-index: 2;
+/* =========================
+   COMPANIES SLIDER
+========================= */
 
-  width: 100%;
-
-  overflow: hidden;
-
-  padding:
-    15px 0 30px;
+.companies-section {
+  background:
+    #fffdf8;
 }
 
-.ticker-track {
-  width: max-content;
-
-  display: flex;
-
-  gap: 18px;
-
-  transition:
-    transform 1s
-    cubic-bezier(.22,.8,.2,1);
-
-  will-change: transform;
-}
-
-.ticker-card {
+.company-slider {
   position: relative;
 
-  width: 270px;
-  min-height: 115px;
+  width: min(94vw, 1450px);
+
+  margin: auto;
 
   padding:
-    25px;
-
-  flex: 0 0 270px;
+    0 45px;
 
   display: flex;
   align-items: center;
+}
 
-  gap: 15px;
+.company-track {
+  width: 100%;
 
-  border-radius: 22px;
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 32px;
+
+  align-items: center;
+}
+
+.company-card {
+  min-height: 315px;
+
+  padding: 34px;
+
+  position: relative;
+
+  overflow: hidden;
 
   background:
-    rgba(255,255,255,.94);
+    rgba(255,255,255,.92);
 
   border:
     1px solid
-    rgba(18,169,201,.11);
+    rgba(24,37,43,.09);
+
+  border-radius: 24px;
 
   box-shadow:
-    0 15px 40px
-    rgba(25,60,70,.07);
+    0 15px 45px
+    rgba(35,55,65,.07);
 
-  transition: .35s;
+  transition:
+    transform .5s cubic-bezier(.2,.8,.2,1),
+    opacity .5s,
+    box-shadow .5s,
+    border-color .5s;
 
-  overflow: hidden;
+  cursor: pointer;
 }
 
-.ticker-card::before {
+.company-card::before {
   content: '';
 
   position: absolute;
 
-  width: 100px;
-  height: 100px;
+  width: 180px;
+  height: 180px;
 
-  top: -55px;
-  right: -40px;
+  top: -90px;
+  right: -90px;
 
   border-radius: 50%;
 
   background:
-    rgba(18,169,201,.08);
+    rgba(22,167,199,.07);
 
-  filter:
-    blur(2px);
+  transition: .5s;
 }
 
-.ticker-card::after {
-  content: '';
-
-  position: absolute;
-
-  top: 0;
-  left: -100%;
-
-  width: 70%;
-  height: 100%;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.75),
-      transparent
-    );
-
+.company-card:hover,
+.company-card.active {
   transform:
-    skewX(-20deg);
-
-  animation:
-    shine 4.5s infinite;
-}
-
-@keyframes shine {
-  0% {
-    left: -100%;
-  }
-
-  45%,
-  100% {
-    left: 150%;
-  }
-}
-
-.ticker-card:hover {
-  transform:
-    translateY(-7px)
-    scale(1.04);
+    scale(1.04)
+    translateY(-6px);
 
   border-color:
-    rgba(18,169,201,.38);
+    rgba(22,167,199,.45);
 
   box-shadow:
-    0 25px 55px
-    rgba(18,169,201,.14);
+    0 25px 65px
+    rgba(22,167,199,.13);
 }
 
-.ticker-icon {
+.company-card:hover::before,
+.company-card.active::before {
+  transform:
+    scale(1.5);
+
+  background:
+    rgba(22,167,199,.12);
+}
+
+.company-card.next,
+.company-card.previous {
+  opacity: .78;
+}
+
+.company-card.hidden-slide {
+  display: none;
+}
+
+.company-icon {
   position: relative;
-  z-index: 2;
 
-  width: 48px;
-  height: 48px;
-
-  flex: 0 0 auto;
+  width: 67px;
+  height: 67px;
 
   display: grid;
   place-items: center;
 
-  border-radius: 15px;
+  margin-bottom: 28px;
+
+  border-radius: 20px;
+
+  color: var(--blue);
+
+  background:
+    rgba(22,167,199,.09);
+
+  font-size: 28px;
+
+  transition: .4s;
+}
+
+.company-card:hover .company-icon,
+.company-card.active .company-icon {
+  color: white;
+
+  background: var(--blue);
+
+  transform:
+    rotate(-5deg)
+    scale(1.08);
+}
+
+.company-card h3 {
+  position: relative;
+
+  margin: 0;
+
+  font-size: 27px;
+
+  font-weight: 800;
+}
+
+.company-card p {
+  position: relative;
+
+  margin:
+    10px 0 0;
+
+  color: var(--muted);
+
+  font-size: 17px;
+}
+
+.company-line {
+  width: 48px;
+  height: 3px;
+
+  margin-top: 30px;
+
+  border-radius: 20px;
+
+  background: var(--blue);
+
+  transition: .4s;
+}
+
+.company-card:hover .company-line,
+.company-card.active .company-line {
+  width: 90px;
+}
+
+.company-arrow {
+  position: absolute;
+
+  bottom: 30px;
+  right: 30px;
+
+  color: var(--blue);
+
+  font-size: 25px;
+
+  opacity: .55;
+
+  transition: .4s;
+}
+
+.company-card:hover .company-arrow,
+.company-card.active .company-arrow {
+  opacity: 1;
+
+  transform:
+    translateX(-7px);
+}
+
+/* SLIDER ARROWS */
+
+.slider-arrow {
+  position: absolute;
+
+  z-index: 10;
+
+  width: 64px;
+  height: 64px;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    2px solid
+    rgba(22,167,199,.42);
+
+  border-radius: 50%;
+
+  background:
+    rgba(255,255,255,.96);
+
+  color: var(--blue);
+
+  font-size: 27px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 30px
+    rgba(22,167,199,.14),
+
+    0 0 25px
+    rgba(22,167,199,.08);
+
+  transition: .3s;
+}
+
+.slider-arrow:hover {
+  transform:
+    scale(1.18);
 
   color: white;
 
   background:
-    linear-gradient(
-      145deg,
-      var(--blue-light),
-      var(--blue)
-    );
-
-  box-shadow:
-    0 8px 22px
-    rgba(18,169,201,.22);
-}
-
-.ticker-card strong {
-  position: relative;
-  z-index: 2;
-
-  font-size: 18px;
-  font-weight: 800;
-}
-
-.ticker-arrow {
-  position: relative;
-  z-index: 2;
-
-  margin-right: auto;
-
-  color:
     var(--blue);
 
-  font-size: 22px;
+  border-color:
+    var(--blue);
+
+  box-shadow:
+    0 0 25px
+      rgba(22,167,199,.48),
+
+    0 0 60px
+      rgba(22,167,199,.20);
 }
 
-/* SERVICES */
+.slider-arrow-left {
+  left: 7px;
+}
+
+.slider-arrow-right {
+  right: 7px;
+}
+
+.slider-dots {
+  margin-top: 35px;
+
+  display: flex;
+  justify-content: center;
+
+  gap: 8px;
+}
+
+.slider-dots button {
+  width: 9px;
+  height: 9px;
+
+  padding: 0;
+
+  border-radius: 50%;
+
+  background:
+    #cbd7da;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.slider-dots button.active {
+  width: 30px;
+
+  border-radius: 10px;
+
+  background:
+    var(--blue);
+}
+
+/* =========================
+   SERVICES
+========================= */
 
 .services-section {
-  padding:
-    110px 0;
-
   background:
     var(--cream);
 }
@@ -2234,13 +2323,11 @@ a {
 .service-card {
   position: relative;
 
-  min-height: 325px;
+  min-height: 330px;
 
   padding: 32px;
 
   overflow: hidden;
-
-  border-radius: 24px;
 
   background:
     rgba(255,255,255,.88);
@@ -2248,6 +2335,8 @@ a {
   border:
     1px solid
     var(--border);
+
+  border-radius: 24px;
 
   box-shadow:
     0 12px 40px
@@ -2261,36 +2350,36 @@ a {
     translateY(-8px);
 
   border-color:
-    rgba(18,169,201,.35);
+    rgba(22,167,199,.35);
 
   box-shadow:
-    0 25px 55px
-    rgba(18,169,201,.11);
+    0 22px 55px
+    rgba(22,167,199,.11);
 }
 
 .service-number {
   position: absolute;
 
-  top: 15px;
-  left: 23px;
+  top: 20px;
+  left: 25px;
 
   color:
-    rgba(18,169,201,.10);
+    rgba(22,167,199,.12);
 
-  font-size: 57px;
+  font-size: 54px;
   font-weight: 800;
 }
 
 .service-icon {
-  width: 64px;
-  height: 64px;
-
-  margin-bottom: 34px;
+  width: 65px;
+  height: 65px;
 
   display: grid;
   place-items: center;
 
-  border-radius: 18px;
+  margin-bottom: 35px;
+
+  border-radius: 19px;
 
   color: white;
 
@@ -2301,12 +2390,12 @@ a {
       var(--blue)
     );
 
-  font-size: 27px;
+  font-size: 28px;
   font-weight: 800;
 
   box-shadow:
     0 12px 25px
-    rgba(18,169,201,.19);
+    rgba(22,167,199,.18);
 }
 
 .service-card h3 {
@@ -2317,10 +2406,10 @@ a {
 }
 
 .service-card p {
-  margin-top: 11px;
+  margin:
+    12px 0 0;
 
-  color:
-    var(--muted);
+  color: var(--muted);
 
   font-size: 17px;
 
@@ -2330,38 +2419,42 @@ a {
 .service-bottom {
   position: absolute;
 
-  bottom: 24px;
+  bottom: 25px;
   left: 32px;
   right: 32px;
 
   display: flex;
-
+  align-items: center;
   justify-content: space-between;
-
-  color:
-    var(--blue);
-
-  font-size: 25px;
 }
 
 .service-bottom span {
   width: 45px;
   height: 3px;
 
-  margin-top: 12px;
+  border-radius: 10px;
 
-  border-radius: 20px;
-
-  background:
-    var(--blue);
+  background: var(--blue);
 }
 
-/* HOW */
+.service-bottom b {
+  color: var(--blue);
+
+  font-size: 24px;
+
+  transition: .3s;
+}
+
+.service-card:hover .service-bottom b {
+  transform:
+    translateX(-7px);
+}
+
+/* =========================
+   HOW
+========================= */
 
 .how-section {
-  padding:
-    110px 0;
-
   background:
     #fffdf8;
 }
@@ -2385,39 +2478,36 @@ a {
   text-align: center;
 }
 
-.step-circle {
-  width: 88px;
-  height: 88px;
+.step-number {
+  width: 90px;
+  height: 90px;
 
-  margin:
-    0 auto 22px;
+  margin: 0 auto 25px;
 
   display: grid;
   place-items: center;
 
   border-radius: 50%;
 
-  color:
-    var(--blue);
+  color: var(--blue);
 
   background:
-    rgba(18,169,201,.08);
+    rgba(22,167,199,.08);
 
   border:
     2px solid
-    rgba(18,169,201,.15);
+    rgba(22,167,199,.16);
 
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 800;
 
-  transition: .35s;
+  transition: .4s;
 }
 
-.step:hover .step-circle {
+.step:hover .step-number {
   color: white;
 
-  background:
-    var(--blue);
+  background: var(--blue);
 
   transform:
     scale(1.08);
@@ -2427,21 +2517,21 @@ a {
   margin: 0;
 
   font-size: 22px;
+  font-weight: 800;
 }
 
 .step p {
-  margin-top: 7px;
+  margin-top: 8px;
 
-  color:
-    var(--muted);
+  color: var(--muted);
 
   font-size: 16px;
 }
 
-.step-connector {
+.step-line {
   position: absolute;
 
-  top: 44px;
+  top: 45px;
 
   left: calc(50% + 65px);
 
@@ -2452,20 +2542,24 @@ a {
   background:
     linear-gradient(
       90deg,
-      rgba(18,169,201,.24),
+      rgba(22,167,199,.25),
       transparent
     );
 }
 
-/* BIG CTA */
+/* =========================
+   CTA
+========================= */
 
-.big-cta {
+.free-cta {
   position: relative;
 
   width: min(92vw, 1250px);
 
+  min-height: 250px;
+
   margin:
-    20px auto 110px;
+    40px auto 100px;
 
   padding:
     45px 55px;
@@ -2479,22 +2573,22 @@ a {
   background:
     linear-gradient(
       135deg,
-      #15a7c5,
-      #087f9b
+      #159fbd,
+      #087d99
     );
 
   box-shadow:
     0 30px 70px
-    rgba(18,169,201,.21);
+    rgba(22,167,199,.22);
 }
 
-.cta-glow {
+.free-cta-glow {
   position: absolute;
 
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 400px;
 
-  top: -300px;
+  top: -230px;
   right: -100px;
 
   border-radius: 50%;
@@ -2506,58 +2600,68 @@ a {
     blur(5px);
 }
 
-.cta-inner {
+.free-cta-content {
   position: relative;
   z-index: 2;
 
   display: flex;
+
   align-items: center;
 
-  gap: 25px;
+  gap: 30px;
 }
 
-.cta-check {
-  width: 76px;
-  height: 76px;
-
+.big-free-icon {
   flex: 0 0 auto;
+
+  width: 80px;
+  height: 80px;
 
   display: grid;
   place-items: center;
 
-  border-radius: 22px;
+  border-radius: 24px;
+
+  color: white;
 
   background:
     rgba(255,255,255,.14);
 
   border:
     1px solid
-    rgba(255,255,255,.22);
+    rgba(255,255,255,.25);
 
-  font-size: 34px;
+  font-size: 36px;
   font-weight: 800;
 }
 
-.cta-copy span {
+.cta-small {
+  display: block;
+
+  margin-bottom: 5px;
+
   opacity: .85;
 
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
 }
 
-.cta-copy h2 {
-  margin:
-    3px 0 0;
+.free-cta h2 {
+  margin: 0;
 
   font-size:
-    clamp(28px, 4vw, 43px);
+    clamp(28px, 4vw, 44px);
+
+  font-weight: 800;
 }
 
-.cta-copy p {
-  margin:
-    7px 0 0;
+.free-cta p {
+  max-width: 650px;
 
-  opacity: .83;
+  margin:
+    8px 0 0;
+
+  opacity: .85;
 
   font-size: 17px;
 }
@@ -2568,22 +2672,19 @@ a {
   min-height: 58px;
 
   padding:
-    0 24px;
+    0 25px;
 
   display: inline-flex;
   align-items: center;
-
-  gap: 13px;
+  gap: 15px;
 
   white-space: nowrap;
 
   border-radius: 15px;
 
-  color:
-    var(--blue-dark);
+  color: var(--blue-dark);
 
-  background:
-    white;
+  background: white;
 
   font-weight: 800;
 
@@ -2599,12 +2700,11 @@ a {
     rgba(0,0,0,.14);
 }
 
-/* FAQ */
+/* =========================
+   FAQ
+========================= */
 
 .faq-section {
-  padding:
-    110px 0;
-
   background:
     var(--cream);
 }
@@ -2620,43 +2720,43 @@ a {
 
   overflow: hidden;
 
-  border-radius: 17px;
-
   background:
-    rgba(255,255,255,.82);
+    rgba(255,255,255,.80);
 
   border:
     1px solid
     var(--border);
 
+  border-radius: 17px;
+
   transition: .3s;
 }
 
-.faq-item.open {
+.faq-item:hover,
+.faq-item.opened {
   border-color:
-    rgba(18,169,201,.35);
+    rgba(22,167,199,.30);
 
   box-shadow:
     0 10px 30px
-    rgba(25,60,70,.06);
+    rgba(30,60,70,.05);
 }
 
 .faq-question {
   width: 100%;
 
   padding:
-    22px 25px;
+    23px 26px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
-  gap: 20px;
+  gap: 25px;
+
+  color: var(--text);
 
   background: transparent;
-
-  color:
-    var(--text);
 
   text-align: start;
 
@@ -2666,11 +2766,11 @@ a {
   cursor: pointer;
 }
 
-.faq-question strong {
+.faq-plus {
+  flex: 0 0 auto;
+
   width: 34px;
   height: 34px;
-
-  flex: 0 0 auto;
 
   display: grid;
   place-items: center;
@@ -2682,107 +2782,132 @@ a {
   background:
     var(--blue);
 
-  font-size: 22px;
+  font-size: 23px;
+
+  line-height: 1;
 }
 
 .faq-answer {
   padding:
-    0 25px 25px;
+    0 26px 25px;
 
-  color:
-    var(--muted);
+  color: var(--muted);
 
   font-size: 18px;
 
   line-height: 1.65;
 }
 
-/* CONTACT */
+/* =========================
+   CONTACT
+========================= */
 
 .contact-section {
-  padding:
-    110px 0;
-
   background:
     #fffdf8;
 }
 
-.contact-box {
+.contact-container {
   width: min(92vw, 1150px);
 
   margin: auto;
 
   padding:
-    60px;
+    65px;
 
   display: grid;
 
   grid-template-columns:
     1fr
-    .75fr;
+    .8fr;
 
-  gap: 65px;
+  gap: 70px;
 
   border-radius: 32px;
 
   background:
     linear-gradient(
       145deg,
-      #eefafb,
+      #f1fafb,
       #ffffff
     );
 
   border:
     1px solid
-    rgba(18,169,201,.10);
+    rgba(22,167,199,.10);
 
   box-shadow:
     var(--shadow);
 }
 
-.contact-info h2 {
-  margin:
-    25px 0 0;
-
-  font-size:
-    clamp(38px, 4vw, 56px);
-
-  line-height: 1.05;
+.dark-badge {
+  margin-bottom: 22px;
 }
 
-.contact-info > p {
-  max-width: 540px;
+.contact-copy h2 {
+  margin: 0;
 
-  color:
-    var(--muted);
+  font-size:
+    clamp(35px, 4vw, 55px);
+
+  line-height: 1.05;
+
+  letter-spacing: -1.5px;
+}
+
+.contact-copy > p {
+  max-width: 550px;
+
+  color: var(--muted);
 
   font-size: 19px;
 
   line-height: 1.6;
 }
 
-.contact-list {
+.contact-benefits {
   display: grid;
 
+  gap: 12px;
+
+  margin-top: 30px;
+
+  color: #5e7077;
+
+  font-weight: 600;
+}
+
+.contact-benefits div {
+  display: flex;
+  align-items: center;
   gap: 10px;
+}
 
-  margin-top: 28px;
+.contact-benefits span {
+  width: 27px;
+  height: 27px;
 
-  color:
-    #607279;
+  display: grid;
+  place-items: center;
 
-  font-weight: 700;
+  border-radius: 50%;
+
+  color: white;
+
+  background: var(--blue);
+
+  font-size: 14px;
 }
 
 .contact-form {
-  min-height: 330px;
+  min-height: 340px;
 
-  padding: 32px;
+  padding: 35px;
 
   display: flex;
   align-items: center;
 
-  border-radius: 24px;
+  border-radius: 25px;
 
   background: white;
 
@@ -2791,39 +2916,42 @@ a {
     rgba(30,60,70,.08);
 }
 
-.contact-form > * {
+.form-fields {
   width: 100%;
+
+  display: grid;
+
+  gap: 18px;
 }
 
-.contact-form label {
+.form-fields label {
   display: grid;
 
   gap: 7px;
 
-  margin-bottom: 17px;
-
-  color:
-    #53656c;
+  color: #50636a;
 
   font-size: 15px;
   font-weight: 700;
 }
 
-.contact-form input {
+.form-fields input {
   width: 100%;
 
   height: 56px;
 
   padding:
-    0 16px;
+    0 17px;
 
   border:
     1px solid
-    #d8e1e3;
+    #d9e1e3;
 
   border-radius: 13px;
 
   outline: none;
+
+  color: var(--text);
 
   background:
     #fbfcfc;
@@ -2833,25 +2961,22 @@ a {
   transition: .25s;
 }
 
-.contact-form input:focus {
+.form-fields input:focus {
   border-color:
     var(--blue);
 
   box-shadow:
     0 0 0 4px
-    rgba(18,169,201,.09);
+    rgba(22,167,199,.09);
 }
 
-.form-submit {
-  width: 100%;
-
+.form-button {
   min-height: 58px;
 
   display: flex;
-  justify-content: center;
   align-items: center;
-
-  gap: 14px;
+  justify-content: center;
+  gap: 15px;
 
   border-radius: 14px;
 
@@ -2869,26 +2994,31 @@ a {
 
   cursor: pointer;
 
+  box-shadow:
+    0 12px 25px
+    rgba(22,167,199,.20);
+
   transition: .3s;
 }
 
-.form-submit:hover {
+.form-button:hover {
   transform:
     translateY(-3px);
 }
 
-.contact-form small {
-  display: block;
-
-  margin-top: 13px;
-
-  color:
-    #87969b;
+.form-fields small {
+  color: #88979c;
 
   text-align: center;
+
+  font-size: 13px;
+
+  line-height: 1.5;
 }
 
-.success {
+.success-message {
+  width: 100%;
+
   text-align: center;
 }
 
@@ -2913,27 +3043,28 @@ a {
   font-weight: 800;
 }
 
-.success h3 {
+.success-message h3 {
   margin: 0;
 
   font-size: 26px;
 }
 
-.success p {
-  color:
-    var(--muted);
+.success-message p {
+  color: var(--muted);
 
   font-size: 17px;
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
 .footer {
   padding:
     45px 0;
 
   background:
-    #17262c;
+    #17252b;
 
   color: white;
 }
@@ -2946,10 +3077,10 @@ a {
   display: flex;
   align-items: center;
 
-  gap: 28px;
+  gap: 30px;
 }
 
-.footer-brand {
+.footer-logo {
   display: flex;
   align-items: center;
 
@@ -2960,11 +3091,13 @@ a {
   white-space: nowrap;
 }
 
-.footer-brand .logo-mark {
+.footer-logo .logo-mark {
   width: 38px;
   height: 38px;
 
   border-radius: 11px;
+
+  font-size: 19px;
 }
 
 .footer-inner p {
@@ -2973,30 +3106,32 @@ a {
   margin: 0;
 
   color:
-    rgba(255,255,255,.65);
+    rgba(255,255,255,.66);
 
-  font-size: 13px;
+  font-size: 14px;
 
   line-height: 1.6;
 }
 
-.copyright {
+.footer-rights {
   margin-right: auto;
 
-  color:
-    rgba(255,255,255,.50);
-
   white-space: nowrap;
+
+  color:
+    rgba(255,255,255,.55);
 
   font-size: 13px;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
-@media (max-width: 1050px) {
+@media (max-width: 1100px) {
 
-  .nav-links {
-    gap: 16px;
+  .desktop-nav {
+    gap: 18px;
   }
 
   .services-grid {
@@ -3011,7 +3146,7 @@ a {
     row-gap: 55px;
   }
 
-  .step-connector {
+  .step-line {
     display: none;
   }
 
@@ -3023,16 +3158,17 @@ a {
 @media (max-width: 850px) {
 
   .nav-inner {
-    min-height: 78px;
+    min-height: 80px;
   }
 
-  .nav-links {
+  .desktop-nav {
     position: absolute;
 
-    top: 78px;
-
+    top: 82px;
     left: 3vw;
     right: 3vw;
+
+    padding: 25px;
 
     display: none;
 
@@ -3042,43 +3178,45 @@ a {
 
     gap: 0;
 
-    padding: 20px;
+    background:
+      rgba(255,255,255,.98);
 
     border-radius: 20px;
 
-    background: white;
-
     box-shadow:
       0 20px 50px
-      rgba(25,50,60,.14);
+      rgba(30,50,60,.14);
   }
 
-  .nav-links.open {
+  .desktop-nav.open {
     display: flex;
   }
 
-  .nav-links a {
-    padding:
-      15px;
+  .desktop-nav a {
+    padding: 16px;
 
     border-bottom:
       1px solid
-      rgba(23,38,44,.07);
+      rgba(24,37,43,.07);
   }
 
-  .hamburger {
+  .mobile-menu-button {
     display: block;
   }
 
-  .language-name {
-    display: none;
+  .language-switcher {
+    margin-right: auto;
   }
 
   .language-button {
-    width: 43px;
+    min-width: 43px;
 
     padding:
-      6px;
+      7px 9px;
+  }
+
+  .language-label {
+    display: none;
   }
 
   .hero {
@@ -3088,8 +3226,8 @@ a {
   .hero-inner {
     min-height: auto;
 
-    padding:
-      125px 0 140px;
+    padding-top: 130px;
+    padding-bottom: 120px;
 
     grid-template-columns: 1fr;
 
@@ -3100,11 +3238,11 @@ a {
     margin: auto;
   }
 
-  .hero-buttons {
+  .hero-actions {
     justify-content: center;
   }
 
-  .hero-checks {
+  .hero-trust {
     justify-content: center;
   }
 
@@ -3112,26 +3250,80 @@ a {
     min-height: 430px;
   }
 
-  .stats-inner {
-    min-height: 90px;
+  .main-visual-card {
+    height: 420px;
   }
 
-  .stat strong {
-    font-size: 31px;
+  .visual-number {
+    margin:
+      55px auto 40px;
   }
 
-  .stat span {
-    font-size: 13px;
+  .card-top {
+    right: 2%;
   }
 
-  .contact-box {
-    grid-template-columns: 1fr;
+  .card-bottom {
+    left: 2%;
+  }
+
+  .free-strip-inner {
+    flex-wrap: wrap;
 
     padding:
-      40px 25px;
+      14px 0;
+
+    font-size: 15px;
   }
 
-  .cta-inner {
+  .company-slider {
+    width: 100%;
+
+    padding:
+      0 30px;
+  }
+
+  .company-track {
+    grid-template-columns: 1fr;
+  }
+
+  .company-card {
+    min-height: 290px;
+  }
+
+  .company-card.next,
+  .company-card.previous {
+    display: none;
+  }
+
+  .company-card.active {
+    display: block;
+
+    transform:
+      scale(1.01);
+  }
+
+  .slider-arrow-left {
+    left: -3px;
+  }
+
+  .slider-arrow-right {
+    right: -3px;
+  }
+
+  .contact-container {
+    grid-template-columns: 1fr;
+
+    padding: 40px 25px;
+
+    gap: 35px;
+  }
+
+  .free-cta {
+    padding: 35px 28px;
+  }
+
+  .free-cta-content {
     flex-direction: column;
 
     text-align: center;
@@ -3147,12 +3339,16 @@ a {
     text-align: center;
   }
 
-  .copyright {
+  .footer-rights {
     margin: 0;
   }
 }
 
 @media (max-width: 600px) {
+
+  .nav-inner {
+    width: 94vw;
+  }
 
   .logo {
     font-size: 23px;
@@ -3163,19 +3359,40 @@ a {
     height: 39px;
   }
 
-  .hero h1 {
-    font-size:
-      clamp(39px, 11vw, 56px);
-
-    letter-spacing: -1.7px;
+  .language-switcher {
+    gap: 3px;
   }
 
-  .hero-description {
+  .language-button {
+    min-width: 39px;
+    min-height: 39px;
+
+    padding: 5px;
+  }
+
+  .language-icon {
     font-size: 18px;
   }
 
-  .hero-buttons {
-    width: 100%;
+  .arabic-icon {
+    width: 23px;
+    height: 23px;
+  }
+
+  .mobile-menu-button {
+    width: 43px;
+    height: 43px;
+  }
+
+  .hero h1 {
+    font-size:
+      clamp(39px, 11vw, 57px);
+
+    letter-spacing: -1.8px;
+  }
+
+  .hero-text {
+    font-size: 18px;
   }
 
   .primary-button,
@@ -3183,56 +3400,62 @@ a {
     width: 100%;
   }
 
-  .finance-card {
-    width: 310px;
-    height: 390px;
+  .hero-actions {
+    width: 100%;
   }
 
-  .finance-icon {
+  .hero-visual {
+    min-height: 390px;
+  }
+
+  .main-visual-card {
+    width: 310px;
+    height: 380px;
+
+    padding: 25px;
+  }
+
+  .visual-number {
     width: 120px;
     height: 120px;
 
     margin:
       60px auto 40px;
+
+    font-size: 48px;
   }
 
-  .floating-stat {
-    min-width: 150px;
+  .floating-card {
+    min-width: 155px;
 
-    padding: 11px;
+    padding: 12px;
   }
 
-  .floating-top {
-    top: 20px;
+  .card-top {
+    top: 25px;
     right: 0;
   }
 
-  .floating-bottom {
+  .card-bottom {
     bottom: 20px;
     left: 0;
   }
 
-  .stats-inner {
-    width: 94vw;
+  section:not(.hero) {
+    padding:
+      80px 0;
   }
 
-  .stat strong {
-    font-size: 27px;
+  .section-heading {
+    margin-bottom: 40px;
   }
 
-  .stat span {
-    font-size: 11px;
+  .section-heading h2 {
+    font-size: 37px;
   }
 
-  .stat-divider {
-    height: 32px;
-  }
-
-  .ticker-card {
-    width: 235px;
-    flex-basis: 235px;
-
-    min-height: 100px;
+  .section-heading p {
+    font-size: 17px;
   }
 
   .services-grid {
@@ -3245,27 +3468,76 @@ a {
     width: 90vw;
 
     grid-template-columns: 1fr;
+
+    gap: 35px;
   }
 
-  .big-cta {
+  .free-cta {
     width: 90vw;
 
-    padding:
-      35px 25px;
-
-    margin-bottom: 70px;
+    margin-bottom: 60px;
   }
 
   .faq-list {
     width: 90vw;
   }
 
-  .contact-box {
+  .faq-question {
+    padding:
+      20px;
+
+    font-size: 18px;
+  }
+
+  .faq-answer {
+    padding:
+      0 20px 22px;
+
+    font-size: 17px;
+  }
+
+  .contact-container {
     width: 90vw;
   }
 
   .contact-form {
     padding: 22px;
+  }
+
+  .contact-copy h2 {
+    font-size: 38px;
+  }
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+:focus-visible {
+  outline:
+    3px solid
+    rgba(22,167,199,.55);
+
+  outline-offset:
+    3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      .01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    scroll-behavior:
+      auto !important;
+
+    transition-duration:
+      .01ms !important;
   }
 }
 </style>
