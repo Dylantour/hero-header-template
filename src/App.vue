@@ -17,7 +17,7 @@ const content = {
     name: 'פנסרה',
     subtitle: 'פתרונות פיננסיים',
 
-    freeBadge: 'מתחילים בחינם — ללא התחייבות',
+    freeBadge: 'מתחילים בחינם',
 
     heroEyebrow: 'פנסרה',
     heroTitle1: 'יש לכם כסף',
@@ -26,7 +26,7 @@ const content = {
     heroTitle4: 'מה אפשר לעשות איתו.',
 
     heroText:
-      'קרנות השתלמות, קופות גמל, חיסכון פנסיוני והלוואות כנגד קופות — אנחנו עוזרים לכם להבין את האפשרויות הקיימות ולבחון מה רלוונטי עבורכם.',
+      'קרנות השתלמות, קופות גמל, חיסכון פנסיוני והלוואות כנגד קופות — אנחנו עוזרים לכם להבין מה יש לכם ומה האפשרויות שניתן לבדוק.',
 
     start: 'מתחילים את הבדיקה בחינם',
     how: 'איך זה עובד?',
@@ -35,9 +35,13 @@ const content = {
     personal: '✓ יחס אישי',
     clear: '✓ מידע ברור',
 
-    formTitle: 'בדיקה חינמית לגמרי',
-    formStrong: 'בואו נבדוק מה האפשרויות שלכם.',
-    formText: 'הבדיקה וההדרכה על הכספים שאיתרנו — חינם.',
+    formTitle: 'מתחילים בחינם',
+    formStrong: 'הבדיקה הראשונית ללא עלות וללא התחייבות.',
+    formText:
+      'בדיקה והדרכה על הכספים שאיתרנו — לגמרי בחינם.',
+
+    freeMain: 'מתחילים בחינם',
+    freeSub: 'הבדיקה הראשונית ללא עלות וללא התחייבות',
 
     name: 'שם מלא *',
     namePlaceholder: 'לדוגמה: דני לוי',
@@ -62,9 +66,9 @@ const content = {
     secure: '🔒 פרטים מאובטחים',
     noCommit: 'ללא התחייבות',
 
-    servicesEyebrow: 'מה אפשר לעשות?',
+    servicesEyebrow: 'מה אפשר לבדוק?',
     servicesTitle: 'הכסף שלכם.',
-    servicesTitle2: 'רק צריך לדעת איפה.',
+    servicesTitle2: 'רק צריך להבין מה האפשרויות.',
 
     howEyebrow: 'איך זה עובד?',
     howTitle: '3 שלבים.',
@@ -86,6 +90,24 @@ const content = {
     ctaTitle: 'לא צריך לנחש.',
     ctaTitle2: 'מתחילים בבדיקה.',
 
+    step1Title: 'משאירים פרטים',
+    step1Text:
+      'שם, טלפון וכמה פרטים בסיסיים. זה הכול.',
+
+    step2Title: 'בודקים את האפשרויות',
+    step2Text:
+      'בוחנים את הנתונים ומבינים אילו אפשרויות ניתן לבדוק.',
+
+    step3Title: 'מבינים ומחליטים',
+    step3Text:
+      'מסבירים את האפשרויות ואת המשמעות שלהן.',
+
+    companyTypeInstitutional: 'גוף מוסדי',
+    companyTypeInvestment: 'בית השקעות',
+
+    companyDescription:
+      'בחינת אפשרויות בהתאם לנתונים הרלוונטיים.',
+
     faqs: [
       [
         'אפשר למשוך כסף מקופת גמל או קרן השתלמות?',
@@ -97,7 +119,7 @@ const content = {
       ],
       [
         'האם הבדיקה הראשונית מחייבת?',
-        'לא. השארת הפרטים מאפשרת לנו להבין את הצורך ולבחון את האפשרויות הרלוונטיות.'
+        'לא. הבדיקה הראשונית אינה מחייבת אתכם להמשיך. קודם מבינים את המצב ואת האפשרויות.'
       ],
       [
         'כמה מס משלמים על משיכה?',
@@ -122,27 +144,31 @@ const content = {
     name: 'Пенсера',
     subtitle: 'Финансовые решения',
 
-    freeBadge: 'Начинаем бесплатно — без обязательств',
+    freeBadge: 'Начинаем бесплатно',
 
     heroEyebrow: 'Пенсера',
     heroTitle1: 'У вас есть деньги',
     heroTitle2: 'в накоплениях?',
-    heroTitle3: 'Давайте проверим',
-    heroTitle4: 'какие есть возможности.',
+    heroTitle3: 'Давайте посмотрим',
+    heroTitle4: 'что можно сделать.',
 
     heroText:
-      'Накопительные фонды, пенсионные продукты и кредиты под залог накоплений — мы помогаем понять доступные варианты и определить, что может подойти именно вам.',
+      'Купат Гемель, Керен Иштальмут, пенсионные накопления и кредиты под накопления — поможем разобраться, что у вас есть и какие варианты можно проверить.',
 
     start: 'Начать бесплатную проверку',
     how: 'Как это работает?',
 
-    simple: '✓ Простой процесс',
-    personal: '✓ Персональное отношение',
-    clear: '✓ Понятная информация',
+    simple: '✓ Всё просто',
+    personal: '✓ Личное отношение',
+    clear: '✓ Понятно объясняем',
 
-    formTitle: 'Полностью бесплатная проверка',
-    formStrong: 'Давайте проверим ваши возможности.',
-    formText: 'Проверка и объяснение найденных средств — бесплатно.',
+    formTitle: 'Начинаем бесплатно',
+    formStrong: 'Первичная проверка — бесплатно и без обязательств.',
+    formText:
+      'Проверка и объяснение найденных денег — полностью бесплатно.',
+
+    freeMain: 'НАЧИНАЕМ БЕСПЛАТНО',
+    freeSub: 'Первичная проверка — без оплаты и без обязательств',
 
     name: 'Полное имя *',
     namePlaceholder: 'Например: Иван Иванов',
@@ -153,8 +179,8 @@ const content = {
     interest: 'Что вас интересует?',
     choose: 'Выберите вариант',
 
-    withdrawal: 'Вывод средств',
-    training: 'Накопительный фонд',
+    withdrawal: 'Вывод денег',
+    training: 'Керен Иштальмут',
     provident: 'Купат Гемель',
     loan: 'Кредит под накопления',
     unsure: 'Я не уверен/а',
@@ -164,58 +190,76 @@ const content = {
 
     submit: 'Начать бесплатную проверку',
 
-    secure: '🔒 Защищённые данные',
+    secure: '🔒 Данные защищены',
     noCommit: 'Без обязательств',
 
     servicesEyebrow: 'Что можно проверить?',
     servicesTitle: 'Ваши деньги.',
-    servicesTitle2: 'Нужно лишь понять возможности.',
+    servicesTitle2: 'Нужно только понять варианты.',
 
     howEyebrow: 'Как это работает?',
     howTitle: '3 шага.',
-    howTitle2: 'Без лишних сложностей.',
+    howTitle2: 'Всё просто.',
     howText:
-      'Начинаем с проверки. Разбираемся в данных. Затем рассматриваем варианты.',
+      'Сначала проверяем. Потом объясняем. И только после этого смотрим варианты.',
 
-    companiesEyebrow: 'Институциональные организации',
+    companiesEyebrow: 'Финансовые организации',
     companiesTitle: 'Проверяем',
-    companiesTitle2: 'возможности.',
+    companiesTitle2: 'варианты.',
     companiesText:
-      'При необходимости можно проверить данные, связанные с накоплениями и счетами, управляемыми различными организациями.',
+      'При необходимости можно проверить данные по накоплениям, которые находятся в разных финансовых организациях.',
 
     faqEyebrow: 'Частые вопросы',
     faqTitle: 'Есть вопрос?',
-    faqTitle2: 'Мы подготовили ответ.',
+    faqTitle2: 'Вот ответ.',
 
     ctaEyebrow: 'Не знаете, с чего начать?',
     ctaTitle: 'Не нужно гадать.',
     ctaTitle2: 'Начните с проверки.',
 
+    step1Title: 'Оставляете данные',
+    step1Text:
+      'Имя, телефон и несколько простых данных.',
+
+    step2Title: 'Проверяем варианты',
+    step2Text:
+      'Смотрим данные и понимаем, какие варианты можно проверить.',
+
+    step3Title: 'Понимаете и решаете',
+    step3Text:
+      'Объясняем всё простыми словами.',
+
+    companyTypeInstitutional: 'Финансовая организация',
+    companyTypeInvestment: 'Инвестиционный дом',
+
+    companyDescription:
+      'Проверка вариантов в соответствии с актуальными данными.',
+
     faqs: [
       [
-        'Можно ли вывести деньги из Купат Гемель или накопительного фонда?',
-        'Это зависит от типа продукта, даты взносов, вида средств и личных обстоятельств. Мы начинаем с проверки и объясняем доступные варианты.'
+        'Можно ли вывести деньги из Купат Гемель или Керен Иштальмут?',
+        'Это зависит от типа продукта, даты взносов, вида денег и вашей ситуации. Сначала мы проверяем и объясняем варианты.'
       ],
       [
         'Всегда ли лучше выводить деньги?',
-        'Нет. В некоторых случаях можно рассмотреть альтернативы, например кредит под накопления. Важно понять варианты до принятия решения.'
+        'Нет. Иногда можно рассмотреть другие варианты, например кредит под накопления. Важно сначала понять ситуацию.'
       ],
       [
-        'Обязательна ли первичная проверка?',
-        'Нет. Оставив данные, вы позволяете нам понять запрос и проверить соответствующие возможности.'
+        'Обязывает ли меня первичная проверка?',
+        'Нет. Первичная проверка ни к чему вас не обязывает.'
       ],
       [
         'Сколько времени занимает процесс?',
-        'Заполнение формы — менее минуты. Представитель свяжется в течение 24 часов (вс–чт, 9:00–18:00). Вывод средств — обычно 7–14 рабочих дней.'
+        'Заполнение формы — меньше минуты. Представитель свяжется в течение 24 часов (вс–чт, 9:00–18:00). Вывод денег — обычно 7–14 рабочих дней.'
       ],
       [
         'Почему проверка бесплатна?',
-        'Проверка полностью бесплатна. Проверка и объяснение найденных средств — бесплатно. Если для завершения вывода потребуется консультант, представитель предложит условия, а вы решите, продолжать ли.'
+        'Проверка полностью бесплатна. Проверка и объяснение найденных денег — бесплатно. Если для завершения вывода понадобится консультант, представитель предложит условия, а вы решите, продолжать ли.'
       ]
     ],
 
     disclaimer:
-      'Информация на сайте носит общий характер и не является пенсионной или инвестиционной консультацией, гарантией получения кредита или гарантией осуществления вывода средств. Возможности и условия зависят от личных данных и условий соответствующих организаций.'
+      'Информация на сайте носит общий характер и не является пенсионной или инвестиционной консультацией, гарантией получения кредита или гарантией вывода средств. Возможности и условия зависят от личных данных и условий соответствующих организаций.'
   },
 
   ar: {
@@ -223,27 +267,31 @@ const content = {
     name: 'بنصرا',
     subtitle: 'حلول مالية',
 
-    freeBadge: 'نبدأ مجانًا — بدون التزام',
+    freeBadge: 'نبدأ مجانًا',
 
     heroEyebrow: 'بنصرا',
-    heroTitle1: 'لديكم أموال',
+    heroTitle1: 'عندكم أموال',
     heroTitle2: 'في الصناديق؟',
-    heroTitle3: 'دعونا نفحص',
-    heroTitle4: 'ما هي الخيارات المتاحة.',
+    heroTitle3: 'خلينا نشوف',
+    heroTitle4: 'شو ممكن نعمل.',
 
     heroText:
-      'صناديق الاستكمال، صناديق الادخار، التقاعد والقروض مقابل المدخرات — نساعدكم على فهم الخيارات المتاحة وفحص ما قد يكون مناسبًا لكم.',
+      'صناديق الاستكمال، صناديق الادخار والتقاعد، وقروض مقابل المدخرات — بنساعدكم تفهموا شو عندكم وشو الخيارات الممكنة.',
 
     start: 'ابدأوا الفحص مجانًا',
-    how: 'كيف يعمل الأمر؟',
+    how: 'كيف الموضوع بيشتغل؟',
 
-    simple: '✓ عملية بسيطة',
+    simple: '✓ الموضوع بسيط',
     personal: '✓ تعامل شخصي',
-    clear: '✓ معلومات واضحة',
+    clear: '✓ شرح واضح',
 
-    formTitle: 'الفحص مجاني بالكامل',
-    formStrong: 'دعونا نفحص الخيارات المتاحة لكم.',
-    formText: 'الفحص والإرشاد حول الأموال التي تم العثور عليها — مجانًا.',
+    formTitle: 'نبدأ مجانًا',
+    formStrong: 'الفحص الأولي مجاني وبدون التزام.',
+    formText:
+      'الفحص والشرح عن الأموال اللي لقيناها — مجانًا بالكامل.',
+
+    freeMain: 'نبدأ مجانًا',
+    freeSub: 'الفحص الأولي مجاني وبدون أي التزام',
 
     name: 'الاسم الكامل *',
     namePlaceholder: 'مثال: داني ليفي',
@@ -251,72 +299,90 @@ const content = {
     phone: 'رقم الهاتف *',
     phonePlaceholder: '050-0000000',
 
-    interest: 'ما الذي يهمكم؟',
-    choose: 'اختاروا خيارًا',
+    interest: 'شو اللي بهتمكم؟',
+    choose: 'اختاروا خيار',
 
     withdrawal: 'سحب الأموال',
     training: 'صندوق استكمال',
     provident: 'صندوق ادخار',
-    loan: 'قرض مقابل صندوق',
-    unsure: 'لست متأكدًا/متأكدة',
+    loan: 'قرض مقابل الصندوق',
+    unsure: 'مش متأكد/ة',
 
     consent:
-      'أوافق على التواصل معي وفقًا لسياسة الخصوصية.',
+      'أوافق على التواصل معي حسب سياسة الخصوصية.',
 
     submit: 'ابدأوا الفحص مجانًا',
 
     secure: '🔒 بيانات آمنة',
     noCommit: 'بدون التزام',
 
-    servicesEyebrow: 'ماذا يمكننا فحصه؟',
+    servicesEyebrow: 'شو ممكن نفحص؟',
     servicesTitle: 'أموالكم.',
-    servicesTitle2: 'نحتاج فقط إلى فهم الخيارات.',
+    servicesTitle2: 'بس لازم نفهم شو الخيارات.',
 
-    howEyebrow: 'كيف يعمل الأمر؟',
+    howEyebrow: 'كيف الموضوع بيشتغل؟',
     howTitle: '3 خطوات.',
     howTitle2: 'بدون تعقيد.',
     howText:
-      'نبدأ بالفحص. نفهم البيانات. وبعد ذلك نفحص الخيارات.',
+      'بنبدأ بالفحص. بنفهم البيانات. وبعدها بنشوف الخيارات.',
 
-    companiesEyebrow: 'جهات مؤسسية',
+    companiesEyebrow: 'جهات مالية',
     companiesTitle: 'نفحص',
     companiesTitle2: 'الخيارات.',
     companiesText:
-      'عند الحاجة، يمكن فحص البيانات المتعلقة بالصناديق والمدخرات التي تديرها جهات مختلفة.',
+      'عند الحاجة، ممكن نفحص بيانات مرتبطة بالصناديق والمدخرات الموجودة في جهات مالية مختلفة.',
 
     faqEyebrow: 'أسئلة شائعة',
-    faqTitle: 'لديكم سؤال؟',
-    faqTitle2: 'أعددنا الإجابة.',
+    faqTitle: 'عندكم سؤال؟',
+    faqTitle2: 'هاي الإجابة.',
 
-    ctaEyebrow: 'لا تعرفون من أين تبدأون؟',
-    ctaTitle: 'لا داعي للتخمين.',
+    ctaEyebrow: 'مش عارفين من وين تبدأوا؟',
+    ctaTitle: 'ما في داعي للتخمين.',
     ctaTitle2: 'ابدأوا بالفحص.',
+
+    step1Title: 'بتتركوا التفاصيل',
+    step1Text:
+      'الاسم، رقم الهاتف وبعض التفاصيل البسيطة.',
+
+    step2Title: 'بنفحص الخيارات',
+    step2Text:
+      'بنشوف البيانات وبنفهم شو ممكن نفحص.',
+
+    step3Title: 'بتفهموا وبتقرروا',
+    step3Text:
+      'بنشرحلكم الخيارات بطريقة بسيطة.',
+
+    companyTypeInstitutional: 'جهة مالية',
+    companyTypeInvestment: 'بيت استثمار',
+
+    companyDescription:
+      'فحص الخيارات حسب البيانات ذات الصلة.',
 
     faqs: [
       [
-        'هل يمكن سحب الأموال من صندوق ادخار أو صندوق استكمال؟',
-        'يعتمد ذلك على نوع المنتج وتاريخ الإيداعات ونوع الأموال والظروف الشخصية. نبدأ بالفحص ونوضح الخيارات التي يمكن بحثها.'
+        'ممكن نسحب مصاري من صندوق ادخار أو استكمال؟',
+        'هذا بيعتمد على نوع الصندوق، تاريخ الإيداعات، نوع الأموال والظروف الشخصية. بنبدأ بالفحص وبنشرح شو ممكن نعمل.'
       ],
       [
-        'هل من الأفضل دائمًا سحب الأموال؟',
-        'ليس بالضرورة. في بعض الحالات يمكن فحص بدائل مثل القرض مقابل المدخرات. الهدف هو فهم الخيارات قبل اتخاذ القرار.'
+        'هل دايمًا الأفضل نسحب المصاري؟',
+        'مش بالضرورة. أحيانًا ممكن نفحص بدائل، مثل قرض مقابل المدخرات. المهم نفهم الخيارات قبل القرار.'
       ],
       [
-        'هل الفحص الأولي يلزمني بأي شيء؟',
-        'لا. ترك التفاصيل يسمح لنا بفهم الحاجة وفحص الخيارات ذات الصلة.'
+        'هل الفحص الأولي بيلزمني بشي؟',
+        'لا. الفحص الأولي ما بلزمكم بأي شيء.'
       ],
       [
-        'كم يستغرق الإجراء؟',
-        'تعبئة النموذج — أقل من دقيقة. سيتواصل معكم ممثل خلال 24 ساعة (الأحد–الخميس، 9:00–18:00). سحب الأموال — عادةً 7–14 يوم عمل.'
+        'قديش بياخد الموضوع وقت؟',
+        'تعبئة النموذج — أقل من دقيقة. ممثل برجعلكم خلال 24 ساعة (الأحد–الخميس، 9:00–18:00). سحب الأموال — عادةً 7–14 يوم عمل.'
       ],
       [
-        'كيف يمكن أن يكون الفحص مجانيًا؟',
-        'الفحص مجاني بالكامل. الفحص والإرشاد حول الأموال التي تم العثور عليها — مجانًا. إذا تطلب إكمال السحب مستشارًا، سيقدم لكم ممثل عرضًا ويمكنكم اتخاذ قرار بشأن المتابعة.'
+        'كيف الفحص ممكن يكون مجاني؟',
+        'الفحص مجاني بالكامل. الفحص والشرح عن الأموال اللي لقيناها — مجانًا. إذا احتجنا مستشار لإكمال عملية السحب، الممثل بعرض عليكم السعر والشروط وأنتم بتقرروا إذا تكملوا.'
       ]
     ],
 
     disclaimer:
-      'المعلومات في الموقع عامة ولا تشكل استشارة تقاعدية أو استثمارية أو التزامًا بالحصول على قرض أو تنفيذ سحب. الخيارات والشروط تخضع للبيانات الشخصية وشروط الجهات ذات الصلة.'
+      'المعلومات في الموقع عامة ولا تشكل استشارة تقاعدية أو استثمارية أو التزامًا بالحصول على قرض أو تنفيذ سحب. الخيارات والشروط تعتمد على البيانات الشخصية وشروط الجهات ذات الصلة.'
   }
 }
 
@@ -325,76 +391,70 @@ const current = computed(() => content[lang.value])
 const services = computed(() => [
   {
     title: current.value.withdrawal,
+    icon: '₪',
     text:
       lang.value === 'he'
-        ? 'בדיקה של אפשרויות המשיכה בהתאם לסוג הקופה, הכספים והנסיבות.'
+        ? 'בדיקה של אפשרויות המשיכה בהתאם לסוג הקופה והכספים.'
         : lang.value === 'ru'
-          ? 'Проверка вариантов вывода средств в зависимости от продукта, средств и обстоятельств.'
-          : 'فحص خيارات سحب الأموال وفقًا لنوع الصندوق والأموال والظروف.',
-    icon: '₪'
+          ? 'Проверяем варианты вывода денег в зависимости от продукта.'
+          : 'بنفحص خيارات سحب الأموال حسب نوع الصندوق والأموال.'
   },
   {
     title: current.value.training,
+    icon: '↗',
     text:
       lang.value === 'he'
-        ? 'הבנת מצב הקרן ובחינת האפשרויות הקיימות.'
+        ? 'מבינים את מצב הקרן ובוחנים אילו אפשרויות קיימות.'
         : lang.value === 'ru'
-          ? 'Понимание состояния фонда и проверка доступных вариантов.'
-          : 'فهم وضع الصندوق وفحص الخيارات المتاحة.',
-    icon: '↗'
+          ? 'Разбираемся в состоянии накоплений и доступных вариантах.'
+          : 'بنفهم وضع الصندوق وبنشوف شو الخيارات الموجودة.'
   },
   {
     title: current.value.provident,
+    icon: '◇',
     text:
       lang.value === 'he'
         ? 'בדיקה של הכספים והאפשרויות שניתן לבחון.'
         : lang.value === 'ru'
-          ? 'Проверка средств и доступных вариантов.'
-          : 'فحص الأموال والخيارات التي يمكن بحثها.',
-    icon: '◇'
+          ? 'Проверяем деньги и варианты, которые можно рассмотреть.'
+          : 'بنفحص الأموال والخيارات الممكنة.'
   },
   {
     title: current.value.loan,
+    icon: '+',
     text:
       lang.value === 'he'
-        ? 'בחינת אפשרות לקבלת מימון כנגד חיסכון קיים, בכפוף לתנאים.'
+        ? 'בחינת אפשרות לקבלת הלוואה כנגד חיסכון קיים, בכפוף לתנאים.'
         : lang.value === 'ru'
-          ? 'Проверка возможности кредита под существующие накопления, в соответствии с условиями.'
-          : 'فحص إمكانية الحصول على تمويل مقابل مدخرات قائمة، وفقًا للشروط.',
-    icon: '+'
+          ? 'Проверяем возможность кредита под существующие накопления.'
+          : 'بنفحص إمكانية الحصول على قرض مقابل مدخرات موجودة.'
   }
 ])
 
 const companies = [
   {
     name: 'הפניקס',
-    type: 'גוף מוסדי',
-    icon: '◈'
+    type: 'institutional'
   },
   {
     name: 'הראל',
-    type: 'גוף מוסדי',
-    icon: '◇'
+    type: 'institutional'
   },
   {
     name: 'מגדל',
-    type: 'גוף מוסדי',
-    icon: '✦'
+    type: 'institutional'
   },
   {
     name: 'כלל',
-    type: 'גוף מוסדי',
-    icon: '◉'
+    type: 'institutional'
   },
   {
     name: 'מנורה',
-    type: 'גוף מוסדי',
-    icon: '◆'
+    type: 'institutional'
   },
   {
     name: 'מיטב',
-    type: 'בית השקעות',
-    icon: '✧'
+    type: 'investment'
   }
 ]
 
@@ -468,7 +528,7 @@ function toggleFaq(index) {
 function increaseText() {
   textScale.value =
     Math.min(
-      1.25,
+      1.3,
       +(textScale.value + 0.1).toFixed(2)
     )
 }
@@ -479,6 +539,12 @@ function decreaseText() {
       0.9,
       +(textScale.value - 0.1).toFixed(2)
     )
+}
+
+function companyType(company) {
+  return company.type === 'investment'
+    ? current.value.companyTypeInvestment
+    : current.value.companyTypeInstitutional
 }
 
 onMounted(() => {
@@ -496,23 +562,32 @@ onUnmounted(() => {
 })
 </script>
 
+
 <template>
+
   <div
     class="site"
     :class="{
-      'high-contrast': highContrast
+      'high-contrast':
+        highContrast
     }"
     :style="{
-      '--text-scale': textScale
+      '--text-scale':
+        textScale
     }"
   >
 
+
     <!-- HEADER -->
+
     <header class="header">
 
       <div class="nav">
 
-        <a href="#" class="logo">
+        <a
+          href="#"
+          class="logo"
+        >
 
           <span class="logo-mark">
             פ
@@ -556,30 +631,52 @@ onUnmounted(() => {
 
           <!-- LANGUAGES -->
 
-          <div
-            class="languages"
-            aria-label="בחירת שפה"
-          >
+          <div class="languages">
 
             <button
-              :class="{ selected: lang === 'he' }"
-              @click="setLang('he')"
+              :class="{
+                selected:
+                  lang === 'he'
+              }"
+              @click="
+                setLang('he')
+              "
             >
-              עברית
+              🇮🇱
+              <span>
+                עברית
+              </span>
             </button>
 
-            <button
-              :class="{ selected: lang === 'ru' }"
-              @click="setLang('ru')"
-            >
-              Русский
-            </button>
 
             <button
-              :class="{ selected: lang === 'ar' }"
-              @click="setLang('ar')"
+              :class="{
+                selected:
+                  lang === 'ru'
+              }"
+              @click="
+                setLang('ru')
+              "
             >
-              العربية
+              🇷🇺
+              <span>
+                Русский
+              </span>
+            </button>
+
+
+            <button
+              :class="{
+                selected:
+                  lang === 'ar'
+              }"
+              @click="
+                setLang('ar')
+              "
+            >
+              <span>
+                العربية
+              </span>
             </button>
 
           </div>
@@ -589,24 +686,28 @@ onUnmounted(() => {
 
           <button
             class="accessibility-top"
-            @click="increaseText"
-            title="הגדלת טקסט"
+            @click="
+              increaseText()
+            "
           >
             A+
           </button>
 
           <button
             class="accessibility-top"
-            @click="decreaseText"
-            title="הקטנת טקסט"
+            @click="
+              decreaseText()
+            "
           >
             A−
           </button>
 
           <button
             class="accessibility-top"
-            @click="highContrast = !highContrast"
-            title="ניגודיות גבוהה"
+            @click="
+              highContrast =
+                !highContrast
+            "
           >
             ◐
           </button>
@@ -616,8 +717,13 @@ onUnmounted(() => {
             href="#contact"
             class="nav-button"
           >
+
             {{ current.start }}
-            <span>«</span>
+
+            <span>
+              «
+            </span>
+
           </a>
 
         </div>
@@ -625,10 +731,18 @@ onUnmounted(() => {
 
         <button
           class="mobile-menu"
-          @click="menuOpen = !menuOpen"
-          aria-label="תפריט"
+          @click="
+            menuOpen =
+              !menuOpen
+          "
         >
-          {{ menuOpen ? '×' : '☰' }}
+
+          {{
+            menuOpen
+              ? '×'
+              : '☰'
+          }}
+
         </button>
 
       </div>
@@ -644,24 +758,39 @@ onUnmounted(() => {
         <div class="mobile-languages">
 
           <button
-            :class="{ selected: lang === 'he' }"
-            @click="setLang('he')"
+            :class="{
+              selected:
+                lang === 'he'
+            }"
+            @click="
+              setLang('he')
+            "
           >
             🇮🇱 עברית
           </button>
 
           <button
-            :class="{ selected: lang === 'ru' }"
-            @click="setLang('ru')"
+            :class="{
+              selected:
+                lang === 'ru'
+            }"
+            @click="
+              setLang('ru')
+            "
           >
             🇷🇺 Русский
           </button>
 
           <button
-            :class="{ selected: lang === 'ar' }"
-            @click="setLang('ar')"
+            :class="{
+              selected:
+                lang === 'ar'
+            }"
+            @click="
+              setLang('ar')
+            "
           >
-            🇸🇦 العربية
+            العربية
           </button>
 
         </div>
@@ -670,19 +799,26 @@ onUnmounted(() => {
         <div class="mobile-access">
 
           <button
-            @click="increaseText"
+            @click="
+              increaseText()
+            "
           >
             A+
           </button>
 
           <button
-            @click="decreaseText"
+            @click="
+              decreaseText()
+            "
           >
             A−
           </button>
 
           <button
-            @click="highContrast = !highContrast"
+            @click="
+              highContrast =
+                !highContrast
+            "
           >
             ◐
           </button>
@@ -692,28 +828,36 @@ onUnmounted(() => {
 
         <a
           href="#services"
-          @click="menuOpen = false"
+          @click="
+            menuOpen = false
+          "
         >
           {{ current.servicesEyebrow }}
         </a>
 
         <a
           href="#how"
-          @click="menuOpen = false"
+          @click="
+            menuOpen = false
+          "
         >
           {{ current.how }}
         </a>
 
         <a
           href="#companies"
-          @click="menuOpen = false"
+          @click="
+            menuOpen = false
+          "
         >
           {{ current.companiesEyebrow }}
         </a>
 
         <a
           href="#faq"
-          @click="menuOpen = false"
+          @click="
+            menuOpen = false
+          "
         >
           {{ current.faqEyebrow }}
         </a>
@@ -765,12 +909,6 @@ onUnmounted(() => {
 
         <b>»</b>
 
-        <span>
-          {{ current.provident }}
-        </span>
-
-        <b>»</b>
-
       </div>
 
     </div>
@@ -797,36 +935,43 @@ onUnmounted(() => {
           class="lead-card"
         >
 
-          <div class="card-badge">
 
-            <span></span>
+          <!-- HUGE FREE BANNER -->
 
-            {{ current.freeBadge }}
+          <div class="free-banner">
+
+            <div class="free-banner-icon">
+              ✓
+            </div>
+
+            <div class="free-banner-text">
+
+              <strong>
+                {{ current.freeMain }}
+              </strong>
+
+              <span>
+                {{ current.freeSub }}
+              </span>
+
+            </div>
 
           </div>
 
 
-          <h2>
+          <div class="form-header">
 
-            {{ current.formTitle }}
+            <div class="form-step">
+              01 / 03
+            </div>
 
-            <strong>
+            <h2>
+              {{ current.formTitle }}
+            </h2>
+
+            <p>
               {{ current.formStrong }}
-            </strong>
-
-          </h2>
-
-
-          <p class="form-subtitle">
-            {{ current.formText }}
-          </p>
-
-
-          <div class="free-highlight">
-
-            <span>✓</span>
-
-            {{ current.formText }}
+            </p>
 
           </div>
 
@@ -842,7 +987,9 @@ onUnmounted(() => {
 
           <input
             type="text"
-            :placeholder="current.namePlaceholder"
+            :placeholder="
+              current.namePlaceholder
+            "
           />
 
 
@@ -853,7 +1000,9 @@ onUnmounted(() => {
           <input
             type="tel"
             dir="ltr"
-            :placeholder="current.phonePlaceholder"
+            :placeholder="
+              current.phonePlaceholder
+            "
           />
 
 
@@ -942,9 +1091,13 @@ onUnmounted(() => {
 
           <div class="live-pill">
 
-            <span class="live-dot"></span>
+            <span
+              class="live-dot"
+            ></span>
 
-            {{ current.freeBadge }}
+            <strong>
+              {{ current.freeBadge }}
+            </strong>
 
           </div>
 
@@ -953,7 +1106,9 @@ onUnmounted(() => {
 
             {{ current.heroEyebrow }}
 
-            <span>»</span>
+            <span>
+              »
+            </span>
 
           </p>
 
@@ -1041,7 +1196,7 @@ onUnmounted(() => {
     </section>
 
 
-    <!-- HOW IT WORKS -->
+    <!-- HOW -->
 
     <section
       id="how"
@@ -1054,7 +1209,9 @@ onUnmounted(() => {
 
           {{ current.howEyebrow }}
 
-          <span>»</span>
+          <span>
+            »
+          </span>
 
         </p>
 
@@ -1079,7 +1236,6 @@ onUnmounted(() => {
 
       <div class="steps">
 
-
         <div class="step">
 
           <div class="step-number">
@@ -1091,33 +1247,22 @@ onUnmounted(() => {
           </div>
 
           <h3>
-
-            {{
-              lang === 'he'
-                ? 'משאירים פרטים'
-                : lang === 'ru'
-                  ? 'Оставляете данные'
-                  : 'ترك التفاصيل'
-            }}
-
+            {{ current.step1Title }}
           </h3>
 
           <p>
-
-            {{
-              lang === 'he'
-                ? 'שם, טלפון וכמה פרטים בסיסיים. זה הכול.'
-                : lang === 'ru'
-                  ? 'Имя, телефон и несколько основных данных.'
-                  : 'الاسم ورقم الهاتف وبعض التفاصيل الأساسية.'
-            }}
-
+            {{ current.step1Text }}
           </p>
 
         </div>
 
 
-        <div class="step active-step">
+        <div
+          class="
+            step
+            active-step
+          "
+        >
 
           <div class="step-number">
             02
@@ -1128,27 +1273,11 @@ onUnmounted(() => {
           </div>
 
           <h3>
-
-            {{
-              lang === 'he'
-                ? 'בודקים את האפשרויות'
-                : lang === 'ru'
-                  ? 'Проверяем варианты'
-                  : 'نفحص الخيارات'
-            }}
-
+            {{ current.step2Title }}
           </h3>
 
           <p>
-
-            {{
-              lang === 'he'
-                ? 'בוחנים את הנתונים ומבינים אילו אפשרויות ניתן לבדוק.'
-                : lang === 'ru'
-                  ? 'Изучаем данные и определяем, какие варианты можно рассмотреть.'
-                  : 'نفحص البيانات ونحدد الخيارات التي يمكن بحثها.'
-            }}
-
+            {{ current.step2Text }}
           </p>
 
         </div>
@@ -1161,27 +1290,11 @@ onUnmounted(() => {
           </div>
 
           <h3>
-
-            {{
-              lang === 'he'
-                ? 'מבינים ומחליטים'
-                : lang === 'ru'
-                  ? 'Понимаете и решаете'
-                  : 'تفهمون وتقررون'
-            }}
-
+            {{ current.step3Title }}
           </h3>
 
           <p>
-
-            {{
-              lang === 'he'
-                ? 'מסבירים את האפשרויות ואת המשמעות שלהן.'
-                : lang === 'ru'
-                  ? 'Объясняем варианты и их значение.'
-                  : 'نشرح الخيارات ومعناها.'
-            }}
-
+            {{ current.step3Text }}
           </p>
 
         </div>
@@ -1195,16 +1308,27 @@ onUnmounted(() => {
 
     <section
       id="services"
-      class="section dark-section services-section"
+      class="
+        section
+        dark-section
+        services-section
+      "
     >
 
-      <div class="section-heading right-heading">
+      <div
+        class="
+          section-heading
+          right-heading
+        "
+      >
 
         <p class="eyebrow">
 
           {{ current.servicesEyebrow }}
 
-          <span>»</span>
+          <span>
+            »
+          </span>
 
         </p>
 
@@ -1227,11 +1351,17 @@ onUnmounted(() => {
       <div class="services-grid">
 
         <article
-          v-for="(service, index) in services"
-          :key="service.title"
+          v-for="
+            (service, index)
+            in services
+          "
+          :key="
+            service.title
+          "
           class="service-card"
           :class="{
-            featured: index === 0
+            featured:
+              index === 0
           }"
         >
 
@@ -1243,16 +1373,13 @@ onUnmounted(() => {
             0{{ index + 1 }}
           </div>
 
-
           <h3>
             {{ service.title }}
           </h3>
 
-
           <p>
             {{ service.text }}
           </p>
-
 
           <a href="#contact">
 
@@ -1275,7 +1402,11 @@ onUnmounted(() => {
 
     <section
       id="companies"
-      class="section dark-section company-section"
+      class="
+        section
+        dark-section
+        company-section
+      "
       @mouseenter="stopSlider"
       @mouseleave="startSlider"
     >
@@ -1286,7 +1417,9 @@ onUnmounted(() => {
 
           {{ current.companiesEyebrow }}
 
-          <span>»</span>
+          <span>
+            »
+          </span>
 
         </p>
 
@@ -1312,9 +1445,11 @@ onUnmounted(() => {
       <div class="company-slider">
 
         <button
-          class="slider-arrow arrow-right"
+          class="
+            slider-arrow
+            arrow-right
+          "
           @click="prevSlide"
-          aria-label="הקודם"
         >
           «
         </button>
@@ -1323,20 +1458,38 @@ onUnmounted(() => {
         <div class="company-track">
 
           <article
-            v-for="company in visibleCompanies"
-            :key="company.name"
+            v-for="
+              company
+              in visibleCompanies
+            "
+            :key="
+              company.name
+            "
             class="company-card"
             :class="{
-              center: company.position === 0,
-              dim: company.position !== 0,
-              hovered: hoveredSlide === company.name
+              center:
+                company.position === 0,
+
+              dim:
+                company.position !== 0,
+
+              hovered:
+                hoveredSlide ===
+                company.name
             }"
-            @mouseenter="hoveredSlide = company.name"
-            @mouseleave="hoveredSlide = null"
+            @mouseenter="
+              hoveredSlide =
+                company.name
+            "
+            @mouseleave="
+              hoveredSlide = null
+            "
             @click="
               activeSlide =
                 companies.findIndex(
-                  c => c.name === company.name
+                  c =>
+                    c.name ===
+                    company.name
                 )
             "
           >
@@ -1344,11 +1497,11 @@ onUnmounted(() => {
             <div class="company-top">
 
               <div class="company-icon">
-                {{ company.icon }}
+                ◈
               </div>
 
               <span class="company-type">
-                {{ company.type }}
+                {{ companyType(company) }}
               </span>
 
             </div>
@@ -1360,15 +1513,7 @@ onUnmounted(() => {
 
 
             <p>
-
-              {{
-                lang === 'he'
-                  ? 'בחינת אפשרויות בהתאם לנתונים הרלוונטיים.'
-                  : lang === 'ru'
-                    ? 'Проверка вариантов в соответствии с актуальными данными.'
-                    : 'فحص الخيارات وفقًا للبيانات ذات الصلة.'
-              }}
-
+              {{ current.companyDescription }}
             </p>
 
 
@@ -1390,9 +1535,11 @@ onUnmounted(() => {
 
 
         <button
-          class="slider-arrow arrow-left"
+          class="
+            slider-arrow
+            arrow-left
+          "
           @click="nextSlide"
-          aria-label="הבא"
         >
           »
         </button>
@@ -1403,11 +1550,15 @@ onUnmounted(() => {
       <div class="slider-dots">
 
         <button
-          v-for="(_, index) in companies"
+          v-for="
+            (_, index)
+            in companies
+          "
           :key="index"
           :class="{
             selected:
-              index === activeSlide
+              index ===
+              activeSlide
           }"
           @click="
             activeSlide = index
@@ -1427,6 +1578,17 @@ onUnmounted(() => {
 
 
       <div class="cta-content">
+
+        <div class="cta-free">
+
+          <span>
+            ✓
+          </span>
+
+          {{ current.freeBadge }}
+
+        </div>
+
 
         <p class="eyebrow">
           {{ current.ctaEyebrow }}
@@ -1453,7 +1615,7 @@ onUnmounted(() => {
 
         <a
           href="#contact"
-          class="primary-button"
+          class="primary-button big-cta"
         >
 
           {{ current.start }}
@@ -1473,7 +1635,10 @@ onUnmounted(() => {
 
     <section
       id="faq"
-      class="section faq-section"
+      class="
+        section
+        faq-section
+      "
     >
 
       <div class="section-heading">
@@ -1482,7 +1647,9 @@ onUnmounted(() => {
 
           {{ current.faqEyebrow }}
 
-          <span>»</span>
+          <span>
+            »
+          </span>
 
         </p>
 
@@ -1503,7 +1670,10 @@ onUnmounted(() => {
       <div class="faq-list">
 
         <div
-          v-for="(faq, index) in current.faqs"
+          v-for="
+            (faq, index)
+            in current.faqs
+          "
           :key="faq[0]"
           class="faq-item"
           :class="{
@@ -1521,7 +1691,6 @@ onUnmounted(() => {
             <span>
               {{ faq[0] }}
             </span>
-
 
             <b>
 
@@ -1605,7 +1774,9 @@ onUnmounted(() => {
 
 
       <div class="footer-disclaimer">
+
         {{ current.disclaimer }}
+
       </div>
 
 
@@ -1613,7 +1784,9 @@ onUnmounted(() => {
 
         © {{ new Date().getFullYear() }}
 
-        {{ current.name }}.
+        {{ current.name }}
+
+        .
 
         {{
           lang === 'he'
@@ -1634,59 +1807,112 @@ onUnmounted(() => {
       href="#contact"
       class="floating-cta"
     >
-      {{ current.start }}
+
+      <span>
+        ✓
+      </span>
+
+      {{ current.freeBadge }}
+
     </a>
 
   </div>
+
 </template>
 
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Rubik:wght@400;500;600;700;800;900&display=swap');
+
+@import url(
+  'https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Rubik:wght@400;500;600;700;800;900&display=swap'
+);
+
 
 :root {
-  --bg: #080b10;
-  --cyan: #37c9f5;
-  --cyan-light: #5edcff;
-  --text: #f5f7fa;
-  --muted: #929aa8;
-  --border: rgba(255,255,255,.11);
+
+  --bg:
+    #080b10;
+
+  --cyan:
+    #37c9f5;
+
+  --cyan-light:
+    #5edcff;
+
+  --text:
+    #f5f7fa;
+
+  --muted:
+    #929aa8;
+
+  --border:
+    rgba(255,255,255,.11);
+
 }
+
 
 * {
-  box-sizing: border-box;
+  box-sizing:
+    border-box;
 }
+
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior:
+    smooth;
 }
 
+
 body {
-  margin: 0;
-  background: var(--bg);
+
+  margin:
+    0;
+
+  background:
+    var(--bg);
+
   font-family:
     'Heebo',
     'Rubik',
     Arial,
     sans-serif;
+
 }
+
 
 button,
 input,
 select {
-  font-family: inherit;
+  font-family:
+    inherit;
 }
+
 
 a {
-  color: inherit;
-  text-decoration: none;
+
+  color:
+    inherit;
+
+  text-decoration:
+    none;
+
 }
 
+
 .site {
-  min-height: 100vh;
-  color: var(--text);
+
+  min-height:
+    100vh;
+
+  color:
+    var(--text);
+
   font-size:
-    calc(16px * var(--text-scale));
+    calc(
+      16px *
+      var(--text-scale)
+    );
+
 }
 
 
@@ -1695,175 +1921,347 @@ a {
 ========================= */
 
 .header {
-  position: fixed;
-  inset: 0 0 auto;
-  z-index: 100;
+
+  position:
+    fixed;
+
+  inset:
+    0 0 auto;
+
+  z-index:
+    100;
+
   background:
-    rgba(7,10,15,.9);
+    rgba(7,10,15,.93);
+
   border-bottom:
-    1px solid rgba(255,255,255,.08);
-  backdrop-filter: blur(18px);
+    1px solid
+    rgba(255,255,255,.08);
+
+  backdrop-filter:
+    blur(18px);
+
 }
+
 
 .nav {
-  height: 76px;
-  max-width: 1180px;
-  margin: auto;
-  padding: 0 24px;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  height:
+    76px;
 
-  gap: 25px;
+  max-width:
+    1180px;
+
+  margin:
+    auto;
+
+  padding:
+    0 24px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    25px;
+
 }
+
 
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  flex-shrink:
+    0;
+
 }
 
-.logo-mark {
-  width: 42px;
-  height: 42px;
 
-  border-radius: 12px;
+.logo-mark {
+
+  width:
+    42px;
+
+  height:
+    42px;
+
+  border-radius:
+    12px;
 
   background:
     var(--cyan);
 
-  color: #061018;
+  color:
+    #061018;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display:
+    flex;
 
-  font-weight: 900;
-  font-size: 21px;
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  font-weight:
+    900;
+
+  font-size:
+    21px;
+
 }
+
 
 .logo strong {
-  display: block;
-  font-size: 20px;
-  line-height: 20px;
+
+  display:
+    block;
+
+  font-size:
+    20px;
+
+  line-height:
+    20px;
+
 }
+
 
 .logo small {
-  display: block;
-  color: #727b88;
-  font-size: 10px;
+
+  display:
+    block;
+
+  color:
+    #727b88;
+
+  font-size:
+    10px;
+
 }
+
 
 .desktop-nav {
-  display: flex;
-  align-items: center;
-  gap: 24px;
 
-  color: #9ba3b0;
+  display:
+    flex;
 
-  font-size: 13px;
-  font-weight: 700;
+  align-items:
+    center;
+
+  gap:
+    24px;
+
+  color:
+    #9ba3b0;
+
+  font-size:
+    13px;
+
+  font-weight:
+    700;
+
 }
+
 
 .desktop-nav a {
-  transition: .25s;
+
+  transition:
+    .25s;
+
 }
+
 
 .desktop-nav a:hover {
-  color: var(--cyan);
+
+  color:
+    var(--cyan);
+
 }
+
+
+/* =========================
+   LANGUAGE
+========================= */
 
 .header-actions {
-  display: flex;
-  align-items: center;
-  gap: 7px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    7px;
+
 }
 
+
 .languages {
-  display: flex;
-  padding: 3px;
+
+  display:
+    flex;
+
+  padding:
+    3px;
 
   border:
-    1px solid rgba(255,255,255,.12);
+    1px solid
+    rgba(255,255,255,.12);
 
-  border-radius: 999px;
+  border-radius:
+    999px;
 
   background:
     rgba(255,255,255,.04);
+
 }
+
 
 .languages button {
-  border: 0;
-  background: transparent;
 
-  color: #929aa8;
+  border:
+    0;
 
-  cursor: pointer;
+  background:
+    transparent;
 
-  padding: 7px 9px;
+  color:
+    #929aa8;
 
-  border-radius: 999px;
+  cursor:
+    pointer;
 
-  font-size: 11px;
-  font-weight: 800;
+  padding:
+    7px 9px;
 
-  transition: .25s;
+  border-radius:
+    999px;
+
+  font-size:
+    11px;
+
+  font-weight:
+    800;
+
+  transition:
+    .25s;
+
 }
 
+
 .languages button.selected {
+
   background:
     var(--cyan);
 
-  color: #061018;
+  color:
+    #061018;
+
 }
+
+
+/* =========================
+   ACCESSIBILITY
+========================= */
 
 .accessibility-top {
-  width: 32px;
-  height: 32px;
+
+  width:
+    32px;
+
+  height:
+    32px;
 
   border:
-    1px solid rgba(255,255,255,.12);
+    1px solid
+    rgba(255,255,255,.12);
 
-  border-radius: 8px;
+  border-radius:
+    8px;
 
-  background: #11161d;
+  background:
+    #11161d;
 
-  color: #b7c0ca;
+  color:
+    #b7c0ca;
 
-  cursor: pointer;
+  cursor:
+    pointer;
 
-  font-weight: 900;
+  font-weight:
+    900;
+
 }
+
 
 .accessibility-top:hover {
-  color: var(--cyan);
-  border-color: var(--cyan);
+
+  color:
+    var(--cyan);
+
+  border-color:
+    var(--cyan);
+
 }
+
+
+/* =========================
+   BUTTONS
+========================= */
 
 .nav-button,
 .primary-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 
-  background: var(--cyan);
-  color: #061018;
+  display:
+    inline-flex;
 
-  font-weight: 900;
+  align-items:
+    center;
 
-  border-radius: 999px;
+  justify-content:
+    center;
 
-  padding: 12px 19px;
+  background:
+    var(--cyan);
 
-  transition: .3s;
+  color:
+    #061018;
 
-  white-space: nowrap;
+  font-weight:
+    900;
+
+  border-radius:
+    999px;
+
+  padding:
+    12px 19px;
+
+  transition:
+    .3s;
+
+  white-space:
+    nowrap;
+
 }
+
 
 .nav-button:hover,
 .primary-button:hover {
+
   background:
     var(--cyan-light);
 
@@ -1873,29 +2271,36 @@ a {
   box-shadow:
     0 10px 30px
     rgba(55,201,245,.2);
+
 }
+
 
 .nav-button span,
 .primary-button span {
-  margin-right: 8px;
+
+  margin-right:
+    8px;
+
 }
+
 
 .mobile-menu {
-  display: none;
 
-  border: 0;
-  background: transparent;
+  display:
+    none;
 
-  color: white;
+  border:
+    0;
 
-  font-size: 25px;
-}
+  background:
+    transparent;
 
+  color:
+    white;
 
-/* MOBILE MENU */
+  font-size:
+    25px;
 
-.mobile-nav {
-  display: none;
 }
 
 
@@ -1904,52 +2309,89 @@ a {
 ========================= */
 
 .ticker {
-  position: relative;
-  z-index: 5;
 
-  margin-top: 76px;
+  position:
+    relative;
 
-  height: 48px;
+  z-index:
+    5;
 
-  overflow: hidden;
+  margin-top:
+    76px;
+
+  height:
+    48px;
+
+  overflow:
+    hidden;
 
   background:
     #0c1016;
 
   border-bottom:
-    1px solid var(--border);
+    1px solid
+    var(--border);
+
 }
+
 
 .ticker-track {
-  width: max-content;
-  height: 100%;
 
-  display: flex;
-  align-items: center;
+  width:
+    max-content;
 
-  gap: 28px;
+  height:
+    100%;
 
-  color: #777f8d;
+  display:
+    flex;
 
-  font-size: 13px;
-  font-weight: 800;
+  align-items:
+    center;
+
+  gap:
+    28px;
+
+  color:
+    #777f8d;
+
+  font-size:
+    13px;
+
+  font-weight:
+    800;
 
   animation:
-    ticker 28s linear infinite;
+    ticker
+    28s linear infinite;
+
 }
+
 
 .ticker b {
-  color: var(--cyan);
+
+  color:
+    var(--cyan);
+
 }
 
+
 @keyframes ticker {
+
   from {
-    transform: translateX(0);
+
+    transform:
+      translateX(0);
+
   }
 
   to {
-    transform: translateX(50%);
+
+    transform:
+      translateX(50%);
+
   }
+
 }
 
 
@@ -1958,13 +2400,18 @@ a {
 ========================= */
 
 .hero {
-  position: relative;
 
-  min-height: 790px;
+  position:
+    relative;
 
-  overflow: hidden;
+  min-height:
+    790px;
+
+  overflow:
+    hidden;
 
   background:
+
     radial-gradient(
       circle at 75% 30%,
       rgba(26,134,164,.28),
@@ -1978,15 +2425,23 @@ a {
     ),
 
     #090c11;
+
 }
 
-.hero-grid {
-  position: absolute;
-  inset: 0;
 
-  opacity: .15;
+.hero-grid {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  opacity:
+    .15;
 
   background-image:
+
     linear-gradient(
       rgba(255,255,255,.08)
       1px,
@@ -2009,188 +2464,389 @@ a {
       black,
       transparent 90%
     );
+
 }
+
 
 .hero-glow {
-  position: absolute;
 
-  border-radius: 50%;
+  position:
+    absolute;
 
-  filter: blur(70px);
+  border-radius:
+    50%;
 
-  pointer-events: none;
+  filter:
+    blur(70px);
+
+  pointer-events:
+    none;
+
 }
 
-.glow-one {
-  width: 400px;
-  height: 400px;
 
-  right: -120px;
-  top: 100px;
+.glow-one {
+
+  width:
+    400px;
+
+  height:
+    400px;
+
+  right:
+    -120px;
+
+  top:
+    100px;
 
   background:
     rgba(37,198,239,.12);
+
 }
 
-.glow-two {
-  width: 300px;
-  height: 300px;
 
-  left: 10%;
-  bottom: 30px;
+.glow-two {
+
+  width:
+    300px;
+
+  height:
+    300px;
+
+  left:
+    10%;
+
+  bottom:
+    30px;
 
   background:
     rgba(230,112,56,.07);
+
 }
 
+
 .hero-content {
-  position: relative;
-  z-index: 2;
 
-  max-width: 1180px;
+  position:
+    relative;
 
-  min-height: 790px;
+  z-index:
+    2;
 
-  margin: auto;
+  max-width:
+    1180px;
+
+  min-height:
+    790px;
+
+  margin:
+    auto;
 
   padding:
     70px 24px;
 
-  display: grid;
+  display:
+    grid;
 
   grid-template-columns:
     420px 1fr;
 
-  align-items: center;
+  align-items:
+    center;
 
-  gap: 90px;
+  gap:
+    90px;
+
 }
 
 
 /* =========================
-   FORM
+   FORM CARD
 ========================= */
 
 .lead-card {
-  position: relative;
 
-  background: #f8f9fb;
+  position:
+    relative;
 
-  color: #111722;
+  background:
+    #f8f9fb;
+
+  color:
+    #111722;
 
   border:
-    2px solid var(--cyan);
+    2px solid
+    var(--cyan);
 
-  border-radius: 20px;
+  border-radius:
+    22px;
 
-  padding: 31px;
+  padding:
+    31px;
 
   box-shadow:
-    0 0 0 5px
-      rgba(55,201,245,.05),
+
+    0 0 0 6px
+      rgba(55,201,245,.06),
 
     0 25px 80px
       rgba(0,0,0,.45),
 
-    0 0 50px
-      rgba(55,201,245,.13);
+    0 0 65px
+      rgba(55,201,245,.16);
+
 }
 
-.card-badge {
-  position: absolute;
 
-  top: -16px;
-  right: 25px;
+/* =========================
+   HUGE FREE BANNER
+========================= */
 
-  background:
-    var(--cyan);
+.free-banner {
 
-  color: #061018;
-
-  padding:
-    7px 14px;
-
-  border-radius:
-    999px;
-
-  font-size: 11px;
-  font-weight: 900;
-}
-
-.card-badge span {
-  display: inline-block;
-
-  width: 7px;
-  height: 7px;
-
-  margin-left: 6px;
-
-  background:
-    #063d4c;
-
-  border-radius: 50%;
-}
-
-.lead-card h2 {
-  margin:
-    10px 0 8px;
-
-  font-size: 27px;
-
-  line-height: 1.15;
-
-  font-weight: 900;
-}
-
-.lead-card h2 strong {
-  display: block;
-
-  color:
-    #1599bf;
-
-  margin-top: 5px;
-}
-
-.form-subtitle {
-  color: #687181;
-
-  font-size: 13px;
-
-  line-height: 1.7;
+  width:
+    calc(100% + 20px);
 
   margin:
-    0 0 12px;
-}
+    -47px -10px 24px;
 
-.free-highlight {
+  min-height:
+    94px;
+
   padding:
-    11px 13px;
+    16px 18px;
 
-  border:
-    1px solid #b9ebf7;
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    14px;
 
   background:
-    #ecfbff;
+
+    linear-gradient(
+      135deg,
+      #37c9f5,
+      #1da9d0
+    );
 
   color:
-    #117e9f;
+    #03141b;
 
   border-radius:
+    16px;
+
+  box-shadow:
+
+    0 12px 30px
+      rgba(55,201,245,.28),
+
+    0 0 35px
+      rgba(55,201,245,.18);
+
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+}
+
+
+.free-banner::after {
+
+  content:
+    '';
+
+  position:
+    absolute;
+
+  width:
+    120px;
+
+  height:
+    120px;
+
+  right:
+    -40px;
+
+  top:
+    -50px;
+
+  border-radius:
+    50%;
+
+  background:
+    rgba(255,255,255,.18);
+
+}
+
+
+.free-banner-icon {
+
+  width:
+    48px;
+
+  height:
+    48px;
+
+  flex-shrink:
+    0;
+
+  border-radius:
+    50%;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  background:
+    rgba(255,255,255,.35);
+
+  font-size:
+    25px;
+
+  font-weight:
+    900;
+
+  box-shadow:
+    0 0 0 5px
+    rgba(255,255,255,.1);
+
+}
+
+
+.free-banner-text {
+
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+}
+
+
+.free-banner-text strong {
+
+  font-size:
+    25px;
+
+  line-height:
+    1;
+
+  font-weight:
+    900;
+
+}
+
+
+.free-banner-text span {
+
+  margin-top:
+    6px;
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+  opacity:
+    .78;
+
+}
+
+
+/* FORM HEADER */
+
+.form-header {
+
+  position:
+    relative;
+
+}
+
+
+.form-step {
+
+  position:
+    absolute;
+
+  left:
+    0;
+
+  top:
+    0;
+
+  color:
+    #a1a9b3;
+
+  font-size:
     10px;
 
-  font-size: 12px;
+  font-weight:
+    800;
 
-  font-weight: 800;
-
-  line-height: 1.5;
 }
 
-.free-highlight span {
-  margin-left: 5px;
+
+.form-header h2 {
+
+  margin:
+    0;
+
+  font-size:
+    27px;
+
+  line-height:
+    1.15;
+
+  font-weight:
+    900;
+
 }
+
+
+.form-header p {
+
+  margin:
+    6px 0 0;
+
+  color:
+    #1398bc;
+
+  font-size:
+    14px;
+
+  line-height:
+    1.5;
+
+  font-weight:
+    800;
+
+}
+
 
 .progress {
-  height: 5px;
+
+  height:
+    5px;
 
   background:
     #e1e5ea;
@@ -2199,40 +2855,60 @@ a {
     10px;
 
   margin:
-    15px 0;
+    18px 0;
+
 }
 
-.progress span {
-  display: block;
 
-  width: 35%;
-  height: 100%;
+.progress span {
+
+  display:
+    block;
+
+  width:
+    35%;
+
+  height:
+    100%;
 
   border-radius:
     inherit;
 
   background:
     var(--cyan);
+
 }
 
+
+/* FORM FIELDS */
+
 .lead-card label:not(.check) {
-  display: block;
+
+  display:
+    block;
 
   margin:
     11px 0 6px;
 
-  font-size: 12px;
+  font-size:
+    12px;
 
-  font-weight: 900;
+  font-weight:
+    900;
+
 }
+
 
 .lead-card input[type="text"],
 .lead-card input[type="tel"],
 .lead-card select {
-  width: 100%;
+
+  width:
+    100%;
 
   border:
-    1px solid #dbe0e7;
+    1px solid
+    #dbe0e7;
 
   border-radius:
     10px;
@@ -2246,15 +2922,21 @@ a {
   color:
     #17202c;
 
-  outline: none;
+  outline:
+    none;
 
-  font-size: 14px;
+  font-size:
+    14px;
 
-  transition: .2s;
+  transition:
+    .2s;
+
 }
+
 
 .lead-card input:focus,
 .lead-card select:focus {
+
   border-color:
     var(--cyan);
 
@@ -2264,39 +2946,60 @@ a {
   box-shadow:
     0 0 0 3px
     rgba(55,201,245,.12);
+
 }
 
+
 .check {
-  display: flex;
 
-  align-items: flex-start;
+  display:
+    flex;
 
-  gap: 8px;
+  align-items:
+    flex-start;
 
-  margin-top: 13px;
+  gap:
+    8px;
+
+  margin-top:
+    13px;
 
   color:
     #697382;
 
-  font-size: 10px;
+  font-size:
+    10px;
 
-  line-height: 1.5;
+  line-height:
+    1.5;
+
 }
+
 
 .check input {
-  margin-top: 3px;
+
+  margin-top:
+    3px;
+
 }
 
+
 .submit-button {
-  width: 100%;
 
-  margin-top: 15px;
+  width:
+    100%;
 
-  padding: 14px;
+  margin-top:
+    15px;
 
-  border: 0;
+  padding:
+    15px;
 
-  border-radius: 10px;
+  border:
+    0;
+
+  border-radius:
+    11px;
 
   background:
     #28afd6;
@@ -2304,46 +3007,71 @@ a {
   color:
     #061018;
 
-  font-size: 14px;
+  font-size:
+    15px;
 
-  font-weight: 900;
+  font-weight:
+    900;
 
-  cursor: pointer;
+  cursor:
+    pointer;
 
-  transition: .3s;
+  transition:
+    .3s;
+
 }
 
+
 .submit-button:hover {
+
   background:
     #42c9ed;
 
   box-shadow:
     0 10px 30px
     rgba(40,175,214,.25);
+
+  transform:
+    translateY(-2px);
+
 }
+
 
 .submit-button span {
-  margin-right: 7px;
+
+  margin-right:
+    7px;
+
 }
 
-.security {
-  margin-top: 15px;
 
-  padding-top: 13px;
+.security {
+
+  margin-top:
+    15px;
+
+  padding-top:
+    13px;
 
   border-top:
-    1px dashed #d5dae0;
+    1px dashed
+    #d5dae0;
 
-  display: flex;
+  display:
+    flex;
 
-  justify-content: center;
+  justify-content:
+    center;
 
-  gap: 7px;
+  gap:
+    7px;
 
   color:
     #727b88;
 
-  font-size: 10px;
+  font-size:
+    10px;
+
 }
 
 
@@ -2352,38 +3080,61 @@ a {
 ========================= */
 
 .hero-text {
-  text-align: right;
+
+  text-align:
+    right;
+
 }
 
+
 .live-pill {
-  display: inline-flex;
 
-  align-items: center;
+  display:
+    inline-flex;
 
-  gap: 8px;
+  align-items:
+    center;
+
+  gap:
+    8px;
 
   padding:
-    7px 13px;
+    9px 15px;
 
   border:
     1px solid
-    rgba(55,201,245,.25);
+    rgba(55,201,245,.35);
 
   background:
-    rgba(55,201,245,.06);
+    rgba(55,201,245,.08);
 
   border-radius:
     999px;
 
   color:
-    #8da5b1;
+    #a4c2ce;
 
-  font-size: 11px;
+  font-size:
+    13px;
+
 }
 
+
+.live-pill strong {
+
+  color:
+    var(--cyan);
+
+}
+
+
 .live-dot {
-  width: 7px;
-  height: 7px;
+
+  width:
+    8px;
+
+  height:
+    8px;
 
   background:
     var(--cyan);
@@ -2397,40 +3148,65 @@ a {
 
   animation:
     pulse 1.8s infinite;
+
 }
+
 
 @keyframes pulse {
+
   50% {
-    opacity: .35;
-    transform: scale(.75);
+
+    opacity:
+      .35;
+
+    transform:
+      scale(.75);
+
   }
+
 }
 
+
 .eyebrow {
+
   color:
     var(--cyan);
 
-  font-size: 12px;
+  font-size:
+    12px;
 
-  font-weight: 900;
+  font-weight:
+    900;
 
   letter-spacing:
     1.5px;
 
   margin:
     0 0 15px;
+
 }
+
 
 .eyebrow span {
-  margin-right: 7px;
+
+  margin-right:
+    7px;
+
 }
+
 
 .hero-text .eyebrow {
-  margin-top: 30px;
+
+  margin-top:
+    30px;
+
 }
 
+
 .hero-text h1 {
-  margin: 0;
+
+  margin:
+    0;
 
   font-size:
     clamp(
@@ -2439,24 +3215,38 @@ a {
       78px
     );
 
-  line-height: .98;
+  line-height:
+    .98;
 
-  letter-spacing: -2px;
+  letter-spacing:
+    -2px;
 
-  font-weight: 900;
+  font-weight:
+    900;
+
 }
+
 
 .hero-text h1 span {
+
   color:
     var(--cyan);
+
 }
+
 
 .hero-text h1 strong {
-  color: white;
+
+  color:
+    white;
+
 }
 
+
 .hero-description {
-  max-width: 650px;
+
+  max-width:
+    650px;
 
   margin:
     27px 0 0;
@@ -2464,26 +3254,39 @@ a {
   color:
     #89919e;
 
-  font-size: 17px;
+  font-size:
+    17px;
 
-  line-height: 1.85;
+  line-height:
+    1.85;
+
 }
 
+
 .hero-actions {
-  margin-top: 31px;
 
-  display: flex;
+  margin-top:
+    31px;
 
-  gap: 11px;
+  display:
+    flex;
+
+  gap:
+    11px;
 
   justify-content:
     flex-start;
+
 }
 
-.secondary-button {
-  display: inline-flex;
 
-  align-items: center;
+.secondary-button {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
 
   padding:
     12px 22px;
@@ -2500,27 +3303,38 @@ a {
 
   transition:
     .3s;
+
 }
 
+
 .secondary-button:hover {
+
   border-color:
     var(--cyan);
 
   color:
     var(--cyan);
+
 }
 
+
 .trust-row {
-  margin-top: 24px;
 
-  display: flex;
+  margin-top:
+    24px;
 
-  gap: 23px;
+  display:
+    flex;
+
+  gap:
+    23px;
 
   color:
     #69727e;
 
-  font-size: 11px;
+  font-size:
+    11px;
+
 }
 
 
@@ -2529,33 +3343,46 @@ a {
 ========================= */
 
 .section {
+
   padding:
     120px 24px;
 
-  position: relative;
+  position:
+    relative;
+
 }
 
+
 .dark-section {
+
   background:
     #0b0e14;
 
   border-top:
     1px solid
     rgba(255,255,255,.05);
+
 }
 
+
 .section-heading {
-  max-width: 900px;
+
+  max-width:
+    900px;
 
   margin:
     0 auto 58px;
 
   text-align:
     center;
+
 }
 
+
 .section-heading h2 {
-  margin: 0;
+
+  margin:
+    0;
 
   font-size:
     clamp(
@@ -2564,22 +3391,30 @@ a {
       66px
     );
 
-  line-height: 1;
+  line-height:
+    1;
 
   font-weight:
     900;
 
   letter-spacing:
     -2px;
+
 }
+
 
 .section-heading h2 span {
+
   color:
     var(--cyan);
+
 }
 
+
 .section-heading p:last-child {
-  max-width: 620px;
+
+  max-width:
+    620px;
 
   margin:
     21px auto 0;
@@ -2589,11 +3424,15 @@ a {
 
   line-height:
     1.8;
+
 }
 
+
 .right-heading {
+
   text-align:
     right;
+
 }
 
 
@@ -2602,7 +3441,9 @@ a {
 ========================= */
 
 .steps {
-  max-width: 1050px;
+
+  max-width:
+    1050px;
 
   margin:
     auto;
@@ -2613,13 +3454,19 @@ a {
   grid-template-columns:
     repeat(3, 1fr);
 
-  gap: 26px;
+  gap:
+    26px;
+
 }
 
-.step {
-  position: relative;
 
-  min-height: 210px;
+.step {
+
+  position:
+    relative;
+
+  min-height:
+    210px;
 
   padding:
     30px;
@@ -2636,9 +3483,12 @@ a {
 
   transition:
     .35s;
+
 }
 
+
 .step:hover {
+
   transform:
     translateY(-7px);
 
@@ -2648,18 +3498,24 @@ a {
   box-shadow:
     0 20px 45px
     rgba(0,0,0,.3);
+
 }
 
+
 .active-step {
+
   border-color:
     var(--cyan);
 
   box-shadow:
     0 15px 45px
     rgba(55,201,245,.09);
+
 }
 
+
 .step-number {
+
   color:
     var(--cyan);
 
@@ -2668,13 +3524,20 @@ a {
 
   font-weight:
     900;
+
 }
 
-.step-arrow {
-  position: absolute;
 
-  left: 25px;
-  top: 35px;
+.step-arrow {
+
+  position:
+    absolute;
+
+  left:
+    25px;
+
+  top:
+    35px;
 
   color:
     var(--cyan);
@@ -2684,24 +3547,32 @@ a {
 
   opacity:
     .65;
+
 }
 
+
 .step h3 {
+
   font-size:
     20px;
 
   margin:
     25px 0 8px;
+
 }
 
+
 .step p {
+
   color:
     #777f8c;
 
   line-height:
     1.7;
 
-  margin: 0;
+  margin:
+    0;
+
 }
 
 
@@ -2710,7 +3581,9 @@ a {
 ========================= */
 
 .services-section {
+
   background:
+
     radial-gradient(
       circle at 80% 20%,
       rgba(30,154,193,.08),
@@ -2718,10 +3591,14 @@ a {
     ),
 
     #0b0e14;
+
 }
 
+
 .services-grid {
-  max-width: 1050px;
+
+  max-width:
+    1050px;
 
   margin:
     auto;
@@ -2732,10 +3609,14 @@ a {
   grid-template-columns:
     repeat(2, 1fr);
 
-  gap: 16px;
+  gap:
+    16px;
+
 }
 
+
 .service-card {
+
   min-height:
     270px;
 
@@ -2760,9 +3641,12 @@ a {
 
   transition:
     .4s;
+
 }
 
+
 .service-card:hover {
+
   transform:
     translateY(-7px)
     scale(1.015);
@@ -2773,19 +3657,28 @@ a {
   box-shadow:
     0 0 40px
     rgba(55,201,245,.08);
+
 }
 
+
 .service-card.featured {
+
   background:
     #1d2229;
 
   border-color:
     rgba(55,201,245,.45);
+
 }
 
+
 .service-icon {
-  width: 48px;
-  height: 48px;
+
+  width:
+    48px;
+
+  height:
+    48px;
 
   border-radius:
     12px;
@@ -2810,9 +3703,12 @@ a {
 
   font-weight:
     900;
+
 }
 
+
 .service-number {
+
   position:
     absolute;
 
@@ -2830,17 +3726,23 @@ a {
 
   font-weight:
     900;
+
 }
 
+
 .service-card h3 {
+
   margin:
     32px 0 7px;
 
   font-size:
     23px;
+
 }
 
+
 .service-card p {
+
   max-width:
     500px;
 
@@ -2849,9 +3751,12 @@ a {
 
   line-height:
     1.8;
+
 }
 
+
 .service-card a {
+
   display:
     inline-block;
 
@@ -2863,23 +3768,29 @@ a {
 
   font-weight:
     800;
+
 }
 
+
 .service-card a span {
+
   margin-right:
     8px;
+
 }
 
 
 /* =========================
-   COMPANY SLIDER
+   COMPANIES
 ========================= */
 
 .company-section {
+
   overflow:
     hidden;
 
   background:
+
     radial-gradient(
       circle at 50% 60%,
       rgba(55,201,245,.05),
@@ -2887,9 +3798,12 @@ a {
     ),
 
     #0b0e14;
+
 }
 
+
 .company-slider {
+
   position:
     relative;
 
@@ -2904,9 +3818,12 @@ a {
 
   align-items:
     center;
+
 }
 
+
 .company-track {
+
   width:
     100%;
 
@@ -2918,9 +3835,12 @@ a {
 
   gap:
     25px;
+
 }
 
+
 .company-card {
+
   min-height:
     280px;
 
@@ -2938,6 +3858,7 @@ a {
     18px;
 
   transition:
+
     transform .5s
       cubic-bezier(.2,.8,.2,1),
 
@@ -2949,17 +3870,23 @@ a {
 
   cursor:
     pointer;
+
 }
 
+
 .company-card.dim {
+
   opacity:
     .55;
 
   transform:
     scale(.91);
+
 }
 
+
 .company-card.center {
+
   opacity:
     1;
 
@@ -2970,14 +3897,18 @@ a {
     var(--cyan);
 
   box-shadow:
+
     0 0 0 1px
       rgba(55,201,245,.15),
 
     0 20px 70px
       rgba(55,201,245,.12);
+
 }
 
+
 .company-card.hovered {
+
   transform:
     scale(1.075)
     translateY(-8px);
@@ -2992,20 +3923,27 @@ a {
     var(--cyan);
 
   box-shadow:
+
     0 0 35px
       rgba(55,201,245,.16),
 
     0 25px 60px
       rgba(0,0,0,.45);
+
 }
 
+
 .company-card.dim.hovered {
+
   transform:
     scale(1.03)
     translateY(-6px);
+
 }
 
+
 .company-top {
+
   display:
     flex;
 
@@ -3014,9 +3952,12 @@ a {
 
   justify-content:
     space-between;
+
 }
 
+
 .company-icon {
+
   width:
     48px;
 
@@ -3043,17 +3984,23 @@ a {
 
   font-size:
     22px;
+
 }
 
+
 .company-type {
+
   color:
     #68727f;
 
   font-size:
     11px;
+
 }
 
+
 .company-card h3 {
+
   margin:
     50px 0 8px;
 
@@ -3062,9 +4009,12 @@ a {
 
   font-weight:
     900;
+
 }
 
+
 .company-card p {
+
   color:
     #858e9a;
 
@@ -3073,9 +4023,12 @@ a {
 
   min-height:
     55px;
+
 }
 
+
 .company-bottom {
+
   margin-top:
     20px;
 
@@ -3097,17 +4050,27 @@ a {
 
   font-size:
     12px;
+
 }
 
+
 .company-bottom b {
+
   color:
     var(--cyan);
 
   font-size:
     20px;
+
 }
 
+
+/* =========================
+   GLOWING SLIDER ARROWS
+========================= */
+
 .slider-arrow {
+
   position:
     absolute;
 
@@ -3115,14 +4078,14 @@ a {
     10;
 
   width:
-    56px;
+    58px;
 
   height:
-    56px;
+    58px;
 
   border:
     1px solid
-    rgba(55,201,245,.35);
+    rgba(55,201,245,.55);
 
   border-radius:
     50%;
@@ -3134,22 +4097,29 @@ a {
     var(--cyan);
 
   font-size:
-    25px;
+    26px;
 
   cursor:
     pointer;
 
   box-shadow:
-    0 0 25px
-    rgba(55,201,245,.1);
+
+    0 0 20px
+      rgba(55,201,245,.15),
+
+    inset 0 0 15px
+      rgba(55,201,245,.05);
 
   transition:
     .3s;
+
 }
 
+
 .slider-arrow:hover {
+
   transform:
-    scale(1.15);
+    scale(1.18);
 
   background:
     var(--cyan);
@@ -3157,22 +4127,38 @@ a {
   color:
     #061018;
 
+  border-color:
+    var(--cyan);
+
   box-shadow:
-    0 0 35px
-    rgba(55,201,245,.4);
+
+    0 0 20px
+      rgba(55,201,245,.6),
+
+    0 0 55px
+      rgba(55,201,245,.35);
+
 }
+
 
 .arrow-right {
+
   right:
     -28px;
+
 }
+
 
 .arrow-left {
+
   left:
     -28px;
+
 }
 
+
 .slider-dots {
+
   margin-top:
     35px;
 
@@ -3184,9 +4170,12 @@ a {
 
   gap:
     8px;
+
 }
 
+
 .slider-dots button {
+
   width:
     7px;
 
@@ -3210,9 +4199,12 @@ a {
 
   transition:
     .3s;
+
 }
 
+
 .slider-dots button.selected {
+
   width:
     24px;
 
@@ -3225,6 +4217,7 @@ a {
   box-shadow:
     0 0 12px
     rgba(55,201,245,.5);
+
 }
 
 
@@ -3233,6 +4226,7 @@ a {
 ========================= */
 
 .cta-section {
+
   position:
     relative;
 
@@ -3246,6 +4240,7 @@ a {
     center;
 
   background:
+
     radial-gradient(
       circle at 50% 100%,
       rgba(55,201,245,.15),
@@ -3253,9 +4248,12 @@ a {
     ),
 
     #080b10;
+
 }
 
+
 .cta-glow {
+
   position:
     absolute;
 
@@ -3282,17 +4280,95 @@ a {
 
   filter:
     blur(70px);
+
 }
 
+
 .cta-content {
+
   position:
     relative;
 
   z-index:
     2;
+
 }
 
+
+.cta-free {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  margin-bottom:
+    22px;
+
+  padding:
+    11px 19px;
+
+  border:
+    1px solid
+    rgba(55,201,245,.45);
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(55,201,245,.08);
+
+  color:
+    var(--cyan);
+
+  font-size:
+    14px;
+
+  font-weight:
+    900;
+
+  box-shadow:
+    0 0 25px
+    rgba(55,201,245,.08);
+
+}
+
+
+.cta-free span {
+
+  width:
+    22px;
+
+  height:
+    22px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border-radius:
+    50%;
+
+  background:
+    var(--cyan);
+
+  color:
+    #061018;
+
+}
+
+
 .cta-content h2 {
+
   margin:
     0;
 
@@ -3305,14 +4381,20 @@ a {
 
   line-height:
     1;
+
 }
+
 
 .cta-content h2 span {
+
   color:
     var(--cyan);
+
 }
 
+
 .cta-content > p:not(.eyebrow) {
+
   color:
     #858e9a;
 
@@ -3321,6 +4403,18 @@ a {
 
   margin:
     25px auto 35px;
+
+}
+
+
+.big-cta {
+
+  font-size:
+    17px;
+
+  padding:
+    16px 27px;
+
 }
 
 
@@ -3329,39 +4423,55 @@ a {
 ========================= */
 
 .faq-section {
+
   background:
     #f4f6f8;
 
   color:
     #10151d;
+
 }
 
+
 .faq-section .eyebrow {
+
   color:
     #1195ba;
+
 }
+
 
 .faq-section
 .section-heading h2 {
+
   color:
     #10151d;
+
 }
+
 
 .faq-section
 .section-heading h2 span {
+
   color:
     #119bc1;
+
 }
 
+
 .faq-list {
+
   max-width:
     850px;
 
   margin:
     auto;
+
 }
 
+
 .faq-item {
+
   margin-bottom:
     10px;
 
@@ -3377,9 +4487,23 @@ a {
 
   overflow:
     hidden;
+
+  transition:
+    .25s;
+
 }
 
+
+.faq-item:hover {
+
+  border-color:
+    #b8dce6;
+
+}
+
+
 .faq-item button {
+
   width:
     100%;
 
@@ -3415,9 +4539,12 @@ a {
 
   font-weight:
     800;
+
 }
 
+
 .faq-item button b {
+
   width:
     32px;
 
@@ -3447,9 +4574,12 @@ a {
 
   font-size:
     20px;
+
 }
 
+
 .faq-answer {
+
   padding:
     0 25px 23px;
 
@@ -3458,6 +4588,7 @@ a {
 
   line-height:
     1.8;
+
 }
 
 
@@ -3466,6 +4597,7 @@ a {
 ========================= */
 
 footer {
+
   background:
     #070a0f;
 
@@ -3475,9 +4607,12 @@ footer {
   border-top:
     1px solid
     var(--border);
+
 }
 
+
 .footer-main {
+
   max-width:
     1100px;
 
@@ -3492,9 +4627,12 @@ footer {
 
   align-items:
     center;
+
 }
 
+
 .footer-links {
+
   display:
     flex;
 
@@ -3506,15 +4644,21 @@ footer {
 
   font-size:
     12px;
+
 }
 
+
 .footer-links a:hover {
+
   color:
     var(--cyan);
+
 }
+
 
 .footer-disclaimer,
 .footer-copy {
+
   max-width:
     1100px;
 
@@ -3529,11 +4673,15 @@ footer {
 
   line-height:
     1.7;
+
 }
 
+
 .footer-copy {
+
   margin-top:
     15px;
+
 }
 
 
@@ -3542,6 +4690,7 @@ footer {
 ========================= */
 
 .floating-cta {
+
   position:
     fixed;
 
@@ -3555,7 +4704,7 @@ footer {
     18px;
 
   padding:
-    11px 19px;
+    13px 21px;
 
   border-radius:
     999px;
@@ -3567,7 +4716,7 @@ footer {
     #061018;
 
   font-size:
-    12px;
+    13px;
 
   font-weight:
     900;
@@ -3575,6 +4724,31 @@ footer {
   box-shadow:
     0 8px 25px
     rgba(0,0,0,.35);
+
+  transition:
+    .3s;
+
+}
+
+
+.floating-cta span {
+
+  margin-left:
+    5px;
+
+}
+
+
+.floating-cta:hover {
+
+  transform:
+    translateY(-3px)
+    scale(1.03);
+
+  box-shadow:
+    0 12px 35px
+    rgba(55,201,245,.3);
+
 }
 
 
@@ -3583,19 +4757,28 @@ footer {
 ========================= */
 
 .high-contrast {
+
   --cyan:
     #00e5ff;
 
   --cyan-light:
     #66efff;
+
 }
 
-.high-contrast .hero,
-.high-contrast .dark-section,
-.high-contrast footer {
+
+.high-contrast
+.hero,
+.high-contrast
+.dark-section,
+.high-contrast
+footer {
+
   background:
     #000;
+
 }
+
 
 .high-contrast
 .company-card,
@@ -3603,8 +4786,10 @@ footer {
 .service-card,
 .high-contrast
 .step {
+
   border-color:
     rgba(255,255,255,.4);
+
 }
 
 
@@ -3619,23 +4804,34 @@ footer {
       none;
   }
 
+
   .header-actions
   .nav-button {
+
     display:
       none;
+
   }
+
 
   .mobile-menu {
+
     display:
       block;
+
   }
+
 
   .header-actions {
+
     margin-right:
       auto;
+
   }
 
+
   .mobile-nav {
+
     padding:
       18px 24px 25px;
 
@@ -3654,17 +4850,23 @@ footer {
 
     background:
       #080b10;
+
   }
 
+
   .mobile-nav a {
+
     color:
       #b8bec8;
 
     font-weight:
       700;
+
   }
 
+
   .mobile-languages {
+
     display:
       flex;
 
@@ -3673,9 +4875,12 @@ footer {
 
     flex-wrap:
       wrap;
+
   }
 
+
   .mobile-languages button {
+
     padding:
       10px 13px;
 
@@ -3697,26 +4902,35 @@ footer {
 
     font-weight:
       800;
+
   }
+
 
   .mobile-languages
   button.selected {
+
     background:
       var(--cyan);
 
     color:
       #061018;
+
   }
 
+
   .mobile-access {
+
     display:
       flex;
 
     gap:
       7px;
+
   }
 
+
   .mobile-access button {
+
     width:
       45px;
 
@@ -3741,44 +4955,62 @@ footer {
 
     cursor:
       pointer;
+
   }
 
+
   .hero-content {
+
     grid-template-columns:
       420px 1fr;
 
     gap:
       45px;
+
   }
+
 }
 
 
 @media (max-width: 850px) {
 
   .nav {
+
     height:
       68px;
 
     padding:
       0 18px;
+
   }
+
 
   .header-actions {
+
     display:
       none;
+
   }
+
 
   .ticker {
+
     margin-top:
       68px;
+
   }
+
 
   .hero {
+
     min-height:
       auto;
+
   }
 
+
   .hero-content {
+
     min-height:
       auto;
 
@@ -3790,19 +5022,28 @@ footer {
 
     padding:
       75px 18px 80px;
+
   }
+
 
   .hero-text {
+
     order:
       -1;
+
   }
+
 
   .hero-text h1 {
+
     font-size:
       48px;
+
   }
 
+
   .lead-card {
+
     width:
       100%;
 
@@ -3811,44 +5052,68 @@ footer {
 
     margin:
       auto;
+
   }
+
 
   .steps {
+
     grid-template-columns:
       1fr;
+
   }
+
 
   .services-grid {
+
     grid-template-columns:
       1fr;
+
   }
+
 
   .company-track {
+
     grid-template-columns:
       1fr;
+
   }
+
 
   .company-card.dim {
+
     display:
       none;
+
   }
+
 
   .company-card.center {
+
     transform:
       scale(1);
+
   }
+
 
   .arrow-right {
+
     right:
       -10px;
+
   }
+
 
   .arrow-left {
+
     left:
       -10px;
+
   }
 
+
   .footer-main {
+
     flex-direction:
       column;
 
@@ -3857,73 +5122,153 @@ footer {
 
     gap:
       25px;
+
   }
 
+
   .footer-links {
+
     flex-wrap:
       wrap;
+
   }
+
 }
 
 
 @media (max-width: 520px) {
 
   .section {
+
     padding:
       90px 18px;
+
   }
 
+
   .hero-text h1 {
+
     font-size:
       42px;
 
     letter-spacing:
       -1px;
+
   }
+
 
   .hero-description {
+
     font-size:
       15px;
+
   }
 
+
   .hero-actions {
+
     flex-direction:
       column;
+
   }
+
 
   .primary-button,
   .secondary-button {
+
     width:
       100%;
 
     text-align:
       center;
+
   }
 
+
   .trust-row {
+
     flex-wrap:
       wrap;
 
     gap:
       10px 18px;
+
   }
+
 
   .lead-card {
+
     padding:
-      26px 19px;
+      27px 19px;
+
   }
+
+
+  .free-banner {
+
+    width:
+      calc(100% + 12px);
+
+    margin:
+      -43px -6px 22px;
+
+    min-height:
+      88px;
+
+    padding:
+      14px;
+
+  }
+
+
+  .free-banner-icon {
+
+    width:
+      43px;
+
+    height:
+      43px;
+
+    font-size:
+      22px;
+
+  }
+
+
+  .free-banner-text strong {
+
+    font-size:
+      21px;
+
+  }
+
+
+  .free-banner-text span {
+
+    font-size:
+      10px;
+
+  }
+
 
   .section-heading h2 {
+
     font-size:
       42px;
+
   }
+
 
   .company-card {
+
     min-height:
       300px;
+
   }
 
+
   .floating-cta {
+
     bottom:
       14px;
 
@@ -3932,15 +5277,22 @@ footer {
 
     font-size:
       11px;
+
   }
+
 }
 
+
+/* =========================
+   REDUCED MOTION
+========================= */
 
 @media (prefers-reduced-motion: reduce) {
 
   *,
   *::before,
   *::after {
+
     scroll-behavior:
       auto !important;
 
@@ -3952,6 +5304,9 @@ footer {
 
     transition-duration:
       .01ms !important;
+
   }
+
 }
+
 </style>
