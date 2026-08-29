@@ -1,321 +1,643 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-let open = ref(false);
+const menuOpen = ref(false)
+const faqOpen = ref(null)
+
+const faqs = [
+  {
+    question: 'האם אפשר למשוך כסף מקופת גמל או מקרן פנסיה?',
+    answer:
+      'האפשרות והדרך לבצע משיכה תלויות בסוג הקופה, במועד ההפקדות ובנסיבות האישיות. אנחנו בודקים את הנתונים ומציגים בפניכם את האפשרויות הרלוונטיות.'
+  },
+  {
+    question: 'האם כדאי למשוך את הכסף או לקחת הלוואה כנגד הקופה?',
+    answer:
+      'לא תמיד משיכה היא האפשרות המתאימה. במקרים מסוימים ניתן לבחון גם הלוואה כנגד החיסכון. אנחנו עוזרים להבין את האפשרויות לפני שמקבלים החלטה.'
+  },
+  {
+    question: 'כמה מס משלמים על משיכת כספים?',
+    answer:
+      'המס תלוי בסוג הקופה, בסוג הכספים ובנסיבות המשיכה. לכן חשוב לבצע בדיקה פרטנית לפני שמחליטים על משיכה.'
+  },
+  {
+    question: 'כמה עולה הבדיקה?',
+    answer:
+      'השאירו פרטים ונציג יחזור אליכם כדי להסביר את התהליך ואת התנאים הרלוונטיים עבורכם.'
+  }
+]
+
+const toggleFaq = (index) => {
+  faqOpen.value = faqOpen.value === index ? null : index
+}
 </script>
 
 <template>
-  <header class="bg-indigo-500">
-        <nav class="container relative flex items-center justify-between px-6 py-8 mx-auto text-white">
-            <a href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 md:w-10 md:h-10" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-                </svg>
-            </a>
-    
-            <button @click="open = !open" class="md:hidden">
-                <span v-show="!open">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
-                    </svg>
-                </span>
-    
-                <span v-show="open">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </span>
-            </button>
-    
-            <div :class="[open ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']"
-                class="absolute inset-x-0 z-30 w-full px-6 py-8 mt-4 space-y-6 transition-all duration-300 ease-in-out bg-indigo-600 top-16 md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:space-y-0 md:-mx-6 md:flex md:items-center">
-                <a href="#" class="block text-white transition-colors duration-300 md:px-6 hover:text-indigo-300">Home</a>
-                <a href="#" class="block text-white transition-colors duration-300 md:px-6 hover:text-indigo-300"> About
-                </a>
-                <a href="#" class="block text-white transition-colors duration-300 md:px-6 hover:text-indigo-300"> Portfolio
-                </a>
-                <a href="#" class="block text-white transition-colors duration-300 md:px-6 hover:text-indigo-300"> Blogs
-                </a>
-                <a href="#" class="block text-white transition-colors duration-300 md:px-6 hover:text-indigo-300"> Contact
-                </a>
+  <div dir="rtl" class="min-h-screen bg-white text-slate-900">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 border-b border-slate-100 bg-white/95 backdrop-blur">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-lg font-bold text-white">
+            פ
+          </div>
+
+          <div>
+            <div class="text-xl font-bold tracking-tight text-slate-900">
+              פנסרה
             </div>
+            <div class="text-[11px] text-slate-500">
+              פתרונות פיננסיים
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden items-center gap-8 md:flex">
+          <a href="#services" class="text-sm font-medium text-slate-600 transition hover:text-slate-900">
+            השירותים שלנו
+          </a>
+
+          <a href="#how" class="text-sm font-medium text-slate-600 transition hover:text-slate-900">
+            איך זה עובד?
+          </a>
+
+          <a href="#faq" class="text-sm font-medium text-slate-600 transition hover:text-slate-900">
+            שאלות נפוצות
+          </a>
+
+          <a
+            href="#contact"
+            class="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+          >
+            בדיקה ראשונית
+          </a>
         </nav>
+
+        <!-- Mobile button -->
+        <button
+          class="rounded-lg p-2 text-slate-700 md:hidden"
+          @click="menuOpen = !menuOpen"
+          aria-label="פתיחת תפריט"
+        >
+          <svg
+            v-if="!menuOpen"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+
+          <svg
+            v-else
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div v-if="menuOpen" class="border-t border-slate-100 bg-white px-5 py-5 md:hidden">
+        <div class="flex flex-col gap-4">
+          <a href="#services" @click="menuOpen = false" class="font-medium text-slate-700">
+            השירותים שלנו
+          </a>
+
+          <a href="#how" @click="menuOpen = false" class="font-medium text-slate-700">
+            איך זה עובד?
+          </a>
+
+          <a href="#faq" @click="menuOpen = false" class="font-medium text-slate-700">
+            שאלות נפוצות
+          </a>
+
+          <a
+            href="#contact"
+            @click="menuOpen = false"
+            class="rounded-xl bg-slate-900 px-5 py-3 text-center font-semibold text-white"
+          >
+            בדיקה ראשונית
+          </a>
+        </div>
+      </div>
     </header>
-    
+
+
+    <!-- Hero -->
     <main>
-        <section>
-            <div class="relative grid w-full bg-indigo-500 h-96 lg:h-[32rem] place-items-center">
-                <div class="flex flex-col items-center mx-auto text-center">
-                    <h1 class="text-4xl font-semibold text-white uppercase md:text-6xl">Hero Header</h1>
-    
-                    <p class="mt-6 text-lg leading-5 text-white">The best in town.</p>
-    
-                    <a href="#about" class="mt-8 cursor-pointer animate-bounce">
-                        <svg width="53" height="53" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="27" cy="26" r="18" stroke="white" stroke-width="2" />
-                            <path
-                                d="M22.41 23.2875L27 27.8675L31.59 23.2875L33 24.6975L27 30.6975L21 24.6975L22.41 23.2875Z"
-                                fill="white" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-    
-            <svg class="fill-indigo-500" viewBox="0 0 1440 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1440 0H0V57C720 0 1440 57 1440 57V0Z" />
-            </svg>
-        </section>
-    
-        <section class="container px-6 py-8 mx-auto lg:py-16 " id="about">
-            <div class="lg:flex lg:items-center lg:-mx-4">
-                <div class="lg:w-1/2 lg:px-4">
-                    <h3 class="text-xl font-medium text-gray-800 md:text-2xl lg:text-3xl">We create awesome prototypes,
-                        plugins, and templates.</h3>
-    
-                    <p class="mt-6 text-gray-500 ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic laboriosam
-                        provident voluptatum id magni iste nobis corrupti, delectus quis repellat, debitis error quod
-                        explicabo molestiae rerum totam ab sunt excepturi?</p>
-    
-                    <button class="flex items-center mt-8 -mx-2 text-indigo-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <p class="mx-1 font-semibold">PLAY VIDEO</p>
-                    </button>
-                </div>
-    
-                <div class="mt-8 lg:w-1/2 lg:px-4 lg:mt-0">
-                    <img class="object-cover w-full rounded-xl h-96"
-                        src="https://images.unsplash.com/photo-1516131206008-dd041a9764fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                        alt="Video thumbnail">
-                </div>
-            </div>
-        </section>
-    
-    
-        <section class="container px-6 py-8 mx-auto lg:py-16">
-            <div class="grid grid-cols-1 gap-8 xl:gap-12 md:grid-cols-2 xl:grid-cols-3">
-                <div class="p-8 space-y-3 border-2 border-indigo-400 rounded-xl">
-                    <span class="inline-block text-indigo-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
-                        </svg>
-                    </span>
-    
-                    <h1 class="text-2xl font-semibold text-gray-700 capitalize">web design</h1>
-    
-                    <p class="text-gray-500">
-                        Research, user experience testing, mockups, and prototypes
-                    </p>
-                </div>
-    
-                <div class="p-8 space-y-3 border-2 border-indigo-400 rounded-xl">
-                    <span class="inline-block text-indigo-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
-                        </svg>
-                    </span>
-    
-                    <h1 class="text-2xl font-semibold text-gray-700 capitalize">development</h1>
-    
-                    <p class="text-gray-500">
-                        Research, user experience testing, mockups, and prototypes
-                    </p>
-                </div>
-    
-                <div class="p-8 space-y-3 border-2 border-indigo-400 rounded-xl">
-                    <span class="inline-block text-indigo-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                        </svg>
-                    </span>
-    
-                    <h1 class="text-2xl font-semibold text-gray-700 capitalize">research</h1>
-    
-                    <p class="text-gray-500">
-                        Research, user experience testing, mockups, and prototypes
-                    </p>
-                </div>
-            </div>
-        </section>
-    
-        <section class="container px-6 py-8 mx-auto lg:py-16">
-            <h3 class="text-xl font-medium text-gray-800 md:text-2xl lg:text-3xl ">Browse Our Projects</h3>
-    
-            <div class="flex items-center py-6 mt-4 -mx-2 overflow-x-auto whitespace-nowrap">
-                <button
-                    class=" inline-flex px-4 mx-2 focus:outline-none  items-center py-0.5 text-white bg-indigo-500 hover:bg-indigo-400 duration-300 transition-colors rounded-2xl">All</button>
-                <button
-                    class=" inline-flex px-4 mx-2 duration-300 transition-colors hover:bg-indigo-500/70 hover:text-white text-gray-500 focus:outline-none py-0.5 cursor-pointer rounded-2xl">Web
-                    Design</button>
-                <button
-                    class=" inline-flex px-4 mx-2 duration-300 transition-colors hover:bg-indigo-500/70 hover:text-white text-gray-500 focus:outline-none py-0.5 cursor-pointer rounded-2xl">Development</button>
-                <button
-                    class=" inline-flex px-4 mx-2 duration-300 transition-colors hover:bg-indigo-500/70 hover:text-white text-gray-500 focus:outline-none py-0.5 cursor-pointer rounded-2xl">Research</button>
-            </div>
-    
-            <div class="grid grid-cols-1 gap-10 mt-10 md:grid-cols-2 lg:grid-cols-3 ">
-                <a href="#" class="transition-all duration-500 lg:col-span-2 hover:scale-105">
-                    <img class="object-cover object-top w-full rounded-lg shadow-md shadow-gray-200 h-80 xl:h-96"
-                        src="https://cdn.dribbble.com/users/1644453/screenshots/17056773/media/00509f74e765da294440886db976943a.png?compress=1&resize=1000x750&vertical=top"
-                        alt="">
-                </a>
 
-                <a href="#" class="transition-all duration-500 hover:scale-105">
-                    <img class="object-cover object-top w-full rounded-lg shadow-md shadow-gray-200 h-80 xl:h-96 "
-                        src="https://cdn.dribbble.com/userupload/3233220/file/original-e80767b5947df65a0f1ab4dab4964679.png?compress=1&resize=1024x768"
-                        alt="">
-                </a>
+      <section class="relative overflow-hidden bg-slate-50">
+        <div class="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-blue-100/60 blur-3xl"></div>
+        <div class="absolute -bottom-40 -right-20 h-96 w-96 rounded-full bg-slate-200/70 blur-3xl"></div>
 
-                <a href="#" class="transition-all duration-500 hover:scale-105">
-                    <img class="object-cover object-top w-full rounded-lg shadow-md shadow-gray-200 h-80 xl:h-96"
-                        src="https://cdn.dribbble.com/users/1644453/screenshots/14748860/media/25f53296059b741ac1c083be9f41745b.png?compress=1&resize=1000x750&vertical=top"
-                        alt="">
-                </a>
+        <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-5 py-20 lg:grid-cols-2 lg:px-8 lg:py-28">
 
-                <a href="#" class="transition-all duration-500 lg:col-span-2 hover:scale-105">
-                    <img class="object-cover object-top w-full rounded-lg shadow-md shadow-gray-200 h-80 xl:h-96"
-                        src="https://cdn.dribbble.com/users/878428/screenshots/17307425/media/01782a518148ce7ef2e790473c888b1f.png?compress=1&resize=1000x750&vertical=top"
-                        alt="">
-                </a>
+          <!-- Hero text -->
+          <div class="max-w-2xl">
 
-                <a href="#" class="transition-all duration-500 lg:col-span-2 hover:scale-105">
-                    <img class="object-cover object-top w-full rounded-lg shadow-md shadow-gray-200 h-80 xl:h-96"
-                        src="https://cdn.dribbble.com/users/1930709/screenshots/11466872/media/e50b0f02160a77397eb4a76782d23966.png?compress=1&resize=1000x750&vertical=top"
-                        alt="">
-                </a>
-
-                <a href="#" class="transition-all duration-500 hover:scale-105">
-                    <img class="object-cover object-top w-full rounded-lg shadow-md shadow-gray-200 h-80 xl:h-96"
-                        src="https://cdn.dribbble.com/users/1644453/screenshots/14403641/media/21e305eb9c8255b6e3367f0ca52c6668.png?compress=1&resize=1000x750&vertical=top"
-                        alt="">
-                </a>
+            <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              בדיקה ראשונית ללא התחייבות
             </div>
-        </section>
-    
-        <section class="container px-6 py-8 mx-auto lg:py-16">
-            <h3 class="text-xl font-medium text-gray-800 md:text-2xl lg:text-3xl ">Recent Blog Posts</h3>
-    
-            <div class="grid grid-cols-1 gap-8 mt-8 md:mt-10 md:grid-cols-2 xl:grid-cols-3">
+
+            <h1 class="text-4xl font-bold leading-tight tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+              יש לכם כסף בקופות?
+              <span class="block text-blue-700">
+                בואו נבדוק מה אפשר לעשות איתו.
+              </span>
+            </h1>
+
+            <p class="mt-7 max-w-xl text-lg leading-8 text-slate-600">
+              בפנסרה עוזרים לכם להבין אילו אפשרויות עומדות בפניכם
+              בנוגע לחיסכון הפנסיוני, קופות גמל, קרנות השתלמות
+              והלוואות כנגד קופות.
+            </p>
+
+            <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+
+              <a
+                href="#contact"
+                class="rounded-xl bg-slate-900 px-7 py-4 text-center font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-slate-800"
+              >
+                רוצה לבדוק את האפשרויות שלי
+              </a>
+
+              <a
+                href="#services"
+                class="rounded-xl border border-slate-200 bg-white px-7 py-4 text-center font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                איך אנחנו יכולים לעזור?
+              </a>
+
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-500">
+              <span>✓ תהליך פשוט וברור</span>
+              <span>✓ ליווי אישי</span>
+              <span>✓ בלי התחייבות לבדיקה הראשונית</span>
+            </div>
+          </div>
+
+
+          <!-- Hero card -->
+          <div class="relative">
+
+            <div class="rounded-3xl border border-slate-200 bg-white p-7 shadow-2xl shadow-slate-900/10 sm:p-9">
+
+              <div class="mb-8 flex items-center justify-between">
                 <div>
-                    <div class="relative">
-                        <img class="object-cover object-center w-full h-64 rounded-lg lg:h-80"
-                            src="https://images.unsplash.com/photo-1624996379697-f01d168b1a52?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                            alt="">
-    
-                        <div class="absolute bottom-0 flex p-3 bg-white ">
-                            <img class="object-cover object-center w-10 h-10 rounded-full"
-                                src="https://cdn.dribbble.com/users/1436669/screenshots/15006128/media/5f91264b3b56cc452cb2bba2535bccdd.png?compress=1&resize=1000x750&vertical=top"
-                                alt="">
-    
-                            <div class="mx-4">
-                                <h1 class="text-sm text-gray-700">Tom Hank</h1>
-                                <p class="text-sm text-gray-500">Creative Director</p>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <h1 class="mt-6 text-xl font-semibold text-gray-800">What do you want to know about UI
-                    </h1>
-    
-                    <hr class="w-32 my-6 text-indigo-500">
-    
-                    <p class="text-sm text-gray-500">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis fugit dolorum amet dolores
-                        praesentium, alias nam? Tempore
-                    </p>
-    
-                    <a href="#" class="inline-block mt-4 text-indigo-500 underline hover:text-indigo-400">Read more</a>
+                  <p class="text-sm font-medium text-slate-500">
+                    פנסרה
+                  </p>
+
+                  <h2 class="mt-1 text-2xl font-bold text-slate-900">
+                    עושים סדר בקופות
+                  </h2>
                 </div>
-    
-                <div>
-                    <div class="relative">
-                        <img class="object-cover object-center w-full h-64 rounded-lg lg:h-80"
-                            src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                            alt="">
-    
-                        <div class="absolute bottom-0 flex p-3 bg-white ">
-                            <img class="object-cover object-center w-10 h-10 rounded-full"
-                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                                alt="">
-    
-                            <div class="mx-4">
-                                <h1 class="text-sm text-gray-700">arthur melo</h1>
-                                <p class="text-sm text-gray-500">Creative Director</p>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <h1 class="mt-6 text-xl font-semibold text-gray-800">All the features you want to know
-                    </h1>
-    
-                    <hr class="w-32 my-6 text-indigo-500">
-    
-                    <p class="text-sm text-gray-500">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis fugit dolorum amet dolores
-                        praesentium, alias nam? Tempore
-                    </p>
-    
-                    <a href="#" class="inline-block mt-4 text-indigo-500 underline hover:text-indigo-400">Read more</a>
+
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+                  ₪
                 </div>
-    
-                <div>
-                    <div class="relative">
-                        <img class="object-cover object-center w-full h-64 rounded-lg lg:h-80"
-                            src="https://images.unsplash.com/photo-1597534458220-9fb4969f2df5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80"
-                            alt="">
-    
-                        <div class="absolute bottom-0 flex p-3 bg-white ">
-                            <img class="object-cover object-center w-10 h-10 rounded-full"
-                                src="https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-                                alt="">
-    
-                            <div class="mx-4">
-                                <h1 class="text-sm text-gray-700">Amelia. Anderson</h1>
-                                <p class="text-sm text-gray-500">Lead Developer</p>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <h1 class="mt-6 text-xl font-semibold text-gray-800">Which services you get from Meraki
-                        UI</h1>
-    
-                    <hr class="w-32 my-6 text-indigo-500">
-    
-                    <p class="text-sm text-gray-500">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis fugit dolorum amet dolores
-                        praesentium, alias nam? Tempore
-                    </p>
-    
-                    <a href="#" class="inline-block mt-4 text-indigo-500 underline hover:text-indigo-400">Read more</a>
+              </div>
+
+              <div class="space-y-4">
+
+                <div class="rounded-2xl bg-slate-50 p-5">
+                  <div class="flex items-center justify-between">
+                    <span class="font-semibold text-slate-800">
+                      קרן השתלמות
+                    </span>
+
+                    <span class="text-sm text-emerald-600">
+                      אפשרויות לבדיקה
+                    </span>
+                  </div>
                 </div>
+
+                <div class="rounded-2xl bg-slate-50 p-5">
+                  <div class="flex items-center justify-between">
+                    <span class="font-semibold text-slate-800">
+                      קופת גמל
+                    </span>
+
+                    <span class="text-sm text-blue-600">
+                      אפשרויות לבדיקה
+                    </span>
+                  </div>
+                </div>
+
+                <div class="rounded-2xl bg-slate-50 p-5">
+                  <div class="flex items-center justify-between">
+                    <span class="font-semibold text-slate-800">
+                      הלוואה כנגד קופה
+                    </span>
+
+                    <span class="text-sm text-slate-500">
+                      בכפוף לתנאים
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="mt-7 rounded-2xl bg-slate-900 p-5 text-white">
+                <p class="text-sm text-slate-300">
+                  לא יודעים מה האפשרות שמתאימה לכם?
+                </p>
+
+                <p class="mt-1 font-semibold">
+                  מתחילים בבדיקה ומבינים את האפשרויות.
+                </p>
+              </div>
+
             </div>
-        </section>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- Trust strip -->
+      <section class="border-b border-slate-100 bg-white">
+        <div class="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-5 py-8 sm:grid-cols-3 lg:px-8">
+
+          <div class="flex items-center gap-4">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-slate-100 font-bold text-slate-700">
+              01
+            </div>
+
+            <div>
+              <p class="font-semibold text-slate-900">בדיקה מסודרת</p>
+              <p class="text-sm text-slate-500">מבינים קודם את המצב</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-slate-100 font-bold text-slate-700">
+              02
+            </div>
+
+            <div>
+              <p class="font-semibold text-slate-900">אפשרויות ברורות</p>
+              <p class="text-sm text-slate-500">בלי מונחים מסובכים</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-slate-100 font-bold text-slate-700">
+              03
+            </div>
+
+            <div>
+              <p class="font-semibold text-slate-900">ליווי אישי</p>
+              <p class="text-sm text-slate-500">עד שמבינים מה עושים</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- Services -->
+      <section id="services" class="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">
+
+        <div class="max-w-2xl">
+          <p class="text-sm font-bold uppercase tracking-widest text-blue-700">
+            השירותים שלנו
+          </p>
+
+          <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+            פתרונות שמתאימים למצב שלכם
+          </h2>
+
+          <p class="mt-5 text-lg leading-8 text-slate-600">
+            במקום לנסות להבין לבד מה אפשר לעשות עם הכספים שלכם,
+            אנחנו עוזרים למפות את האפשרויות הרלוונטיות.
+          </p>
+        </div>
+
+
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-7 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/5">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-xl font-bold text-blue-700">
+              ₪
+            </div>
+
+            <h3 class="mt-6 text-xl font-bold text-slate-900">
+              משיכת כספים
+            </h3>
+
+            <p class="mt-3 leading-7 text-slate-600">
+              בדיקה של אפשרויות משיכת כספים מקופות בהתאם לסוג הכספים ולנסיבות האישיות.
+            </p>
+          </div>
+
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-7 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/5">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-xl font-bold text-blue-700">
+              ↗
+            </div>
+
+            <h3 class="mt-6 text-xl font-bold text-slate-900">
+              קרנות השתלמות
+            </h3>
+
+            <p class="mt-3 leading-7 text-slate-600">
+              בחינת אפשרויות הקיימות עבור כספים בקרנות השתלמות.
+            </p>
+          </div>
+
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-7 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/5">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-xl font-bold text-blue-700">
+              ◇
+            </div>
+
+            <h3 class="mt-6 text-xl font-bold text-slate-900">
+              קופות גמל
+            </h3>
+
+            <p class="mt-3 leading-7 text-slate-600">
+              בדיקה והכוונה בנוגע לאפשרויות שעשויות להיות רלוונטיות לקופת הגמל.
+            </p>
+          </div>
+
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-7 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/5">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-xl font-bold text-blue-700">
+              +
+            </div>
+
+            <h3 class="mt-6 text-xl font-bold text-slate-900">
+              הלוואה כנגד קופה
+            </h3>
+
+            <p class="mt-3 leading-7 text-slate-600">
+              בחינת אפשרות לקבלת הלוואה כנגד חיסכון קיים, בכפוף לתנאי הגוף המנהל.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- How it works -->
+      <section id="how" class="bg-slate-50">
+        <div class="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">
+
+          <div class="text-center">
+            <p class="text-sm font-bold uppercase tracking-widest text-blue-700">
+              איך זה עובד?
+            </p>
+
+            <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+              פשוט. ברור. בלי להסתבך.
+            </h2>
+          </div>
+
+
+          <div class="mt-14 grid gap-8 md:grid-cols-3">
+
+            <div class="relative rounded-2xl bg-white p-8 shadow-sm">
+              <span class="text-5xl font-bold text-slate-100">01</span>
+
+              <h3 class="mt-5 text-xl font-bold text-slate-900">
+                משאירים פרטים
+              </h3>
+
+              <p class="mt-3 leading-7 text-slate-600">
+                מספר פרטים בסיסיים מאפשרים לנו להבין במה מדובר.
+              </p>
+            </div>
+
+
+            <div class="relative rounded-2xl bg-white p-8 shadow-sm">
+              <span class="text-5xl font-bold text-slate-100">02</span>
+
+              <h3 class="mt-5 text-xl font-bold text-slate-900">
+                בודקים את האפשרויות
+              </h3>
+
+              <p class="mt-3 leading-7 text-slate-600">
+                עוברים על הנתונים ומסבירים מה ניתן לבדוק ומה המשמעות של כל אפשרות.
+              </p>
+            </div>
+
+
+            <div class="relative rounded-2xl bg-white p-8 shadow-sm">
+              <span class="text-5xl font-bold text-slate-100">03</span>
+
+              <h3 class="mt-5 text-xl font-bold text-slate-900">
+                מקבלים החלטה
+              </h3>
+
+              <p class="mt-3 leading-7 text-slate-600">
+                רק אחרי שמבינים את האפשרויות מחליטים אם ואיך להתקדם.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- CTA -->
+      <section id="contact" class="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">
+
+        <div class="overflow-hidden rounded-3xl bg-slate-900 px-6 py-12 text-white sm:px-12 lg:px-16 lg:py-16">
+
+          <div class="grid items-center gap-10 lg:grid-cols-2">
+
+            <div>
+              <p class="text-sm font-bold uppercase tracking-widest text-blue-300">
+                מתחילים כאן
+              </p>
+
+              <h2 class="mt-3 text-3xl font-bold leading-tight sm:text-4xl">
+                רוצים לדעת אילו אפשרויות עומדות בפניכם?
+              </h2>
+
+              <p class="mt-5 max-w-xl leading-7 text-slate-300">
+                השאירו פרטים ונציג יחזור אליכם כדי להבין את הצורך
+                ולבחון את האפשרויות הרלוונטיות.
+              </p>
+            </div>
+
+
+            <form class="rounded-2xl bg-white p-6 text-slate-900 shadow-xl sm:p-8">
+
+              <div class="space-y-4">
+
+                <div>
+                  <label class="mb-2 block text-sm font-semibold">
+                    שם מלא
+                  </label>
+
+                  <input
+                    type="text"
+                    placeholder="השם שלך"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  />
+                </div>
+
+
+                <div>
+                  <label class="mb-2 block text-sm font-semibold">
+                    טלפון
+                  </label>
+
+                  <input
+                    type="tel"
+                    placeholder="050-0000000"
+                    dir="ltr"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-3 text-right outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  />
+                </div>
+
+
+                <div>
+                  <label class="mb-2 block text-sm font-semibold">
+                    במה תרצו לבדוק?
+                  </label>
+
+                  <select
+                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  >
+                    <option>בחרו אפשרות</option>
+                    <option>משיכת כספים</option>
+                    <option>קרן השתלמות</option>
+                    <option>קופת גמל</option>
+                    <option>הלוואה כנגד קופה</option>
+                    <option>לא בטוח/ה</option>
+                  </select>
+                </div>
+
+
+                <button
+                  type="button"
+                  class="w-full rounded-xl bg-slate-900 px-5 py-4 font-bold text-white transition hover:bg-blue-700"
+                >
+                  שלחו לי פרטים לבדיקה
+                </button>
+
+                <p class="text-center text-xs leading-5 text-slate-400">
+                  השארת הפרטים אינה מהווה התחייבות לקבלת שירות.
+                  בכפוף לתנאים ולבדיקה פרטנית.
+                </p>
+
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- FAQ -->
+      <section id="faq" class="bg-slate-50">
+        <div class="mx-auto max-w-4xl px-5 py-20 lg:py-28">
+
+          <div class="text-center">
+            <p class="text-sm font-bold uppercase tracking-widest text-blue-700">
+              שאלות נפוצות
+            </p>
+
+            <h2 class="mt-3 text-3xl font-bold text-slate-950 sm:text-4xl">
+              לפני שמתחילים
+            </h2>
+          </div>
+
+
+          <div class="mt-10 space-y-3">
+
+            <div
+              v-for="(faq, index) in faqs"
+              :key="faq.question"
+              class="overflow-hidden rounded-2xl border border-slate-200 bg-white"
+            >
+
+              <button
+                class="flex w-full items-center justify-between gap-6 px-6 py-5 text-right"
+                @click="toggleFaq(index)"
+              >
+
+                <span class="font-semibold text-slate-900">
+                  {{ faq.question }}
+                </span>
+
+                <span class="shrink-0 text-2xl text-slate-400">
+                  {{ faqOpen === index ? '−' : '+' }}
+                </span>
+
+              </button>
+
+
+              <div v-if="faqOpen === index" class="border-t border-slate-100 px-6 py-5">
+                <p class="leading-7 text-slate-600">
+                  {{ faq.answer }}
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
     </main>
-    
-    <footer class="flex flex-col items-center py-20 text-white bg-gray-900">
-        <p class="text-center">Copyright © 2020, Hero Header Inc.</p>
-    
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mt-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-        </svg>
+
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400">
+
+      <div class="mx-auto max-w-7xl px-5 py-12 lg:px-8">
+
+        <div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+
+          <div>
+            <div class="text-xl font-bold text-white">
+              פנסרה
+            </div>
+
+            <p class="mt-2 max-w-md text-sm leading-6">
+              פתרונות ושירותים בתחום החיסכון והקופות.
+            </p>
+          </div>
+
+          <div class="text-sm">
+            © {{ new Date().getFullYear() }} פנסרה. כל הזכויות שמורות.
+          </div>
+
+        </div>
+
+        <div class="mt-8 border-t border-slate-800 pt-6 text-xs leading-6 text-slate-500">
+          המידע באתר הינו כללי ואינו מהווה ייעוץ פנסיוני, ייעוץ השקעות,
+          התחייבות לקבלת הלוואה או התחייבות לביצוע משיכה.
+          האפשרויות והתנאים כפופים לנתונים האישיים ולתנאי הגופים הרלוונטיים.
+        </div>
+
+      </div>
+
     </footer>
+
+  </div>
 </template>
